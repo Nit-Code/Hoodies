@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561a4ad3ab0e4a44484569f186012a00, type: 3}
+  m_Name: Abilities_Inst
+  m_EditorClassIdentifier: 
+  myAbilities:
+  - myName: Protector
+    myId: 2
+    myDescription: +2 SHIELDS to all surrounding units
+    myAreaShape: 2
+    myAreaShapeSize: 1
+    myIncludeCenter: 0
+    myTileColor: 1
+    myCost: 2
+    myCastingRange: 0
+    myCooldown: 4
+    myDuration: 2
+    myStatusEffect: 2
+    myOverrideAnimatorController: {fileID: 0}
+    mySprite: {fileID: 0}
+  - myName: Engine Overdrive
+    myId: 1
+    myDescription: +2 Movement range for the selected unit
+    myAreaShape: 0
+    myAreaShapeSize: 0
+    myIncludeCenter: 1
+    myTileColor: 1
+    myCost: 2
+    myCastingRange: 0
+    myCooldown: 3
+    myDuration: 0
+    myStatusEffect: 2
+    myOverrideAnimatorController: {fileID: 0}
+    mySprite: {fileID: 0}

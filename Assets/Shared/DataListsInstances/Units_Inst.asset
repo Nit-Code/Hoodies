@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e1b7263350a2041acf38f25396cdb8, type: 3}
+  m_Name: Units_Inst
+  m_EditorClassIdentifier: 
+  myUnits:
+  - myName: Test Mothership
+    myId: 1
+    myAttack: 2
+    myAttackRange: 2
+    myShields: 12
+    myMovementRange: 2
+    myAbilityId: 2
+    canSpawnOtherUnits: 0
+    myOverrideAnimatorController: {fileID: 22100000, guid: 6ff12e24759270549b2dede5273446a8, type: 2}
+    mySprite: {fileID: 21300000, guid: 41d82d3363bfa444abf32dae899093a4, type: 3}
+  - myName: Test Unit
+    myId: 2
+    myAttack: 2
+    myAttackRange: 3
+    myShields: 4
+    myMovementRange: 2
+    myAbilityId: 1
+    canSpawnOtherUnits: 0
+    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+  - myName: Hunter
+    myId: 4
+    myAttack: 4
+    myAttackRange: 3
+    myShields: 2
+    myMovementRange: 3
+    myAbilityId: 1
+    canSpawnOtherUnits: 0
+    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+  - myName: Rocket
+    myId: 5
+    myAttack: 3
+    myAttackRange: 4
+    myShields: 3
+    myMovementRange: 2
+    myAbilityId: 0
+    canSpawnOtherUnits: 0
+    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+  - myName: Tank
+    myId: 6
+    myAttack: 1
+    myAttackRange: 1
+    myShields: 6
+    myMovementRange: 1
+    myAbilityId: 2
+    canSpawnOtherUnits: 1
+    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+  - myName: Fenix
+    myId: 7
+    myAttack: 5
+    myAttackRange: 2
+    myShields: 4
+    myMovementRange: 2
+    myAbilityId: 0
+    canSpawnOtherUnits: 1
+    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+  - myName: Traveler
+    myId: 8
+    myAttack: 1
+    myAttackRange: 1
+    myShields: 1
+    myMovementRange: 10
+    myAbilityId: 1
+    canSpawnOtherUnits: 1
+    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}

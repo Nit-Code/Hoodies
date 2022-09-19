@@ -9,6 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]serSettings/
+/[Dd]istribution/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -57,3 +59,10 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+# Plastic stuff
+.plastic/
+
+# Lambda project
+.Lambda/HoodiesLambda/bin/
+.Lambda/HoodiesLambda/obj/

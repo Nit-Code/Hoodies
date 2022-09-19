@@ -1,0 +1,47 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Transform" : "AWS::Serverless-2016-10-31",
+  "Description" : "Starting template for an AWS Serverless Application.",
+  "Parameters" : {},
+  "Resources" : {
+    "BasicFunction" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "HoodiesLambda::HoodiesLambda.BasicFunction::BasicFunctionHandler",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Description": "Default function",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": "lambda-dynamoDbFull-cloudWatchFull",
+        "Policies": [ "AmazonDynamoDBFullAccess" ]
+      }
+    },
+    "GetGameSessionId" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "HoodiesLambda::HoodiesLambda.GetGameSessionId::GetGameSessionIdHandler",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Description": "Default function",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": "lambda-dynamoDbFull-cloudWatchFull",
+        "Policies": [ "AmazonDynamoDBFullAccess" ]
+      }
+    },
+    "CreateShortLobbyId" : {
+      "Type" : "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "HoodiesLambda::HoodiesLambda.CreateShortLobbyId::CreateShortLobbyIdHandler",
+        "Runtime": "dotnetcore2.1",
+        "CodeUri": "",
+        "Description": "Default function",
+        "MemorySize": 256,
+        "Timeout": 30,
+        "Role": "lambda-dynamoDbFull-cloudWatchFull",
+        "Policies": [ "AmazonDynamoDBFullAccess" ]
+      }
+    }
+  }
+}

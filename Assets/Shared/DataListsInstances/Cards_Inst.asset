@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df4062e9a3cb5f43b4ce2c63e346ca3, type: 3}
+  m_Name: Cards_Inst
+  m_EditorClassIdentifier: 
+  myUnitCards:
+  - myName: Test Mothership
+    myId: 1
+    myCardType: 3
+    myDescription: Test Motheship
+    myCost: 0
+    mySprite: {fileID: 21300000, guid: 41d82d3363bfa444abf32dae899093a4, type: 3}
+    myUnitId: 1
+  - myName: Test Unit
+    myId: 2
+    myCardType: 1
+    myDescription: Test Unit
+    myCost: 2
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    myUnitId: 2
+  - myName: Hunter
+    myId: 4
+    myCardType: 1
+    myDescription: Spawns a Hunter ship
+    myCost: 4
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    myUnitId: 4
+  - myName: Rocket
+    myId: 5
+    myCardType: 1
+    myDescription: Spawns a Rocket ship
+    myCost: 3
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    myUnitId: 5
+  - myName: Tank
+    myId: 6
+    myCardType: 1
+    myDescription: Spawns a Tank ship
+    myCost: 3
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    myUnitId: 6
+  - myName: Fenix
+    myId: 7
+    myCardType: 1
+    myDescription: Spawns a Fenix ship
+    myCost: 2
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    myUnitId: 7
+  - myName: Traveler
+    myId: 8
+    myCardType: 1
+    myDescription: Spawns a Traveler ship
+    myCost: 2
+    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    myUnitId: 8
+  myAbilityCards: []

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a1ebcc24131d0468c7c8f8355ef34e, type: 3}
+  m_Name: StatusEffects_Inst
+  m_EditorClassIdentifier: 
+  myStatusEffects:
+  - myName: Improved Engines
+    myId: 1
+    myDescription: Unit Movement Range +2
+    myDuration: 2
+    mySprite: {fileID: 0}
+    myAnimationController: {fileID: 0}
+    myUnitColor: {r: 0.84400004, g: 0.730838, b: 0, a: 1}
+  - myName: Protector Aura
+    myId: 2
+    myDescription: Unit Shields +2
+    myDuration: 0
+    mySprite: {fileID: 0}
+    myAnimationController: {fileID: 0}
+    myUnitColor: {r: 0.53310466, g: 1, b: 0.9188333, a: 1}

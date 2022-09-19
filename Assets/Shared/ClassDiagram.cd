@@ -1,0 +1,660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AudioManager" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEEAgEAQIKQAAAAAQABkAkoBEAAIQCiIEBQDkkCAiUg=</HashCode>
+      <FileName>Assets\Client\Scripts\AudioManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AuthenticationManager" Collapsed="true">
+    <Position X="22.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABEAAiAAAAEAEAAAAAAAgAAAACAAiABAAAAQEAQAAEA=</HashCode>
+      <FileName>Assets\Client\Scripts\AuthenticationManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClientGameManager" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ygFSAICAQCEAODBAEAAAEAgAkKAMDSUKDAJAgAAnCkA=</HashCode>
+      <FileName>Assets\Client\Scripts\ClientGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClientStartup" Collapsed="true">
+    <Position X="12" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAACAAAAAACgAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\ClientStartup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileReadWrite" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAEAAAAAAAAEAA=</HashCode>
+      <FileName>Assets\Client\Scripts\FileReadWrite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameLiftClient" Collapsed="true">
+    <Position X="2.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAACBAAAAIAQAAQQFAAAQIEACAAAAAABCCAEkQIAABA=</HashCode>
+      <FileName>Assets\Client\Scripts\GameLiftClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObjectPool" Collapsed="true">
+    <Position X="20.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAgAgAAIAIAgIAAAAAAQAkA=</HashCode>
+      <FileName>Assets\Client\Scripts\GameObjectPool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LobbyPlayer" Collapsed="true">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAABAAAAAIAAAAAIAAAEA=</HashCode>
+      <FileName>Assets\Client\Scripts\LobbyPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatchCard" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQAAAgAAAAAIABAAACBEGEEABAAIAGAICIADAEMIIFA=</HashCode>
+      <FileName>Assets\Client\Scripts\MatchCard.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MyDecksCard" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAgCAAAgAAQAABCAAAAEAAAAIAAAICAACACAIBBA=</HashCode>
+      <FileName>Assets\Client\Scripts\MyDecksCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkClient" Collapsed="true">
+    <Position X="2.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQIABMAAAAAAARQAAAAAABAEEEAQBKAAAAAAAADAEA=</HashCode>
+      <FileName>Assets\Client\Scripts\NetworkClient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RetryHelper" Collapsed="true">
+    <Position X="17.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAABAAAAAIAAABAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\RetryHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SaveDataManager" Collapsed="true">
+    <Position X="19" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\SaveDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneController" Collapsed="true">
+    <Position X="20.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAECAACAAACAgAAIECAIAAAAAAAAgAAAAAAABAEA=</HashCode>
+      <FileName>Assets\Client\Scripts\SceneController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sound" Collapsed="true">
+    <Position X="12" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAABAAAIAAAAAAAACEA=</HashCode>
+      <FileName>Assets\Client\Scripts\Sound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HandleTooltipOnHover" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAARAAAGA=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\HandleTooltipOnHover.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LoginCanvasUIManager" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gCAAAAAAACAABAgAAAAEAAAAQAAAAIIAAAAgAAAAIFA=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Login\LoginCanvasUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LoginSceneUIManager" Collapsed="true">
+    <Position X="17.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>nAAGAkAQASgEBEACLAAIAEQgECAAYRAgIAAAAAIgAEQ=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Login\LoginSceneUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbilityPromptUI" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAACCAAAIAAAAAgAAAAAAAAAQAAABABAAAAAkA=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Match\AbilityPromptUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ActionPromptUI" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACCAAAJAYAAAogAAAAAAAAQAAABABAAAAAEI=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Match\ActionPromptUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatchSceneUIManager" Collapsed="true">
+    <Position X="20.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACIAAAAQACIAAAgAAAIAAAAAABAAAAAEAAAAAAAgAEU=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Match\MatchSceneUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIPromptReseter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAiAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Match\UIPromptReseter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HomeCanvasUIManager" Collapsed="true">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GUCBAwAQAaBACBgIIBAEBDAQMHAJAQACQCAAEAQAgEE=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Menu\HomeCanvasUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LobbyCanvasUIManager" Collapsed="true">
+    <Position X="12" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>cAcAQAAIoCMQIggAAACAgSAAQAgAIBggAICAAEAADUg=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Menu\LobbyCanvasUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuSceneUIManager" Collapsed="true">
+    <Position X="22.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAggAAAGAEAAAAKAAIAERAESAAABAQACIHAAAAAMQ=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Menu\MenuSceneUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyDecksCanvasUIManager" Collapsed="true">
+    <Position X="10.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\Menu\MyDecksCanvasUIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TooltipScreenSpaceUI" Collapsed="true">
+    <Position X="20.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAABAAAIAgAAAAAAAAIQAAAABAAAAAAFA=</HashCode>
+      <FileName>Assets\Client\Scripts\UI\TooltipScreenSpaceUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UserSessionCache" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAQAAQEQAAAACAAAAJACCCAAAAIAAAEAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\UserSessionCache.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GameLiftServer" Collapsed="true">
+    <Position X="4.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAABAAASQAEAAMQAIACAAAAAAEAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Server\Scripts\GameLiftServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NetworkServer" Collapsed="true">
+    <Position X="4.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABwQBRAAIAAQEEBAAAARAAAAUAAAAAIAAAAQgAABAGA=</HashCode>
+      <FileName>Assets\Server\Scripts\NetworkServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server" Collapsed="true">
+    <Position X="12" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Server\Scripts\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServerGameManager" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAiAAAAAAAAAAAAAAIAAAAAAAAAAAAAQACAAA=</HashCode>
+      <FileName>Assets\Server\Scripts\ServerGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServerStartup" Collapsed="true">
+    <Position X="13.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Server\Scripts\ServerStartup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbilityData" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAgAgAAASAAAAAAAAQAAQABAAIIAAAAAEAAAAAAQEA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Abilities_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Abilities_Def" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Abilities_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioData" Collapsed="true">
+    <Position X="17.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAEAAAAABAAACAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Audios_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Audios_Def" Collapsed="true">
+    <Position X="20.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Audios_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitCardData" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Cards_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbilityCardData" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Cards_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CardData" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAABAAAIAAAAAEAAAAAIAEA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Cards_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cards_Def" Collapsed="true">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Cards_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneData" Collapsed="true">
+    <Position X="22.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAIAAAAAAAAAAAABAAAAAAAAAAAAAAAAAMA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Scenes_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scenes_Def" Collapsed="true">
+    <Position X="10.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Scenes_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatusEffectData" Collapsed="true">
+    <Position X="13.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAQAAAABAAAIQAAAAAABAAAAAEA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\StatusEffects_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatusEffects_Def" Collapsed="true">
+    <Position X="15.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\StatusEffects_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileData" Collapsed="true">
+    <Position X="17.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAABAAAAAAAAAAAAAAAADEQ=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Tiles_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tiles_Def" Collapsed="true">
+    <Position X="19" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Tiles_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnitData" Collapsed="true">
+    <Position X="10.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAASAAAAAAAABAAAYAAAACEAAAAAAAEA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Units_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Units_Def" Collapsed="true">
+    <Position X="12" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\DataListsDefinitions\Units_Def.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventHandler" Collapsed="true">
+    <Position X="13.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABQAAAAQAIAABAAAABCAAAgAAAAAKAAgABAEAIhA=</HashCode>
+      <FileName>Assets\Shared\Scripts\EventHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineOverdrive" Collapsed="true">
+    <Position X="5.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAAAAQAAAAACAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\Ability\EngineOverdrive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Protector" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQAAAAQAAAAACAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\Ability\Protector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedAbility" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>kUFgBEAAAyACAYQAQAQSACABKAKMgAAIBEAKBGIASMA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\Ability\SharedAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedStatusEffect" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAACAAAJAAAAQAAAABACAAgAAgAAAGAAIAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\Ability\StatusEffect\SharedStatusEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatusEffect_ImprovedEngines" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAIAAAAQAAAAAACAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\Ability\StatusEffect\StatusEffect_EngineOverdrive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatusEffect_ImprovedShields" Collapsed="true">
+    <Position X="2.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAIAAAAQAAAAAACAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\Ability\StatusEffect\StatusEffect_ImprovedShields.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedBoard" Collapsed="true">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQBAEhEEAKABAPARAAACAATFkBCBBDAAAgAQAiAAiQA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedBoard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedDeck" Collapsed="true">
+    <Position X="22.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedDeck.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedHand" Collapsed="true">
+    <Position X="12" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedHand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedPlayer" Collapsed="true">
+    <Position X="13.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAACiAAAAACAAAAAgAAAQCBAKAiEAAABAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedPlayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedSlots" Collapsed="true">
+    <Position X="17.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedSlots.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedTile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQBAgQgAwkgCDoABQADEACiEIBAgAAAAAwhSAREADAQ=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedTile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SharedTurn" Collapsed="true">
+    <Position X="20.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedTurn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedUnit" Collapsed="true">
+    <Position X="22.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FYAgHkICUjYAAUSAGEACEYIAoIQcEAACAGALBSYBIEE=</HashCode>
+      <FileName>Assets\Shared\Scripts\Gameplay\SharedUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shared" Collapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAEgAAAAAAAAAAAAAAAASAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\Shared.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedDataLoader" Collapsed="true">
+    <Position X="20.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JQgAAiACgCgBpAABCAAAkQEIoAgFQSQAAAAGAEnJBUg=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedDataLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedGameManager" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAkEIAQDAAACEIEAAACogAAAAABQEIEAgAAAAKCEA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedGameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedGameObjectFactory" Collapsed="true">
+    <Position X="10.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAEEAAAAAAwICSQAAAAAAQCAUAACABAQAAAAAACUA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedGameObjectFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedUser" Collapsed="true">
+    <Position X="10.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAABAAgAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedScripts.SharedClientMessage" Collapsed="true">
+    <Position X="19" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAACAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedClientMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SharedScripts.SharedServerMessage" Collapsed="true">
+    <Position X="15.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAACAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedServerMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ISaveable" Collapsed="true">
+    <Position X="10.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAACAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Client\Scripts\SaveDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SharedScripts.SharedISerializable" Collapsed="true">
+    <Position X="12" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedISerializable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SharedScripts.ClientMessage" Collapsed="true">
+    <Position X="19" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAABAgAAAAAgCAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.ServerMessage" Collapsed="true">
+    <Position X="20.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAMAAQAAEAAAAEAAEBAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.LambdaMessageId" Collapsed="true">
+    <Position X="22.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.LobbyStatus" Collapsed="true">
+    <Position X="10.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAgAAAAAAABAQAAAAAAAAAEAABACAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.GameStatus" Collapsed="true">
+    <Position X="20.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.MatchType" Collapsed="true">
+    <Position X="13.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.MatchState" Collapsed="true">
+    <Position X="12" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAEAAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.PlayerType" Collapsed="true">
+    <Position X="15.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.SceneName" Collapsed="true">
+    <Position X="19" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAgAAAAAQAAACAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.AreaShape" Collapsed="true">
+    <Position X="12" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAoAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.TileColor" Collapsed="true">
+    <Position X="10.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAQIAAAAAAAAAAAgAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.AbilityId" Collapsed="true">
+    <Position X="10.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAACAABAAAAAABAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.AudioId" Collapsed="true">
+    <Position X="13.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAEAAAgAIgAAAAAAAAAAABABAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.CardId" Collapsed="true">
+    <Position X="15.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.CardType" Collapsed="true">
+    <Position X="17.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAIAAAAAAACAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.SceneId" Collapsed="true">
+    <Position X="17.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAEAAAAAAAQAAAAAAAAFAAAAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.StatusEffectId" Collapsed="true">
+    <Position X="22.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAACAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.TileId" Collapsed="true">
+    <Position X="12" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.TileType" Collapsed="true">
+    <Position X="13.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAACAAAAABAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SharedScripts.DataId.UnitId" Collapsed="true">
+    <Position X="15.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SharedEnums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6aa546ce9aaa246b7fb5fd9b14684b, type: 3}
+  m_Name: Scenes_Inst
+  m_EditorClassIdentifier: 
+  myScenes:
+  - myName: Login
+    myId: 1
+    myScenePath: Assets/Client/Scenes/LoginScene_Imported.unity
+    myAudioId: 3
+    myAmbientAudioId: 1
+  - myName: Menu
+    myId: 2
+    myScenePath: Assets/Client/Scenes/MenuScene_Imported.unity
+    myAudioId: 4
+    myAmbientAudioId: 1
+  - myName: Match
+    myId: 3
+    myScenePath: Assets/Client/Scenes/MatchScene.unity
+    myAudioId: 1
+    myAmbientAudioId: 1
+  - myName: Persistent
+    myId: 4
+    myScenePath: Assets/Client/Scenes/PersistentScene.unity
+    myAudioId: 1
+    myAmbientAudioId: 1
