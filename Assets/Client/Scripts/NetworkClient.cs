@@ -509,8 +509,6 @@ public class NetworkClient : MonoBehaviour
 
     public void LeaveEndedMatch()
     {
-        /*ClientMatchConnectionMessage message = new ClientMatchConnectionMessage(MatchMessageIdClient.LEAVE_ENDED_MATCH, myPlayerSession);
-        SendMessageToServer(message);*/
         mySceneControllerReference.LoadScene(SceneId.MENU);
     }
 }

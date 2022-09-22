@@ -39,7 +39,7 @@ public class SharedGameObjectFactory : MonoBehaviour
     private void Awake()
     {
         myDataLoaded = 0;
-        myDataToLoad = 9;
+        myDataToLoad = 7;
 
         if (myEmptyTilePrefab != null)
             myDataLoaded++;
@@ -64,17 +64,17 @@ public class SharedGameObjectFactory : MonoBehaviour
             myDataLoaded++;
             myHasLoader = true;
         }
-
+        
 #if UNITY_SERVER
         myGameManagerReference = FindObjectOfType<ServerGameManager>();
         if(myGameManagerReference != null)
         {
-            myDataLoaded++;
+           // myDataLoaded++;
         }
 
         myBoardReference = FindObjectOfType<SharedBoard>();
         {
-            myDataLoaded++;
+            //myDataLoaded++;
             myHasBoard = true;
         }
 #endif
@@ -96,10 +96,10 @@ public class SharedGameObjectFactory : MonoBehaviour
         {
             myGameManagerReference = FindObjectOfType<SharedGameManager>(); //CHANGE TO CLIENTGAMEMANAGER
 
-            if (myGameManagerReference != null)
+            /*if (myGameManagerReference != null)
             {
                 myDataLoaded++;
-            }
+            }*/
         }
 
         if (myBoardReference == null)
@@ -108,7 +108,7 @@ public class SharedGameObjectFactory : MonoBehaviour
 
             if (myBoardReference != null)
             {
-                myDataLoaded++;
+                //myDataLoaded++;
                 myHasBoard = true;
             }
         }
@@ -150,7 +150,7 @@ public class SharedGameObjectFactory : MonoBehaviour
         {
             case TileType.INVALID:
                 break;
-            case TileType.EMPTY:
+            case TileType.EMPTY:                 
                 tile = Instantiate(myEmptyTilePrefab.GetComponent<SharedTile>(), aPosition, Quaternion.identity);
                 break;
             case TileType.NEBULA:

@@ -219,8 +219,9 @@ public class LoginSceneUIManager : MonoBehaviour
 
     public async void TryLogin()
     {
-        bool successfulLogin = await myAuthenticationManagerReference.Login(myLoginEmailInputField.text, myLoginPasswordInputField.text);
+        bool successfulLogin = await myAuthenticationManagerReference.Login(myLoginEmailInputField.text, myLoginPasswordInputField.text);        
         LoadMenu(successfulLogin);
+        myLoginCanvasReference.ShowErrorPopup();
     }
 
     public void StartSignUp() 

@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 105695663}
   - component: {fileID: 105695662}
   m_Layer: 5
-  m_Name: PlayerUsername
+  m_Name: Player1Username
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,7 +1091,7 @@ GameObject:
   - component: {fileID: 362914166}
   - component: {fileID: 362914165}
   m_Layer: 5
-  m_Name: EnemyUsername
+  m_Name: Player2Username
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1508,6 +1508,22 @@ PrefabInstance:
     - target: {fileID: 4444765345682566729, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0.000030517578
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652591672108534535, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1644416857}
+    - target: {fileID: 4652591672108534535, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSurrenderButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652591672108534535, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MatchSceneUIManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4652591672108534535, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4924982034542719413, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
       propertyPath: m_text
@@ -3371,7 +3387,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1057850020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2244df83765f9a47ab163824bb42b5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e10f25857d7ead4d9cdff699e8be5dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1059323361
@@ -3386,6 +3402,7 @@ GameObject:
   - component: {fileID: 1059323365}
   - component: {fileID: 1059323364}
   - component: {fileID: 1059323366}
+  - component: {fileID: 1059323367}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -3474,9 +3491,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1059323361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2244df83765f9a47ab163824bb42b5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e10f25857d7ead4d9cdff699e8be5dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1059323367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059323361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1063925508
 GameObject:
   m_ObjectHideFlags: 0
@@ -4577,6 +4611,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420352773}
   m_CullTransparentMesh: 1
+--- !u!114 &1461997819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4652591672108534535, guid: d9ea8f4512798f144ad773987d6a957c, type: 3}
+  m_PrefabInstance: {fileID: 460853974}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1474109988
 GameObject:
   m_ObjectHideFlags: 0
@@ -5254,9 +5299,10 @@ MonoBehaviour:
   myPlayerTurnText: {fileID: 1354150631}
   myEnergyNumberText: {fileID: 1547996272}
   myTimerNumberText: {fileID: 371590987}
-  myPlayer1UsernameText: {fileID: 0}
-  myPlayer2UsernameText: {fileID: 0}
+  myPlayer1UsernameText: {fileID: 105695662}
+  myPlayer2UsernameText: {fileID: 362914165}
   myEndTurnButton: {fileID: 418143384}
+  mySurrenderButton: {fileID: 1461997819}
   myMatchEndContainer: {fileID: 88625356}
   myMatchEndPanelBorder: {fileID: 1908190713}
   myMatchEndClickBlocker: {fileID: 120252029}

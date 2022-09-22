@@ -30,6 +30,7 @@ public class MatchSceneUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI myPlayer1UsernameText;
     [SerializeField] TextMeshProUGUI myPlayer2UsernameText;
     [SerializeField] Button myEndTurnButton;
+    [SerializeField] Button mySurrenderButton;
 
 
     [SerializeField] GameObject myMatchEndContainer;
@@ -113,6 +114,7 @@ public class MatchSceneUIManager : MonoBehaviour
 
         myMatchEndPanelBorder.color = aBorderColor;
         // if we add any extra menus, deactivate them
+        mySurrenderButton.enabled = false;
         myMatchEndContainer.SetActive(true);
     }
 
@@ -175,6 +177,12 @@ public class MatchSceneUIManager : MonoBehaviour
     {
         PlaySound(AudioId.SOUND_MENU_CLICK);
         myNetworkClientReference.LeaveEndedMatch();
+    }
+
+    public void OnSurrenderButton()
+    {
+        ClientPlayerGameplayMessage surrenderMessage = new ClientPlayerGameplayMessage(PlayerGameplayMessageIdClient.SURRENDER, myGameManagerReference.GetLocalPlayer().GetSessionId());
+        myNetworkClientReference.SendMessageToServer(surrenderMessage);
     }
 
     public IEnumerator ShowPlayerTurnMessage(TurnType aTurnType)

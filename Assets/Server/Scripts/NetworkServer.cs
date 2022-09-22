@@ -67,8 +67,19 @@ public class NetworkServer : MonoBehaviour
         OnStart();
     }
 
+    private void DisplayAsciiArt() 
+    {
+        Console.WriteLine(@" _   _                 _ _               ____                           ");
+        Console.WriteLine(@"| | | | ___   ___   __| (_) ___  ___    / ___|  ___ _ ____   _____ _ __ ");
+        Console.WriteLine(@"| |_| |/ _ \ / _ \ / _` | |/ _ \/ __|   \___ \ / _ \ '__\ \ / / _ \ '__|");
+        Console.WriteLine(@"|  _  | (_) | (_) | (_| | |  __/\__ \    ___) |  __/ |   \ V /  __/ |   ");
+        Console.WriteLine(@"|_| |_|\___/ \___/ \__,_|_|\___||___/___|____/ \___|_|    \_/ \___|_|   ");
+        Console.WriteLine(@"                                   |_____|                              ");
+    }
+
     private void OnStart()
     {
+        DisplayAsciiArt();
         Shared.Log("[HOOD][SERVER][NETWORK] - OnStart");
 
         myIsAConnectionAccomplished = false;
@@ -183,6 +194,7 @@ public class NetworkServer : MonoBehaviour
                 myGameManagerReference.EndTurn();
                 break;
             case PlayerGameplayMessageIdClient.SURRENDER:
+                myGameManagerReference.Surrender();
                 break;
             default:
                 Shared.LogError("[HOOD][SERVER][NETWORK] - Unknown PlayerGameplayMessage received.");
@@ -538,17 +550,21 @@ public class NetworkServer : MonoBehaviour
     public void EndMatch()
     {
         Shared.Log("Closing match");
-        foreach (KeyValuePair<int, string> playerSession in myPlayerSessionsMap)
+        if (!CLU.GetIsConnectLocalEnabled())
         {
-            if(myPlayerSessionsMap.ContainsKey(playerSession.Key))
-                myPlayerSessionsMap.Remove(playerSession.Key);
-            if(myConnectionIdMap.ContainsKey(playerSession.Value))
-                myConnectionIdMap.Remove(playerSession.Value);
-            myServer.Disconnect(playerSession.Key);
-            if (!CLU.GetIsConnectLocalEnabled())
+            foreach (KeyValuePair<int, string> playerSession in myPlayerSessionsMap)
+            {
                 myGameLiftServerReference.RemovePlayerSession(playerSession.Value);
+            }
+            myGameLiftServerReference.HandleGameEnd();
+        }else
+            myServer.Stop();
+        //Disconnect everyone from telepathy
+        foreach (int connectionId in myConnectionIdMap.Values)
+        {
+            myServer.Disconnect(connectionId);
         }
-        myGameLiftServerReference.HandleGameEnd();                
+        ClearConnectionMaps();        
     }
 
 
@@ -602,9 +618,7 @@ public class NetworkServer : MonoBehaviour
             else if (myPlayerSessionsMap[connectionId] == myGameManagerReference.GetPlayer2().GetSessionId())
                 myGameManagerReference.SetMatchWinner(MatchWinner.PLAYER_1);
             myGameManagerReference.ChangeState(MatchState.END);
-        }
-
-        if(myPlayerSessionsMap.ContainsKey(connectionId))
+        }else if(myPlayerSessionsMap.ContainsKey(connectionId))
         {
             string disconnectedPlayerSession = myPlayerSessionsMap[connectionId].ToString();
             myPlayerSessionsMap.Remove(connectionId);
@@ -641,11 +655,7 @@ public class NetworkServer : MonoBehaviour
             }
             myGameLiftServerReference.HandleGameEnd();
         }
-        myConnectionIdMap.Clear();
-        myPlayerSessionsMap.Clear();
-        myHostConnectionId = -1;
-        myGuestConnectionId = -1;
-        myHostUsername = "";
+        ClearConnectionMaps();
     }
 
     private void HandleGuestDisconnect(string aPlayerSessionId)
@@ -684,6 +694,15 @@ public class NetworkServer : MonoBehaviour
             HandleHostDisconnect(aPlayerSessionId);
         else
             HandleGuestDisconnect(aPlayerSessionId);
+    }
+
+    private void ClearConnectionMaps()
+    {
+        myConnectionIdMap.Clear();
+        myPlayerSessionsMap.Clear();
+        myHostConnectionId = -1;
+        myGuestConnectionId = -1;
+        myHostUsername = "";
     }
 
     public void ShutDownGameSession()

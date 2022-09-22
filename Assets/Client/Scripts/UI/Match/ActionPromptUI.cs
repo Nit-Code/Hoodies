@@ -46,7 +46,7 @@ public class ActionPromptUI : MonoBehaviour
             return;
         }
 
-        myRectTransform.anchoredPosition = Input.mousePosition + new Vector3(70,15,0);
+        myRectTransform.anchoredPosition = Input.mousePosition;// / myRectTransform.localScale.x;//new Vector3(70,15,0);
 
         myClickedTileReference = aTile;
         

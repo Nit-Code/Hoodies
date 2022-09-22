@@ -106,9 +106,18 @@ public class ServerGameManager : SharedGameManager
                     newStateMessage = new ServerMatchStateMessage(MatchStateMessageId.END_DRAW);
                 }
                 myNetworkServerReference.SendMessageToAllPlayers(newStateMessage);
+                ResetMatch();
                 myNetworkServerReference.EndMatch();
                 break;
         }
+    }
+
+    private void ResetMatch()
+    {
+        myReadyAndLoadedPlayers.Clear();
+        myReadyPlayersInfo.Clear();
+        myPlayersReferenceList.Clear();
+        mySpawnedUnitDictionary.Clear();
     }
 
     public bool AddReadyPlayer(string aPlayerSessionId, int aPlayerDeckId, string aUsername)
@@ -542,6 +551,14 @@ public class ServerGameManager : SharedGameManager
                 return;
             }
         }
+    }
+
+    public void Surrender()
+    {
+        myCurrentPlayerReference.GetMotherShip().KillUnit();
+        EvaluateWinCondition();
+        if (myMatchWinner != MatchWinner.NO_WINNER)
+            ChangeState(MatchState.END);
     }
 
     public void TestKillMyMothership()
