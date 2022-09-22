@@ -10,6 +10,8 @@ public class SharedUnit : MonoBehaviour
     private int myMatchId;
     public int GetMatchId() { return myMatchId; }
     private UnitId myUnitDataId;
+    private CardId myCardId;
+    public CardId GetCardId() { return myCardId; }
 
     // presentation
     [SerializeField] private TextMeshProUGUI myHPText;
@@ -36,7 +38,10 @@ public class SharedUnit : MonoBehaviour
     private bool myHasMoved;
     public bool GetHasMoved() { return myHasMoved; }
     public void SetHasMoved() { myHasMoved = true; }
-    public void SetKindText(string aKind) { myKindText.text = aKind; }
+
+    private bool myIsSpawner;
+    public bool GetIsSpawner() { return myIsSpawner; }
+    public void EnableKindText() { myKindText.enabled = true; }
 
     // reference
     protected SharedPlayer myOwnerPlayerReference;
@@ -51,7 +56,7 @@ public class SharedUnit : MonoBehaviour
     protected SharedAbility myAbility;
     public SharedAbility GetAbility() { return myAbility; }
 
-    // ??????????????????????
+    //animation hashes
     public static int AttackAnimation;
     public static int DeathAnimation;
     public static int HurtAnimation;
@@ -83,9 +88,10 @@ public class SharedUnit : MonoBehaviour
         myIsEnabled = false;
     }
 
-    public void Init(SharedPlayer aOwnerPlayer, bool aIsCapitain, Vector2Int aBoardPosition, UnitData aUnitData, int aMatchId)
+    public void Init(SharedPlayer aOwnerPlayer, bool aIsCapitain, Vector2Int aBoardPosition, UnitData aUnitData, int aMatchId, CardId aCardId)
     {
         myGameObjectFactoryReference = FindObjectOfType<SharedGameObjectFactory>();
+        myCardId = aCardId;
 
         if (aUnitData.myAbilityId != AbilityId.INVALID && myGameObjectFactoryReference != null)
         {
@@ -106,6 +112,7 @@ public class SharedUnit : MonoBehaviour
         myAttack = aUnitData.myAttack;
         myAttackRange = aUnitData.myAttackRange;
         myMovementRange = aUnitData.myMovementRange;
+        myIsSpawner = aUnitData.canSpawnOtherUnits;
         myStatusEffects = new();
 
         myUnitDataId = aUnitData.myId;
@@ -318,11 +325,16 @@ public class SharedUnit : MonoBehaviour
         }
 
         Destroy(myAnimator);
-        myCanvasGroup.alpha = 0f;
+        MakeInvisible();
         myBoardPosition = new Vector2Int(-99, -99);
         transform.SetParent(null);
         transform.position += new Vector3(-1000, -1000, -1000);
         myIsEnabled = false;
+    }
+
+    public void MakeInvisible()
+    {
+        myCanvasGroup.alpha = 0f;
     }
 
     public MovementInfo GetMovementInfo()
@@ -330,12 +342,15 @@ public class SharedUnit : MonoBehaviour
         return new MovementInfo(myMovementRange, myBoardPosition);
     }
 
-    public void RefreshUnit()  //TODO
+    public void RefreshUnit(bool isAuxUnit)  //TODO
     {
-        ResetUnitSprite();
-        UpdateStatusEffectsTimers(); // We call this first in case status effects need to be re-applied
-        UpdateAbilityTimers();// We call this second in case status effects need to be re-applied
-        myHasMoved = false;
+        if(!isAuxUnit)
+        {
+            ResetUnitSprite();
+            myHasMoved = false;
+            UpdateStatusEffectsTimers(); // We call this first in case status effects need to be re-applied
+        }
+        UpdateAbilityTimers();// We call this second in case status effects need to be re-applied   
     }
 
     public void EnableUnit()
@@ -355,5 +370,10 @@ public class SharedUnit : MonoBehaviour
     {
         mySpriteRenderer.color = myOriginalColor;
         myCanvasGroup.alpha = 1f;
+    }
+
+    public void FlipSprite()
+    {
+        mySpriteRenderer.flipX = true;
     }
 }

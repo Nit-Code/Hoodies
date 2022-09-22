@@ -50,7 +50,6 @@ public class ActionPromptUI : MonoBehaviour
 
         myClickedTileReference = aTile;
         
-        // TODO: Hard coded user facing text?
         switch (aPromptOption)
         {
             case PromptOption.ATTACK:
@@ -104,19 +103,4 @@ public class ActionPromptUI : MonoBehaviour
         }
         MakeInvisible();
     }
-
-    /*
-    public void RequestAction()
-    {
-        if(myCurrentOption == PromptOption.ATTACK)
-        {
-            myGameManagerReference.RequestAttackUnit(mySelectedUnit, myClickedTile);
-        }
-        else if(myCurrentOption == PromptOption.MOVE)
-        {
-            myGameManagerReference.RequestMoveUnit(mySelectedUnit, myClickedTile);
-        }
-        MakeInvisible();
-    }
-    */
 }

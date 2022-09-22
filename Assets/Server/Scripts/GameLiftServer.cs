@@ -212,22 +212,22 @@ public class GameLiftServer : MonoBehaviour
             Shared.Log("[HOOD][SERVER][GAMELIFT] - ProcessEnding success!");
         else
             Shared.Log("[HOOD][SERVER][GAMELIFT] - ProcessEnding failed " + outcome.Error.ToString());
-
+        /*
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
-#endif
+#endif*/
     }
 
     private void FinalizeLocalServerProcessShutdown()
     {
         Shared.Log("[HOOD][SERVER][GAMELIFT] - FinalizeLocalServerProcessShutdown");
-
+        /*
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
-#endif
+#endif*/
     }
 }

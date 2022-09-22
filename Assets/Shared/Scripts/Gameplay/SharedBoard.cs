@@ -164,7 +164,7 @@ public class SharedBoard : MonoBehaviour
     {
         Vector3 sizeChange = new Vector3(myTileSize, 3, myTileSize);
 
-        foreach(KeyValuePair<Vector2Int, SharedTile> entry in myTileDictionary)
+        foreach (KeyValuePair<Vector2Int, SharedTile> entry in myTileDictionary)
         {
             entry.Value.transform.localScale = sizeChange;
         }
@@ -440,6 +440,7 @@ public class SharedBoard : MonoBehaviour
 
         return tiles;
     }
+
     private List<SharedTile> GetCrossFromCentralCoord(int shapeSize, Vector2Int centerTileCoord, bool includeCenter)
     {
         List<SharedTile> tiles = new List<SharedTile>();
@@ -454,9 +455,7 @@ public class SharedBoard : MonoBehaviour
                     {
                         tiles.Add(tileToAdd);
                     }
-
                 }
-
             }
         }
         if (!includeCenter)
@@ -471,55 +470,58 @@ public class SharedBoard : MonoBehaviour
     {
         List<SharedTile> tiles = new List<SharedTile>();
 
-        if (directionTileCoord != null)
+        if (directionTileCoord == null)
         {
-            Vector2Int netDirectionVector = (Vector2Int)(centerTileCoord - directionTileCoord);
+            return tiles;
+        }
 
-            if (netDirectionVector.x < 0) // Rightwards direction
+        Vector2Int netDirectionVector = centerTileCoord - directionTileCoord;
+
+        if (netDirectionVector.x < 0) // Rightwards direction
+        {
+            for (int x = centerTileCoord.x; x <= centerTileCoord.x + shapeSize; x++)
             {
-                for (int x = centerTileCoord.x; x <= centerTileCoord.x + shapeSize; x++)
+                SharedTile tileToAdd = GetTile(x, centerTileCoord.y);
+                if (tileToAdd != null)
                 {
-                    SharedTile tileToAdd = GetTile(x, centerTileCoord.y);
-                    if (tileToAdd != null)
-                    {
-                        tiles.Add(tileToAdd);
-                    }
-                }
-            }
-            else if (netDirectionVector.x > 0) // Leftwards direction
-            {
-                for (int x = centerTileCoord.x; x >= centerTileCoord.x - shapeSize; x--)
-                {
-                    SharedTile tileToAdd = GetTile(x, centerTileCoord.y);
-                    if (tileToAdd != null)
-                    {
-                        tiles.Add(tileToAdd);
-                    }
-                }
-            }
-            else if (netDirectionVector.y < 0) // Upwards direction
-            {
-                for (int y = centerTileCoord.y; y <= centerTileCoord.y + shapeSize; y++)
-                {
-                    SharedTile tileToAdd = GetTile(centerTileCoord.x, y);
-                    if (tileToAdd != null)
-                    {
-                        tiles.Add(tileToAdd);
-                    }
-                }
-            }
-            else if (netDirectionVector.y > 0) // Downwards direction
-            {
-                for (int y = centerTileCoord.y; y >= centerTileCoord.y - shapeSize; y--)
-                {
-                    SharedTile tileToAdd = GetTile(centerTileCoord.x, y);
-                    if (tileToAdd != null)
-                    {
-                        tiles.Add(tileToAdd);
-                    }
+                    tiles.Add(tileToAdd);
                 }
             }
         }
+        else if (netDirectionVector.x > 0) // Leftwards direction
+        {
+            for (int x = centerTileCoord.x; x >= centerTileCoord.x - shapeSize; x--)
+            {
+                SharedTile tileToAdd = GetTile(x, centerTileCoord.y);
+                if (tileToAdd != null)
+                {
+                    tiles.Add(tileToAdd);
+                }
+            }
+        }
+        else if (netDirectionVector.y < 0) // Upwards direction
+        {
+            for (int y = centerTileCoord.y; y <= centerTileCoord.y + shapeSize; y++)
+            {
+                SharedTile tileToAdd = GetTile(centerTileCoord.x, y);
+                if (tileToAdd != null)
+                {
+                    tiles.Add(tileToAdd);
+                }
+            }
+        }
+        else if (netDirectionVector.y > 0) // Downwards direction
+        {
+            for (int y = centerTileCoord.y; y >= centerTileCoord.y - shapeSize; y--)
+            {
+                SharedTile tileToAdd = GetTile(centerTileCoord.x, y);
+                if (tileToAdd != null)
+                {
+                    tiles.Add(tileToAdd);
+                }
+            }
+        }
+
         if (!includeCenter)
         {
             tiles.Remove(GetTile(centerTileCoord.x, centerTileCoord.y));
@@ -542,8 +544,8 @@ public class SharedBoard : MonoBehaviour
             return false;
         }
 
-        SharedUnit testingUnit = myGameManagerReference.ForceSpawnAuxiliaryUnit(spawnedTile); // Create special method to force spawn
-        myGameManagerReference.RemoveUnitFromDictionary(testingUnit.GetMatchId());
+        SharedUnit testingUnit = myGameManagerReference.ForceSpawnAuxiliaryUnit(spawnedTile, CardId.CARD_MOTHERSHIP_TEST);
+        //myGameManagerReference.RemoveUnitFromDictionary(testingUnit.GetMatchId());
 
         testingUnit.ModifyMovementRange(1000); // Hard coded for now
 

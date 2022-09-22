@@ -41,3 +41,17 @@ MonoBehaviour:
     myStatusEffect: 2
     myOverrideAnimatorController: {fileID: 0}
     mySprite: {fileID: 0}
+  - myName: Repair Station
+    myId: 3
+    myDescription: Adjacent units get +1 SHIELDS per turn.
+    myAreaShape: 2
+    myAreaShapeSize: 1
+    myIncludeCenter: 0
+    myTileColor: 4
+    myCost: 2
+    myCastingRange: 0
+    myCooldown: 3
+    myDuration: 3
+    myStatusEffect: 0
+    myOverrideAnimatorController: {fileID: 22100000, guid: 07ffbf2c91f11ed4498ec9e08aa78bb8, type: 2}
+    mySprite: {fileID: -64725680, guid: e9067d5e617f7a8448ff8e7b96e10031, type: 3}

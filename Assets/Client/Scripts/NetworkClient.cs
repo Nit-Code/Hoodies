@@ -23,6 +23,7 @@ public class NetworkClient : MonoBehaviour
     private ClientGameManager myClientGameManagerReference;
 
     private SceneController mySceneControllerReference;
+    private MatchSceneUIManager myMatchSceneUIManagerReference;
 
     public void SetMenuSceneReference(MenuSceneUIManager aMenuScene) 
     {
@@ -65,18 +66,21 @@ public class NetworkClient : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if(myMenuSceneReference != null)
+            DisconnectMeFromLobby(myMenuSceneReference.GetIsLobbyOwner());
         // the client/server threads won't receive the OnQuit info if we are
         // running them in the Editor. they would only quit when we press Play
         // again later. this is fine, but let's shut them down here for consistency
-        myTelepathyClient.Disconnect();
+        //myTelepathyClient.Disconnect();
     }
 
     private void SendMatchSceneLoadedMessage()
     {
         Shared.Log("[HOOD][CLIENT][NETWORK] - SendMatchSceneLoadedMessage()");
         myClientGameManagerReference = FindObjectOfType<ClientGameManager>();
+        myMatchSceneUIManagerReference = FindObjectOfType<MatchSceneUIManager>();
 
-        if(myClientGameManagerReference == null)
+        if (myClientGameManagerReference == null)
         {
             Shared.LogError("[HOOD][CLIENT][NETWORK] - ClientGameManager is null");
             return;
@@ -158,7 +162,7 @@ public class NetworkClient : MonoBehaviour
         {
             case LobbyMessageId.CONNECTED:
                 Shared.Log("[HOOD][CLIENT][NETWORK] - Connection to server confirmed.");
-                HandleConnectedToLobby(aMessage.myPlayerInfo.myPlayerSessionId);
+                HandleConnectedToLobby(aMessage.myPlayerInfo.myName);
                 break;
             case LobbyMessageId.PRIVATE_LOBBY_CREATED:
                 Shared.Log("[HOOD][CLIENT][NETWORK] - Private match created with code: " + aMessage.myLobbyId);
@@ -171,6 +175,14 @@ public class NetworkClient : MonoBehaviour
                 break;
             case LobbyMessageId.LOBBY_FULL:
                 Shared.Log("[HOOD][CLIENT][NETWORK] - Lobby is full");
+                break;
+            case LobbyMessageId.HOST_DISCONNECTED:
+                Shared.Log("[HOOD][CLIENT][NETWORK] - Host disconnected");
+                myMenuSceneReference.Lobby_HOST_DISCONNECTED();
+                break;
+            case LobbyMessageId.GUEST_DISCONNECTED:
+                Shared.Log("[HOOD][CLIENT][NETWORK] - Guest disconnected");
+                myMenuSceneReference.Lobby_GUEST_DISCONNECTED();
                 break;
             default:
                 Shared.LogError("[HOOD][CLIENT][NETWORK] - Unknown LobbyMessageId received.");
@@ -237,6 +249,7 @@ public class NetworkClient : MonoBehaviour
                 else
                 {
                     myClientGameManagerReference.OnServerFailedToSpawnCard((CardId)aMessage.myGameplayObjectId);
+                    myMatchSceneUIManagerReference.PlayErrorSound();
                 }
                 break;
             case GameplayMessageIdServer.ATTACK_UNIT:
@@ -244,11 +257,19 @@ public class NetworkClient : MonoBehaviour
                 {
                     await myClientGameManagerReference.DoAttackUnit(aMessage.myGameplayObjectId, coord);
                 }
+                else
+                {
+                    myMatchSceneUIManagerReference.PlayErrorSound();
+                }
                 break;
             case GameplayMessageIdServer.MOVE_UNIT:
                 if (success)
                 {
                     myClientGameManagerReference.DoMoveUnit(aMessage.myGameplayObjectId, coord);
+                }
+                else
+                {
+                    myMatchSceneUIManagerReference.PlayErrorSound();
                 }
                 break;
             case GameplayMessageIdServer.USE_ABILITY:
@@ -256,11 +277,20 @@ public class NetworkClient : MonoBehaviour
                 {
                     await myClientGameManagerReference.DoCastUnitAbility(aMessage.myGameplayObjectId, coord);
                 }
+                else
+                {
+                    myMatchSceneUIManagerReference.PlayErrorSound();
+                }
                 break;
             case GameplayMessageIdServer.USE_TECHNOLOGY:
                 if (success)
                 {
-                    myClientGameManagerReference.DoUseTechnologyCard((CardId)aMessage.myGameplayObjectId, coord);
+                 //   myClientGameManagerReference.DoUseTechnologyCard((CardId)aMessage.myGameplayObjectId, coord);
+                }
+                else
+                {
+                    //  myClientGameManagerReference.OnServerFailedToSpawnCard((CardId)aMessage.myGameplayObjectId);
+                    //myMatchSceneUIManagerReference.PlayErrorSound();
                 }
                 break;
             default:
@@ -276,8 +306,6 @@ public class NetworkClient : MonoBehaviour
             case ReadyStatusMessageId.PLAYER_READY:
                 Debug.Log("[HOOD][CLIENT][NETWORK] - Player " + aMessage.myPlayerId + " | Ready = " + aMessage.myIsReady.ToString());
                 myMenuSceneReference.GetLobbyCanvasReference().ChangeOpponentPlayerReadyStatus(aMessage.myIsReady);
-                break;
-            case ReadyStatusMessageId.PLAYER_READY_AND_LOADED:
                 break;
             default:
                 Shared.LogError("[HOOD][CLIENT][NETWORK] - Unknown ServerReadyStatusMessage received.");
@@ -355,6 +383,10 @@ public class NetworkClient : MonoBehaviour
             case InformationMessageId.INFO:
                 Shared.Log("[HOOD][CLIENT][NETWORK] Server info - " + aMessage.myMessage);
                 break;
+            case InformationMessageId.SERVER_CLOSED:
+                Shared.Log("[HOOD][CLIENT][NETWORK] Server info - server closed");
+                mySceneControllerReference.LoadScene(SceneId.MENU);
+                break;
             default:
                 Shared.LogError("[HOOD][CLIENT][NETWORK] - Unknown ServerErrorMessage received.");
                 break;
@@ -362,28 +394,29 @@ public class NetworkClient : MonoBehaviour
     }
 
     // hoodies's method
-    private void HandleConnectedToLobby(string aPlayerSessionId) 
+    private void HandleConnectedToLobby(string aUsername) 
     {
         if (!myMenuSceneReference.GetIsLobbyOwner()) //if im guest
         {
             myMenuSceneReference.Lobby_CONNECTED();
-            myMenuSceneReference.GetLobbyCanvasReference().LoadOpponentPanel(aPlayerSessionId); // TODO: network client should't tell a scene manager what ui to display
+            myMenuSceneReference.GetLobbyCanvasReference().LoadOpponentPanel(aUsername); // TODO: network client should't tell a scene manager what ui to display            
         }
         else if (myMenuSceneReference.GetLobbyStatus() != LobbyStatus.WAITING_FOR_OPPONENT) //if im host and creating
         {
-            myMenuSceneReference.Lobby_CONNECTED(); 
+            myMenuSceneReference.Lobby_CONNECTED();
         }
         else //if im host and waiting
         {
-            myMenuSceneReference.GetLobbyCanvasReference().LoadOpponentPanel(aPlayerSessionId); // TODO: network client should't tell a scene manager what ui to display
+            myMenuSceneReference.GetLobbyCanvasReference().LoadOpponentPanel(aUsername); // TODO: network client should't tell a scene manager what ui to display            
         }
     }
 
     // telepathy's method
     private void OnConnected()
     {
+        SharedUser user = GetComponent<SharedUser>();  
         Shared.Log("[HOOD][CLIENT][NETWORK] - OnConnected");
-        SharedClientMessage sharedClientMessage = new ClientLobbyMessage(LobbyMessageIdClient.CONNECT, myPlayerSession, myMenuSceneReference.GetIsLobbyOwner());
+        SharedClientMessage sharedClientMessage = new ClientLobbyMessage(LobbyMessageIdClient.CONNECT, myPlayerSession, user.GetUsername(), myMenuSceneReference.GetIsLobbyOwner());
         SendMessageToServer(sharedClientMessage);
         Shared.Log("[HOOD][CLIENT][NETWORK] - after send message to server");
     }
@@ -411,15 +444,18 @@ public class NetworkClient : MonoBehaviour
 
     public void DisconnectMeFromLobby(bool aIsLobbyOwner)
     {
+        SharedUser user = GetComponent<SharedUser>();
         Shared.Log("[HOOD][CLIENT][NETWORK] - Disconnecting me from lobby.");
-        SharedClientMessage sharedClientMessage = new ClientLobbyMessage(LobbyMessageIdClient.DISCONNECT, myPlayerSession, aIsLobbyOwner);
+        SharedClientMessage sharedClientMessage = new ClientLobbyMessage(LobbyMessageIdClient.DISCONNECT_ME, myPlayerSession, user.GetUsername(), aIsLobbyOwner);
         SendMessageToServer(sharedClientMessage);
         Shared.Log("[HOOD][CLIENT][NETWORK] - After send disconnect from lobby message.");
     }
 
     public void SendReadyStatus(bool aIsReady, int aDeckId)
     {
-        ClientPlayerReadyStatusMessage sharedClientMessage = new ClientPlayerReadyStatusMessage(ReadyStatusMessageId.PLAYER_READY, myPlayerSession, aIsReady, aDeckId);
+        SharedUser user = GetComponent<SharedUser>();
+        string userName = user.GetUsername();
+        ClientPlayerReadyStatusMessage sharedClientMessage = new ClientPlayerReadyStatusMessage(ReadyStatusMessageId.PLAYER_READY, myPlayerSession, aIsReady, userName, aDeckId);
         SendMessageToServer(sharedClientMessage);
     }
 
@@ -473,8 +509,8 @@ public class NetworkClient : MonoBehaviour
 
     public void LeaveEndedMatch()
     {
-        ClientMatchConnectionMessage message = new ClientMatchConnectionMessage(MatchMessageIdClient.LEAVE_ENDED_MATCH, myPlayerSession);
-        SendMessageToServer(message);
+        /*ClientMatchConnectionMessage message = new ClientMatchConnectionMessage(MatchMessageIdClient.LEAVE_ENDED_MATCH, myPlayerSession);
+        SendMessageToServer(message);*/
         mySceneControllerReference.LoadScene(SceneId.MENU);
     }
 }

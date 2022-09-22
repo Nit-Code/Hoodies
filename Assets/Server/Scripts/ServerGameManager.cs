@@ -15,14 +15,17 @@ public class ServerGameManager : SharedGameManager
         public int myDeckSeed;
         public string myPlayerSessionId;
         public CardId myMothershipId;
+        public string myUsername;
         public Vector2Int myMothershipCoord;
+        public SharedPlayer.BoardSide myBoardSide;
 
-        public ReadyPlayerInfo(int aDeckId, int aDeckSeed, string aPlayerSessionId, CardId aMothershipId)
+        public ReadyPlayerInfo(int aDeckId, int aDeckSeed, string aPlayerSessionId, CardId aMothershipId, string aUsername)
         {
             myDeckId = aDeckId;
             myDeckSeed = aDeckSeed;
             myPlayerSessionId = aPlayerSessionId;
             myMothershipId = aMothershipId;
+            myUsername = aUsername;
         }
     }
 
@@ -36,7 +39,7 @@ public class ServerGameManager : SharedGameManager
 
     [SerializeField] private int myLobbyCountdownTime = 15;
     [SerializeField] private int myLockInTime = 5;
-    [SerializeField] private int myTurnTimer = 60;
+    [SerializeField] private int myTurnTimer = 90;
     private bool myLobbyCountdownIsRunning = false;
 
     private Coroutine myLobbyCountdownCoroutine;
@@ -78,12 +81,12 @@ public class ServerGameManager : SharedGameManager
             case MatchState.PLAYER_TURN:
                 if (myTurnCountdownCoroutine != null)
                 {
-                    //    StopCoroutine(myTurnCountdownCoroutine);
+                    StopCoroutine(myTurnCountdownCoroutine);
                 }
                 InitializeNewState(aNewState, aPlayerSessionId);
                 newStateMessage = new ServerMatchStateMessage(MatchStateMessageId.PLAYER_TURN, myCurrentPlayerReference.GetSessionId());
                 myNetworkServerReference.SendMessageToAllPlayers(newStateMessage);
-                //myTurnCountdownCoroutine = StartCoroutine(TurnCountdownTimer()); Commented for testing
+                myTurnCountdownCoroutine = StartCoroutine(TurnCountdownTimer()); //Commented for testing
                 break;
             case MatchState.END:
                 if (myMatchWinner == MatchWinner.NO_WINNER)
@@ -102,12 +105,13 @@ public class ServerGameManager : SharedGameManager
                 {
                     newStateMessage = new ServerMatchStateMessage(MatchStateMessageId.END_DRAW);
                 }
-                myNetworkServerReference.SendMessageToAllPlayers(newStateMessage);                
+                myNetworkServerReference.SendMessageToAllPlayers(newStateMessage);
+                myNetworkServerReference.EndMatch();
                 break;
         }
     }
 
-    public bool AddReadyPlayer(string aPlayerSessionId, int aPlayerDeckId)
+    public bool AddReadyPlayer(string aPlayerSessionId, int aPlayerDeckId, string aUsername)
     {
         int shuffleDeckSeed = new System.Random().Next(1, 50000);
         SharedDeck playerDeck = GetShuffledDeck(aPlayerDeckId, shuffleDeckSeed);
@@ -123,7 +127,7 @@ public class ServerGameManager : SharedGameManager
         SharedPlayer readyPlayer = new SharedPlayer(aPlayerSessionId, playerDeck);
         myPlayersReferenceList.Add(readyPlayer);
 
-        ReadyPlayerInfo playerInfo = new ReadyPlayerInfo(aPlayerDeckId, shuffleDeckSeed, aPlayerSessionId, readyPlayer.GetMothershipCard());
+        ReadyPlayerInfo playerInfo = new ReadyPlayerInfo(aPlayerDeckId, shuffleDeckSeed, aPlayerSessionId, readyPlayer.GetMothershipCard(), aUsername);
         myReadyPlayersInfo.Add(aPlayerSessionId, playerInfo);
 
         if (myPlayersReferenceList.Count == 2)
@@ -271,10 +275,15 @@ public class ServerGameManager : SharedGameManager
         DoSpawnMothership(player1Mothership, motherShip1Tile, player1);
         DoSpawnMothership(player2Mothership, motherShip2Tile, player2);
 
-        myReadyPlayersInfo[player1.GetSessionId()].myMothershipCoord = motherShip1Tile.GetCoordinate();
-        myReadyPlayersInfo[player2.GetSessionId()].myMothershipCoord = motherShip2Tile.GetCoordinate();
-    }
+        ReadyPlayerInfo player1Info = myReadyPlayersInfo[player1.GetSessionId()];
+        ReadyPlayerInfo player2Info = myReadyPlayersInfo[player2.GetSessionId()];
 
+        player1Info.myMothershipCoord = motherShip1Tile.GetCoordinate();
+        player1Info.myBoardSide = SharedPlayer.BoardSide.LEFT;
+        player2Info.myMothershipCoord = motherShip2Tile.GetCoordinate();
+        player2Info.myBoardSide = SharedPlayer.BoardSide.RIGHT;
+    }
+   
     private void DrawStartingHands()
     {
         foreach (SharedPlayer player in myPlayersReferenceList)
@@ -479,33 +488,49 @@ public class ServerGameManager : SharedGameManager
         return true;
     }
 
-    public bool TryUseTechnologyCard(string requestingPlayerId, CardId aUnitCardId, Vector2Int aTileCoord)
-    {
-        // Request arrived from client
+    //public bool TryUseTechnologyCard(string requestingPlayerId, CardId aTechCardId, Vector2Int aTileCoord)
+    //{
+    //    // Request arrived from client
 
-        if (myMatchState != MatchState.PLAYER_TURN || myCurrentPlayerReference == null || requestingPlayerId != myCurrentPlayerReference.GetSessionId())
-        {
-            return false;
-        }
+    //    if (myMatchState != MatchState.PLAYER_TURN || myCurrentPlayerReference == null || requestingPlayerId != myCurrentPlayerReference.GetSessionId())
+    //    {
+    //        return false;
+    //    }
 
-        int cardCost = GetCardCost(aUnitCardId);
+    //    if (!myCurrentPlayerReference.IsCardInHand(aTechCardId))
+    //    {
+    //        return false;
+    //    }
 
-        if (cardCost == -1)
-        {
-            return false;
-        }
+    //    int cardCost = GetCardCost(aTechCardId);
 
-        SharedTile tile = myBoardReference.GetTile(aTileCoord);
+    //    if (cardCost == -1)
+    //    {
+    //        return false;
+    //    }
 
-        if (!myBoardReference.GetAllTiles().Contains(tile))
-        {
-            return false;
-        }
+    //    SharedTile tile = myBoardReference.GetTile(aTileCoord);
 
-        DoUseTechnologyCard(aUnitCardId, aTileCoord);
-        return true;
-        // The message is sent from NetworkServer
-    }
+    //    if (!myBoardReference.GetAllTiles().Contains(tile))
+    //    {
+    //        return false;
+    //    }
+
+    //    List<SharedTile> tiles = DoUseTechnologyCard(aTechCardId, aTileCoord).Result;
+
+    //    if (tiles == null)
+    //        return false;
+
+    //    EvaluateWinCondition();
+
+    //    if (myMatchWinner != MatchWinner.NO_WINNER)
+    //    {
+    //        ChangeState(MatchState.END);
+    //    }
+
+    //    return true;
+    //    // The message is sent from NetworkServer
+    //}
 
     public void EndTurn()
     {

@@ -17,6 +17,7 @@ public class UnitCardData : CardData
 public class AbilityCardData : CardData
 {
     public AbilityId myAbilityId;
+    public bool myIsInvisible;
 }
 
 [System.Serializable]

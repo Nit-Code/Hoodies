@@ -27,12 +27,12 @@ public class AudioManager : MonoBehaviour
     private Coroutine myPlaySceneSoundsCoroutine;
     private float mySoundVolume = 1f;
 
-    private const string MASTER_VOL_NAME = "Master";
-    private const string MUSIC_MASTER_VOL_NAME = "MusicMaster";
-    private const string AMBIENT_MASTER_VOL_NAME = "AmbientMaster";
+    private const string MASTER_VOL_NAME = "MasterVolume";
+    private const string MUSIC_MASTER_VOL_NAME = "MusicMasterVolume";
+    private const string AMBIENT_MASTER_VOL_NAME = "AmbientMasterVolume";
 
-    private const string MUSIC_VOL_NAME = "Music";
-    private const string AMBIENT_VOL_NAME = "Ambient";
+    private const string MUSIC_VOL_NAME = "MusicVolume";
+    private const string AMBIENT_VOL_NAME = "AmbientVolume";
 
     private const float MAX_DECIBELS = 20;
     private const float MIN_DECIBELS = -80;
@@ -113,19 +113,20 @@ public class AudioManager : MonoBehaviour
     public void ChangeMasterVolume(float aVolume)
     {
         aVolume = Mathf.Clamp(aVolume, 0, 1);
-        myAudioMixer.SetFloat(MASTER_VOL_NAME, RemapClamped(aVolume, myUISliderRange, myDecibelsRange));
+        mySoundVolume = aVolume;
+        myAudioMixer.SetFloat(MASTER_VOL_NAME, ConvertSoundVolumeDecimalFractionToDecibels(aVolume));
     }
 
     public void ChangeMusicMasterVolume(float aVolume)
     {
         aVolume = Mathf.Clamp(aVolume, 0, 1);
-        myAudioMixer.SetFloat(MUSIC_MASTER_VOL_NAME, RemapClamped(aVolume, myUISliderRange, myDecibelsRange));
+        myAudioMixer.SetFloat(MUSIC_MASTER_VOL_NAME, ConvertSoundVolumeDecimalFractionToDecibels(aVolume));
     }
 
     public void ChangeAmbientMasterVolume(float aVolume)
     {
         aVolume = Mathf.Clamp(aVolume, 0, 1);
-        myAudioMixer.SetFloat(AMBIENT_MASTER_VOL_NAME, RemapClamped(aVolume, myUISliderRange, myDecibelsRange));
+        myAudioMixer.SetFloat(AMBIENT_MASTER_VOL_NAME, ConvertSoundVolumeDecimalFractionToDecibels(aVolume));
     }
 
     // TODO mda: should this ve handled in the same way ambient and music volumes are handled?
@@ -303,12 +304,12 @@ public class AudioManager : MonoBehaviour
     }
 
     // ACTION SOUNDS //
-    /*
+    
     private float ConvertSoundVolumeDecimalFractionToDecibels(float aVolumeDecimalFracion)
     {
         return (aVolumeDecimalFracion * 100f - 80f);
     }
-    */
+    
 
     private IEnumerator DisableSound(GameObject aSoundGameObject, float aSoundDuration)
     {

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Cards_Inst
   m_EditorClassIdentifier: 
   myUnitCards:
-  - myName: Test Mothership
+  - myName: Mothership
     myId: 1
     myCardType: 3
     myDescription: Test Motheship
     myCost: 0
-    mySprite: {fileID: 21300000, guid: 41d82d3363bfa444abf32dae899093a4, type: 3}
+    mySprite: {fileID: -1182949721, guid: f57a7a561e9833d4db2759da8807ae57, type: 3}
     myUnitId: 1
   - myName: Test Unit
     myId: 2
@@ -32,34 +32,42 @@ MonoBehaviour:
     myCardType: 1
     myDescription: Spawns a Hunter ship
     myCost: 4
-    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    mySprite: {fileID: -1544636669, guid: e96d70bf03814244a8cabf821c9a058c, type: 3}
     myUnitId: 4
   - myName: Rocket
     myId: 5
     myCardType: 1
     myDescription: Spawns a Rocket ship
     myCost: 3
-    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    mySprite: {fileID: 1122007686, guid: f7d0435dcb0547b4c948e89bdd365f03, type: 3}
     myUnitId: 5
   - myName: Tank
     myId: 6
     myCardType: 1
     myDescription: Spawns a Tank ship
     myCost: 3
-    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    mySprite: {fileID: 1008428006, guid: cb871a69c0af31b439a8221542e897c7, type: 3}
     myUnitId: 6
   - myName: Fenix
     myId: 7
     myCardType: 1
     myDescription: Spawns a Fenix ship
     myCost: 2
-    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    mySprite: {fileID: -1903147306, guid: 2c5e191e6db424b4aa7f55f20da7c21f, type: 3}
     myUnitId: 7
   - myName: Traveler
     myId: 8
     myCardType: 1
     myDescription: Spawns a Traveler ship
     myCost: 2
-    mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
+    mySprite: {fileID: 1098143202, guid: 3eea9abdf0b926141a9e45cf20fd2a45, type: 3}
     myUnitId: 8
-  myAbilityCards: []
+  myAbilityCards:
+  - myName: Repair Station
+    myId: 9
+    myCardType: 2
+    myDescription: Adjacent units get +1 SHIELDS per turn.
+    myCost: 3
+    mySprite: {fileID: -64725680, guid: e9067d5e617f7a8448ff8e7b96e10031, type: 3}
+    myAbilityId: 3
+    myIsInvisible: 0

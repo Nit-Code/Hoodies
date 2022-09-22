@@ -11,6 +11,9 @@ public class ClientGameManager : SharedGameManager
 {
     private SharedPlayer myLocalPlayer;
     public SharedPlayer GetLocalPlayer() { return myLocalPlayer; }
+    private string myUsername;
+    public string GetUsername() { return myUsername; }
+    public void SetUsername(string aUsername) { myUsername = aUsername; }
 
     private SharedUnit myCurrentlySelectedUnit;
     public SharedUnit GetSelectedUnit() { return myCurrentlySelectedUnit; }
@@ -28,6 +31,9 @@ public class ClientGameManager : SharedGameManager
 
     private bool myIsCastingUnitAbility;
     public bool GetIsCastingUnitAbility() { return myIsCastingUnitAbility; }
+    private string myOpponentUsername;
+    public string GetOpponentUsername() { return myOpponentUsername; }
+    public void SetOpponentUsername(string anOpponentUsername) { myOpponentUsername = anOpponentUsername; }
 
     // reference
     private NetworkClient myNetworkClientReference;
@@ -148,19 +154,32 @@ public class ClientGameManager : SharedGameManager
 
         foreach (ServerGameManager.ReadyPlayerInfo playerInfo in playersInfo)
         {
+            if(playerInfo.myBoardSide == SharedPlayer.BoardSide.LEFT)
+            {
+                myMatchSceneUIManagerReference.SetPlayer1UsernameText(playerInfo.myUsername);             
+            }
+            else
+            {
+                myMatchSceneUIManagerReference.SetPlayer2UsernameText(playerInfo.myUsername);
+            }
+
             if (playerInfo.myPlayerSessionId != myLocalPlayer.GetSessionId()) // EnemyPlayer
             {
                 SharedPlayer opponentPlayer = new SharedPlayer(playerInfo.myPlayerSessionId, null);
+                opponentPlayer.SetBoardSide(playerInfo.myBoardSide);
                 myPlayersReferenceList.Add(opponentPlayer);
                 DoSpawnMothership(playerInfo.myMothershipId, myBoardReference.GetTile(playerInfo.myMothershipCoord), opponentPlayer);
+                
             }
             else
             {
                 SharedDeck deck = GetShuffledDeck(playerInfo.myDeckId, playerInfo.myDeckSeed); // LocalPlayer
+                myLocalPlayer.SetBoardSide(playerInfo.myBoardSide);
                 myLocalPlayer.SetDeck(deck);
                 DrawStartingHand();
                 DoSpawnMothership(playerInfo.myMothershipId, myBoardReference.GetTile(playerInfo.myMothershipCoord), myLocalPlayer);
                 myLocalPlayer.FillEnergy();
+                
             }
         }
 
@@ -193,7 +212,7 @@ public class ClientGameManager : SharedGameManager
         myMatchSceneUIManagerReference.StopTimer();
         myMatchSceneUIManagerReference.HideLoadingScreen(); // We put this here to avoid creating a "hide loading screen" message
         myMatchSceneUIManagerReference.StartTimer(90); //Hardcoded for now, could send this from server message later
-        myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy());
+        myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy(), myLocalPlayer.GetCurrentMaximumEnergy());
 
         if (!IsLocalPlayerTurn())
         {
@@ -259,14 +278,14 @@ public class ClientGameManager : SharedGameManager
 
         if (!IsLocalPlayerTurn() || !myLocalPlayer.IsCardInHand(aCard.GetId()) || !myCurrentValidSpawnTiles.Contains(aTile))
         {
-            //Error sound
+            myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_ERROR);
             return false;
         }
 
         if (!myLocalPlayer.CanSubstractEnergyCost(aCard.GetCost()))
         {
             CantAffordCard("Not enough energy.");
-            //Error sound
+            myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_ERROR);
             return false;
         }
 
@@ -287,7 +306,9 @@ public class ClientGameManager : SharedGameManager
     public void OnServerFailedToSpawnCard(CardId aUnitCardId) // We do this because client destroys the MatchCard GameObject when TryRequest succeeds.
     {
         myLocalPlayer.AddCardToHand(aUnitCardId);
-        myGameFactoryReference.CreateMatchCard(aUnitCardId, myMatchSceneUIManagerReference.GetCardGrid().transform);
+        MatchCard card = myGameFactoryReference.CreateMatchCard(aUnitCardId, myMatchSceneUIManagerReference.GetCardGrid().transform);
+        int cardCost = card.GetCost();
+        myLocalPlayer.AddEnergy(cardCost);
     }
 
 
@@ -295,60 +316,96 @@ public class ClientGameManager : SharedGameManager
     public override SharedUnit DoSpawnUnitFromCard(CardId aUnitCardId, Vector2Int aCoord)
     {
         SharedUnit unit = base.DoSpawnUnitFromCard(aUnitCardId, aCoord);
-
+        if (unit == null)
+            return null;
         if (IsLocalPlayerTurn()) //Players don't know each others cards
         {
-            myLocalPlayer.RemoveCardFromHand(aUnitCardId);
-            myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy());
-        }
-        else
-        {
-            unit.SetKindText("Enemy");
+            myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy(), myLocalPlayer.GetCurrentMaximumEnergy());
         }
 
-        if (unit != null)
+        if(!unit.GetPlayer().Equals(myLocalPlayer))
         {
-            StartCoroutine(ColorGrayAfterSpawn(unit));
+            unit.EnableKindText();
         }
 
+        if (unit.GetPlayer().GetBoardSide() == SharedPlayer.BoardSide.RIGHT)
+            unit.FlipSprite();
+
+        StartCoroutine(ColorGrayAfterSpawn(unit));
         ResetPlayerSelections();
         return unit;
     }
 
-    public bool TryRequestUseTechnologyCard(MatchCard aCard, SharedTile aTile)
+    public override SharedUnit DoSpawnMothership(CardId aUnitCardId, SharedTile aTile, SharedPlayer anOwnerPlayer)
     {
-        if (myMatchState != MatchState.PLAYER_TURN)
+        SharedUnit mothership = base.DoSpawnMothership(aUnitCardId, aTile, anOwnerPlayer);
+
+        if (!mothership.GetPlayer().Equals(myLocalPlayer))
         {
-            return false;
+            mothership.EnableKindText();
         }
+		
+		if (mothership.GetPlayer().GetBoardSide() == SharedPlayer.BoardSide.RIGHT)
+        	mothership.FlipSprite();
 
-        if (!IsLocalPlayerTurn())
-        {
-            //Error sound
-            return false;
-        }
-
-        if (!myLocalPlayer.CanSubstractEnergyCost(aCard.GetCost()))
-        {
-            CantAffordCard("Not enough energy.");
-            //Error sound
-            return false;
-        }
-
-        int cardIdAsInt = (int)aCard.GetId();
-
-        ClientGameplayMessage sharedGameplayClientMessage = new ClientGameplayMessage(GameplayMessageIdClient.REQUEST_USE_TECHNOLOGY, myNetworkClientReference.GetPlayerSession(), cardIdAsInt, aTile.GetCoordinate().x, aTile.GetCoordinate().y);
-
-        myNetworkClientReference.SendMessageToServer(sharedGameplayClientMessage);
-        ResetPlayerSelections();
-        return true;
+        return mothership;
     }
 
-    public override List<SharedTile> DoUseTechnologyCard(CardId aTechnologyCardId, Vector2Int aCoord)
-    {
-        myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy());
-        return new List<SharedTile>();
-    }
+    //public bool TryRequestUseTechnologyCard(MatchCard aCard, SharedTile aTile)
+    //{
+    //    if (myMatchState != MatchState.PLAYER_TURN)
+    //    {
+    //        return false;
+    //    }
+
+    //    if (!IsLocalPlayerTurn())
+    //    {
+    //        //Error sound
+    //        return false;
+    //    }
+
+    //    if (!myLocalPlayer.CanSubstractEnergyCost(aCard.GetCost()))
+    //    {
+    //        CantAffordCard("Not enough energy.");
+    //        myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_MENU_CLICK);
+    //        return false;
+    //    }
+
+    //    int cardIdAsInt = (int)aCard.GetId();
+
+    //    ClientGameplayMessage sharedGameplayClientMessage = new ClientGameplayMessage(GameplayMessageIdClient.REQUEST_USE_TECHNOLOGY, myNetworkClientReference.GetPlayerSession(), cardIdAsInt, aTile.GetCoordinate().x, aTile.GetCoordinate().y);
+
+    //    myNetworkClientReference.SendMessageToServer(sharedGameplayClientMessage);
+    //    ResetPlayerSelections();
+    //    return true;
+    //}
+
+    //public async override Task<List<SharedTile>> DoUseTechnologyCard(CardId aTechnologyCardId, Vector2Int aCoord)
+    //{
+    //    List<SharedTile> castTiles = await base.DoUseTechnologyCard(aTechnologyCardId, aCoord);
+
+    //    if (castTiles == null)
+    //    {
+    //        return null;
+    //    }
+
+    //    myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy(), myLocalPlayer.GetCurrentMaximumEnergy());
+
+    //    foreach (SharedTile tile in castTiles)
+    //    {
+    //        SharedUnit affectedUnit = tile.GetUnit();
+
+    //        if (affectedUnit != null)
+    //        {
+    //            if (!affectedUnit.IsAlive())
+    //            {
+    //                await KillUnit(affectedUnit);
+    //            }
+    //        }
+    //    }
+
+    //    return castTiles;
+    //}
 
     public bool TryRequestMoveUnit(SharedTile aTile)
     {
@@ -366,7 +423,7 @@ public class ClientGameManager : SharedGameManager
 
         if (!IsLocalPlayerTurn() || !selectedUnit.GetIsEnabled() || selectedUnit.GetHasMoved() || !myCurrentValidMovementTiles.Contains(aTile)) // You shouldn't be able to select a unit if it's not enabled, or click the button to move. But just in case.
         {
-            //Error sound
+            myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_ERROR);
             return false;
         }
 
@@ -416,7 +473,7 @@ public class ClientGameManager : SharedGameManager
 
         if (!IsLocalPlayerTurn() || !attackingUnit.GetIsEnabled() || !myCurrentValidAttackTiles.Contains(anAttackedTile)) // You shouldn't be able to select a unit if it's not enabled, or click the button to attack. But just in case.
         {
-            //Error sound
+            myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_ERROR);
             return false;
         }
 
@@ -475,13 +532,13 @@ public class ClientGameManager : SharedGameManager
 
         if (!IsLocalPlayerTurn() || !castingUnit.GetIsEnabled() || !castingUnit.HasAbility() || !myCurrentValidCastingTiles.Contains(aCastTileTarget))
         {
-            //Error sound
+            myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_ERROR);
             return false;
         }
 
         if (!castingUnit.CanAffordAbility())
         {
-            //Error message
+            myMatchSceneUIManagerReference.PlaySound(AudioId.SOUND_ERROR);
             return false;
         }
 
@@ -501,7 +558,9 @@ public class ClientGameManager : SharedGameManager
             return null;
         }
 
-        myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy());
+        GetUnit(aUnitId).ColorGray();
+
+        myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy(), myLocalPlayer.GetCurrentMaximumEnergy());
 
         foreach (SharedTile tile in castTiles)
         {
@@ -561,11 +620,6 @@ public class ClientGameManager : SharedGameManager
         {
             await Task.Yield();
         }
-    }
-
-    public void UpdateUnitStatusEffects() // Call at the begining of each round (same player turn)
-    {
-        //TODO: implement me
     }
 
     public void ChangeCastingUnitAbilityStatus()
@@ -658,12 +712,5 @@ public class ClientGameManager : SharedGameManager
         myCurrentlySelectedUnit = null;
         myMatchSceneUIManagerReference.UpdateAbilityButtonStatus(null);
         myMatchSceneUIManagerReference.HideActionPrompt();
-    }
-
-    public void LeaveOngoingMatch()
-    {
-        //TODO
-        //myMatchWinner = 
-        // InitializeNewState(MatchState.END);
     }
 }

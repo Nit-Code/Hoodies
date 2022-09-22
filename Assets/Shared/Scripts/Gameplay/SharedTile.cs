@@ -174,7 +174,7 @@ public class SharedTile : MonoBehaviour, IDropHandler, IPointerClickHandler, IPo
             {
                 if (!myMatchSceneUIManager.IsMouseOverActionPrompt(eventData))
                 {
-                    ChangeTileMaterial(TileColor.BLUE);
+                    ColorTileTemporary(TileColor.BLUE, false);
                 }
             }
         }
@@ -243,7 +243,7 @@ public class SharedTile : MonoBehaviour, IDropHandler, IPointerClickHandler, IPo
             }
         }
 
-        ChangeTileMaterial(myFallbackColor);
+        ColorTileTemporary(myFallbackColor, false);
     }
 
     public virtual void OnDrop(PointerEventData eventData)
@@ -278,14 +278,14 @@ public class SharedTile : MonoBehaviour, IDropHandler, IPointerClickHandler, IPo
         }
         else if (aDroppedCard.GetCardType() == CardType.TECHNOLOGY)
         {
-            if (!myClientGameManagerReference.TryRequestUseTechnologyCard(aDroppedCard, this))
-            {
-                return;
-            }
-            else
-            {
-                Destroy(aDroppedCard.transform.gameObject);
-            }
+            //if (!myClientGameManagerReference.TryRequestUseTechnologyCard(aDroppedCard, this))
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    Destroy(aDroppedCard.transform.gameObject);
+            //}
         }
     }
 

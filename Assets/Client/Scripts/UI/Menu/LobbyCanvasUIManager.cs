@@ -157,11 +157,11 @@ public class LobbyCanvasUIManager : MonoBehaviour
         myOpponentReadyText.enabled = aIsReady;
     }
 
-    public void LoadOpponentPanel(string aPlayerSessionId)
+    public void LoadOpponentPanel(string anOpponentUsername)
     {
         myReadyButton.enabled = true;
 
-        myOpponentPlayerNameText.text = aPlayerSessionId;
+        myOpponentPlayerNameText.text = anOpponentUsername;
         myOpponentPanel.SetActive(true);
         myOpponentContainerCanvas.SetActive(true);
     }

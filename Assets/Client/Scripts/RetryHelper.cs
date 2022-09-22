@@ -42,8 +42,8 @@ public class RetryHelper
 
     private static Task CreateDelayForException(int aMaxAttempts, int aAttempts, Exception aException)
     {
-        var nextDelay = 3;
-        Debug.Log($"Exception on attempt {aAttempts} of {aMaxAttempts}. Will retry after sleeping for {nextDelay}. " + aException.Message);
+        var nextDelay = 3000;
+        Debug.Log($"Exception on attempt {aAttempts} of {aMaxAttempts}. Will retry after sleeping for {nextDelay/1000}. " + aException.Message);
         return Task.Delay(nextDelay);
     }
 }

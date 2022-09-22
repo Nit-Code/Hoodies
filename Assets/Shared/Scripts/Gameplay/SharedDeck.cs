@@ -13,6 +13,7 @@ public class SharedDeck
     public string GetName() { return myName; }
     private List<CardId> myCards; // We leave this as a list and not a stack in case we need to draw a specific card at some point
     public List<CardId> GetCards() { return myCards; }
+    public void SetCards(List<CardId> cards) { myCards = cards; }   
 
     private CardId myMothership;
 

@@ -6,17 +6,13 @@ using TMPro;
 public class TooltipScreenSpaceUI : MonoBehaviour
 {
     private RectTransform myCanvasRectTransform;
-    private RectTransform myBackgroundRectTransform;
-    private TextMeshProUGUI myText;
+    [SerializeField] private RectTransform myBackgroundRectTransform;
+    [SerializeField] private TextMeshProUGUI myText;
     private RectTransform myRectTransform;
     private Canvas myTooltipParentCanvas;
 
     private void Awake()
     {
-        // TODO: hardcoded named component finds ????????????????
-        myBackgroundRectTransform = transform.Find("Background").GetComponent<RectTransform>();
-        myText = transform.Find("Text").GetComponent<TextMeshProUGUI>();
-
         myRectTransform = transform.GetComponent<RectTransform>();
         myCanvasRectTransform = transform.parent.GetComponent<RectTransform>();
         myTooltipParentCanvas = myCanvasRectTransform.GetComponent<Canvas>();

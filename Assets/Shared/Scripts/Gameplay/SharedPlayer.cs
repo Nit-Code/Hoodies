@@ -16,6 +16,9 @@ public class SharedPlayer : IEquatable<SharedPlayer>
     public void SetMotherShip(SharedUnit aMothership) { myMothership = aMothership; }
 
     private string myPlayerSessionId;
+    private string myUsername;
+    public string GetUsername() { return myUsername; }
+    public void SetUsername(string aUsername) { myUsername = aUsername; }
     private int myCurrentMaximumEnergy;
     private int myTopEnergy;
     public int GetCurrentMaximumEnergy() { return myCurrentMaximumEnergy; }
@@ -23,6 +26,14 @@ public class SharedPlayer : IEquatable<SharedPlayer>
     // falta top energy
     private int myEnergy;
     public int GetEnergy() { return myEnergy; }
+    private BoardSide myBoardSide;
+    public void SetBoardSide(BoardSide aBoardSide) { myBoardSide = aBoardSide; }
+    public BoardSide GetBoardSide() { return myBoardSide; }
+    public enum BoardSide
+    {
+        RIGHT,
+        LEFT
+    }
 
     public SharedPlayer(string aPlayerSessionId, SharedDeck aDeck)
     {
@@ -168,6 +179,11 @@ public class SharedPlayer : IEquatable<SharedPlayer>
 
     public void RemoveCardFromHand(CardId card)
     {
+        if(myHand == null)
+        {
+            return;
+        }
+
         List<CardId> cards = myHand.GetCards();
 
         for (int i = 0; i < cards.Count; i++)

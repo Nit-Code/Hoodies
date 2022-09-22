@@ -257,8 +257,15 @@ public class MenuSceneUIManager : MonoBehaviour
         }
         else if (myMatchType == MatchType.PRIVATE && myPlayerType == PlayerType.GUEST)
         {
-            //JOIN PRIVATE MATCH
-            myLambdaReference.InvokeGetGameSessionId(aPrivateLobbyId, myGameLiftClientReference, this);
+            if (CLU.GetIsConnectLocalEnabled())
+            {
+                myGameLiftClientReference.CreateOrJoinMatch("PRIVATE_GUEST");
+            }
+            else
+            {
+                //JOIN PRIVATE MATCH
+                myLambdaReference.InvokeGetGameSessionId(aPrivateLobbyId, myGameLiftClientReference, this);
+            }
         }
         else if (myMatchType == MatchType.PUBLIC)
         {
@@ -273,7 +280,9 @@ public class MenuSceneUIManager : MonoBehaviour
 
     public void DisconnectFromLobby()
     {
-        myGameLiftClientReference.DisconnectMeFromLobby(myIsLobbyOwner);
+        myNetworkClientReference.DisconnectMeFromLobby(myIsLobbyOwner);
+        ResetLobbyVars();
+        SwitchToBaseCanvas();
     }
     #endregion
 
@@ -305,6 +314,21 @@ public class MenuSceneUIManager : MonoBehaviour
         //myLobbyStatus = LobbyStatus.WAITING_PLAYERS_TO_LOCK_IN;
     }
 
+    public void Lobby_HOST_DISCONNECTED()
+    {
+        //We are guest
+        myHomeCanvasReference.ShowLobbyClosedPopup();
+        ResetLobbyVars();
+        SwitchToBaseCanvas();
+    }
+
+    public void Lobby_GUEST_DISCONNECTED()
+    {
+        //We are host
+        myLobbyCanvasReference.ResetLobbyUI();
+        myLobbyStatus = LobbyStatus.WAITING_FOR_OPPONENT;
+    }
+
     public void Lobby_DISCONNECTED_FROM_LOBBY(bool aIsLocalPlayerDisconnect)
     {
         if (myPlayerType == PlayerType.HOST && !aIsLocalPlayerDisconnect) // I'm the host and the guest disconnected
@@ -318,7 +342,7 @@ public class MenuSceneUIManager : MonoBehaviour
             ResetLobbyVars();
             myHomeCanvasReference.ShowLobbyClosedPopup();
         }
-
+        ResetLobbyVars();
         SwitchToBaseCanvas();
     }
 

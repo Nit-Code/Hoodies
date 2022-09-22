@@ -1,5 +1,6 @@
 using Assets.Shared.Scripts.Messages.Client;
 using SharedScripts;
+using SharedScripts.DataId;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,7 +14,7 @@ public class MatchSceneUIManager : MonoBehaviour
     private bool myLobbyCountdownIsRunning = false;
     private Coroutine myCountdownCoroutine;
 
-    
+
     [SerializeField] GameObject myUIBottomContainer;
     [SerializeField] GameObject myUITopContainer;
     [SerializeField] ActionPromptUI myActionPrompt;
@@ -26,9 +27,11 @@ public class MatchSceneUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI myPlayerTurnText;
     [SerializeField] TextMeshProUGUI myEnergyNumberText;
     [SerializeField] TextMeshProUGUI myTimerNumberText;
+    [SerializeField] TextMeshProUGUI myPlayer1UsernameText;
+    [SerializeField] TextMeshProUGUI myPlayer2UsernameText;
     [SerializeField] Button myEndTurnButton;
 
-    
+
     [SerializeField] GameObject myMatchEndContainer;
     [SerializeField] Image myMatchEndPanelBorder;
     [SerializeField] Image myMatchEndClickBlocker;
@@ -38,7 +41,7 @@ public class MatchSceneUIManager : MonoBehaviour
     [SerializeField] private ClientGameManager myGameManagerReference;
     private NetworkClient myNetworkClientReference;
     private AudioManager myAudioManagerReference;
-    
+
     private void Start()
     {
         myAudioManagerReference = FindObjectOfType<AudioManager>();
@@ -60,6 +63,22 @@ public class MatchSceneUIManager : MonoBehaviour
         EventHandler.OurAfterMatchSceneLoadEvent -= ShowLoadingScreen;
     }
 
+    public void PlaySound(AudioId anAudioId)
+    {
+        if (myAudioManagerReference == null || anAudioId == AudioId.INVALID)
+        {
+            Debug.LogError("[HOOD][CLIENT][SCENE] - PlayClickSound()");
+        }
+        else
+        {
+            myAudioManagerReference.PlaySound(anAudioId);
+        }
+    }
+
+    public void PlayErrorSound()
+    {
+        PlaySound(AudioId.SOUND_ERROR);
+    }
 
     public void ShowMatchUI()
     {
@@ -76,20 +95,20 @@ public class MatchSceneUIManager : MonoBehaviour
         myUIBottomContainer.SetActive(aStatus);
         myUITopContainer.SetActive(aStatus);
         myActionPrompt.enabled = aStatus;
-        myAbilityPrompt.enabled = aStatus;   
+        myAbilityPrompt.enabled = aStatus;
     }
 
     public void ShowMatchEndPanel(MatchStateMessageId anEndState, string aWinnerName, Color32 aBorderColor)
     {
         myPlayerInputLocked = true;
 
-        if(anEndState == MatchStateMessageId.END_DRAW)
+        if (anEndState == MatchStateMessageId.END_DRAW)
         {
             myMatchEndWinnerText.text = "DRAW";
         }
         else
         {
-            myMatchEndWinnerText.text = aWinnerName + " WON!";            
+            myMatchEndWinnerText.text = aWinnerName + " WON!";
         }
 
         myMatchEndPanelBorder.color = aBorderColor;
@@ -127,28 +146,34 @@ public class MatchSceneUIManager : MonoBehaviour
         myLoadingScreen.SetActive(false);
     }
 
-    public void UpdateEnergyNumber(int aNumber)
+    public void UpdateEnergyNumber(int aCurrentEnergy, int aMaxEnergy)
     {
-        if(aNumber <= 9)
-        {
-            myEnergyNumberText.text = "0" + aNumber.ToString();
-        }
-        else
-        {
-            myEnergyNumberText.text = aNumber.ToString();
-        }
+        myEnergyNumberText.text = aCurrentEnergy.ToString() + "/" + aMaxEnergy.ToString();
+    }
+
+    public void SetPlayer1UsernameText(string aName)
+    {
+        myPlayer1UsernameText.text = aName;
+    }
+
+    public void SetPlayer2UsernameText(string aName)
+    {
+        myPlayer2UsernameText.text = aName;
     }
 
     public void OnEndTurnButton()
     {
-        if(!myPlayerInputLocked)
+        if (!myPlayerInputLocked)
         {
             myGameManagerReference.EndTurn();
-        } 
+        }
+
+        PlaySound(AudioId.SOUND_MENU_CLICK);
     }
 
     public void OnBackToMainMenuButton()
     {
+        PlaySound(AudioId.SOUND_MENU_CLICK);
         myNetworkClientReference.LeaveEndedMatch();
     }
 
@@ -300,12 +325,5 @@ public class MatchSceneUIManager : MonoBehaviour
         {
             myAbilityPrompt.MakeInvisible();
         }
-    }
-
-    
-    public void PlayClickSound()
-    {
-        // TODO: implement
-        // myAudioManagerReference.PlaySound(SoundName.MenuClick);
     }
 }

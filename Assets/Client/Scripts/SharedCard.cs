@@ -30,6 +30,7 @@ public class SharedCard : MonoBehaviour
     [SerializeField] protected GameObject myATKDisplay;
     [SerializeField] protected GameObject myExtraStatsPanel;
     [SerializeField] protected GameObject myAbilityDescriptionPanel;
+    [SerializeField] protected GameObject mySummonerTag;
 
     [SerializeField] protected TextMeshProUGUI myTitleText;
     [SerializeField] protected TextMeshProUGUI myCostText;
@@ -81,7 +82,7 @@ public class SharedCard : MonoBehaviour
         myTypeText.text = "UNIT";
         //myTypeText.text = aCardData.myCardType.ToString(); //mda TODO: re-create a ToString implementation.
 
-        if(myAbilityId != AbilityId.INVALID)
+        if(myAbilityId != AbilityId.INVALID || anAbilityData != null)
         {
             myAbilityNameText.text = myAbilityId.ToString(); // TODO: re - create a ToString implementation.
             myAbilityDescriptionText.text = SetAbilityDescriptionText(anAbilityData.myDescription);
@@ -91,6 +92,11 @@ public class SharedCard : MonoBehaviour
         else
         {
             myAbilityDescriptionPanel.SetActive(false);
+        }
+
+        if(aUnitData.canSpawnOtherUnits)
+        {
+            mySummonerTag.SetActive(true);
         }
     }
 

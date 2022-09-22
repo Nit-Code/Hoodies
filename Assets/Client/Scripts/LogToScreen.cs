@@ -6,21 +6,31 @@ public class LogToScreen : MonoBehaviour
 {
     private uint myMaxLogLines;
     private Queue myLogQueue;
+
     private void Start()
     {
-        Debug.Log("Started up logging.");
+        if (CLU.GetIsPrintToScreenEnabled())
+        {
+            Shared.Log("[HOOD][LOG] - Started up logging.");
+        }
     }
 
     private void OnEnable()
     {
-        myMaxLogLines = 15;
-        myLogQueue = new Queue();
-        Application.logMessageReceived += HandleLog;
+        if (CLU.GetIsPrintToScreenEnabled()) 
+        {
+            myMaxLogLines = 15;
+            myLogQueue = new Queue();
+            Application.logMessageReceived += HandleLog;
+        }
     }
 
     private void OnDisable()
     {
-        Application.logMessageReceived -= HandleLog;
+        if (CLU.GetIsPrintToScreenEnabled())
+        {
+            Application.logMessageReceived -= HandleLog;
+        }
     }
 
     private void HandleLog(string logString, string stackTrace, LogType type)

@@ -25,6 +25,8 @@ public class NetworkServer : MonoBehaviour
     private ServerGameManager myGameManagerReference;
     private ServerLambda myServerLambdaReference;
     public int myHostConnectionId;
+    public string myHostUsername;
+    public int myGuestConnectionId;
     private int myToLoad;
     private int myLoaded;
     private bool myIsAConnectionAccomplished;
@@ -92,7 +94,15 @@ public class NetworkServer : MonoBehaviour
     void OnApplicationQuit()
     {
         Shared.Log("[HOOD][SERVER][NETWORK] - OnApplicationQuit");
+        NotifyServerClosed();
+        myGameLiftServerReference.HandleGameEnd();
         myServer.Stop();
+    }
+
+    private void NotifyServerClosed()
+    {
+        ServerInformationMessage sim = new ServerInformationMessage(InformationMessageId.SERVER_CLOSED,"");
+        SendMessageToAllPlayers(sim);
     }
 
     private void OnDataReceived(int aConnectionId, ArraySegment<byte> aMessage)
@@ -133,7 +143,7 @@ public class NetworkServer : MonoBehaviour
                     break;
                 case nameof(ClientMatchConnectionMessage):
                     ClientMatchConnectionMessage mcm = aSharedClientMessage as ClientMatchConnectionMessage;
-                    ProcessMatchConnectionMessage(aConnectionId, mcm);
+                    //ProcessMatchConnectionMessage(aConnectionId, mcm);
                     break;
                 case nameof(ClientPlayerReadyStatusMessage):
                     ClientPlayerReadyStatusMessage cprsm = aSharedClientMessage as ClientPlayerReadyStatusMessage;
@@ -214,8 +224,8 @@ public class NetworkServer : MonoBehaviour
                 responseMessage = new ServerGameplayActionMessage(GameplayMessageIdServer.USE_ABILITY, requestingPlayerConnectionId, aMessage.myGameplayObjectId, aMessage.myTargetPositionX, aMessage.myTargetPositionY, successfulAction);
                 break;
             case GameplayMessageIdClient.REQUEST_USE_TECHNOLOGY:
-                successfulAction =myGameManagerReference.TryUseTechnologyCard(aMessage.myPlayerId, (CardId)aMessage.myGameplayObjectId, coord);
-                responseMessage = new ServerGameplayActionMessage(GameplayMessageIdServer.USE_TECHNOLOGY, requestingPlayerConnectionId, aMessage.myGameplayObjectId, aMessage.myTargetPositionX, aMessage.myTargetPositionY, successfulAction);
+                //successfulAction =myGameManagerReference.TryUseTechnologyCard(aMessage.myPlayerId, (CardId)aMessage.myGameplayObjectId, coord);
+               // responseMessage = new ServerGameplayActionMessage(GameplayMessageIdServer.USE_TECHNOLOGY, requestingPlayerConnectionId, aMessage.myGameplayObjectId, aMessage.myTargetPositionX, aMessage.myTargetPositionY, successfulAction);
                 break;
             default:
                 Shared.LogError("[HOOD][SERVER][NETWORK] - Unknown ClientGameplayMessage received.");
@@ -248,11 +258,11 @@ public class NetworkServer : MonoBehaviour
         switch (aMessage.myMessageId)
         {
             case LobbyMessageIdClient.CONNECT:
-                HandleConnect(aConnectionId, aMessage.myPlayerSessionId, aMessage.myLobbyOwner);
+                HandleConnect(aConnectionId, aMessage.myPlayerSessionId, aMessage.myLobbyOwner, aMessage.myUsername);
                 break;
             case LobbyMessageIdClient.READY:
                 break;
-            case LobbyMessageIdClient.DISCONNECT:
+            case LobbyMessageIdClient.DISCONNECT_ME:
                 HandleDisconnect(aMessage.myPlayerSessionId, aMessage.myLobbyOwner);
                 break;
             default:
@@ -261,7 +271,7 @@ public class NetworkServer : MonoBehaviour
         }
     }
 
-    private void ProcessMatchConnectionMessage(int aConnectionId, ClientMatchConnectionMessage aMessage) //TODO
+    private void ProcessMatchConnectionMessage(int aConnectionId, ClientMatchConnectionMessage aMessage)
     {
         if (aMessage == null)
         {
@@ -301,7 +311,7 @@ public class NetworkServer : MonoBehaviour
             case ReadyStatusMessageId.PLAYER_READY:
                 if (aMessage.myIsReady)
                 {
-                    myGameManagerReference.AddReadyPlayer(aMessage.myPlayerId, aMessage.myDeckId);
+                    myGameManagerReference.AddReadyPlayer(aMessage.myPlayerId, aMessage.myDeckId, aMessage.myUsername);
                 }
                 else
                 {
@@ -360,6 +370,40 @@ public class NetworkServer : MonoBehaviour
         }
     }
 
+    public void SendMessageToHost(SharedServerMessage aMessage)
+    {
+        try
+        {
+            var data = JsonConvert.SerializeObject(aMessage);
+            var encoded = Encoding.UTF8.GetBytes(data);
+            var asWriteBuffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
+            myServer.Send(myHostConnectionId, asWriteBuffer);
+        }
+        catch (Exception ex)
+        {
+            SharedServerMessage sem = new ServerInformationMessage(InformationMessageId.ERROR, ex.Message);
+            SendMessageToPlayer(myHostConnectionId, sem);
+            ShutDownGameSession();
+        }
+    }
+
+    public void SendMessageToGuest(SharedServerMessage aMessage)
+    {
+        try
+        {
+            var data = JsonConvert.SerializeObject(aMessage);
+            var encoded = Encoding.UTF8.GetBytes(data);
+            var asWriteBuffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);            
+            myServer.Send(myGuestConnectionId, asWriteBuffer);
+        }
+        catch (Exception ex)
+        {
+            SharedServerMessage sem = new ServerInformationMessage(InformationMessageId.ERROR, ex.Message);
+            SendMessageToPlayer(myHostConnectionId, sem);
+            ShutDownGameSession();
+        }
+    }
+
     public void SendMessageToPlayer(int aConnectionId, SharedServerMessage aMessage)
     {
         try
@@ -411,7 +455,7 @@ public class NetworkServer : MonoBehaviour
         }
     }
 
-    public void HandleConnect(int aConnectionId, string aPlayerSessionId, bool aIsOwner)
+    public void HandleConnect(int aConnectionId, string aPlayerSessionId, bool aIsOwner, string aUsername)
     {
         Shared.Log("[HOOD][SERVER][NETWORK] - HandleConnect");
         bool result = false;
@@ -423,7 +467,7 @@ public class NetworkServer : MonoBehaviour
         }
         else
         {
-            if (!myPlayerSessionsMap.ContainsKey(aConnectionId) && !myConnectionIdMap.ContainsKey(aPlayerSessionId)) 
+            if (!myPlayerSessionsMap.ContainsKey(aConnectionId) && !myConnectionIdMap.ContainsKey(aPlayerSessionId))
             {
                 result = true;
             }
@@ -439,7 +483,7 @@ public class NetworkServer : MonoBehaviour
 
         bool isFirstPlayerToJoin = myPlayerSessionsMap.Count == 0;
 
-        if (aIsOwner != isFirstPlayerToJoin) 
+        if (aIsOwner != isFirstPlayerToJoin)
         {
             Shared.LogError("[HOOD][SERVER][NETWORK] - HandleConnect, contradicting information.");
             ShutDownGameSession();
@@ -449,9 +493,8 @@ public class NetworkServer : MonoBehaviour
         // Track our player sessions
         myPlayerSessionsMap.Add(aConnectionId, aPlayerSessionId);
         myConnectionIdMap.Add(aPlayerSessionId, aConnectionId);
-            
+
         SharedServerMessage responseMessage = null;
-        string hostPlayerSessionId = "";
         if (isFirstPlayerToJoin)
         {
             // Iniciate short private lobby id creation
@@ -460,41 +503,48 @@ public class NetworkServer : MonoBehaviour
             // NOTE: We dont need exactly player identifying info, the database index could just mean
             // an empty row in the database, the lambda function could take care of finding out the first
             // non used row in the database or create a new entry on it.
-            int hoodId = 1; 
+            int hoodId = 1;
 
             myServerLambdaReference.InvokeCreateShortLobbyId(hoodId, gameSessionId, aConnectionId);
 
             LobbyPlayer playerInfo = new LobbyPlayer();
             playerInfo.myPlayerSessionId = aPlayerSessionId;
+            playerInfo.myName = aUsername;
             responseMessage = new ServerLobbyMessage(LobbyMessageId.CONNECTED, playerInfo, "");
             SendMessageToPlayer(aConnectionId, responseMessage);
             myHostConnectionId = aConnectionId;
+            myHostUsername = aUsername;
         }
         else
         {
+            myGuestConnectionId = aConnectionId;
+
             //Send message to my client with host info (player already in match)
-            hostPlayerSessionId = myPlayerSessionsMap[myHostConnectionId];
             LobbyPlayer opponentInfo = new LobbyPlayer();
-            opponentInfo.myPlayerSessionId = hostPlayerSessionId; //playerInfo.myName = obtener desde AWS
+            opponentInfo.myPlayerSessionId = myPlayerSessionsMap[myHostConnectionId]; ;
+            opponentInfo.myName = myHostUsername;
             responseMessage = new ServerLobbyMessage(LobbyMessageId.CONNECTED, opponentInfo, "");
             SendMessageToPlayer(aConnectionId, responseMessage);
 
             //Send message to player already in match
             LobbyPlayer playerInfo = new LobbyPlayer();
-            playerInfo.myPlayerSessionId = aPlayerSessionId; //playerInfo.myName = obtener desde AWS
+            playerInfo.myPlayerSessionId = aPlayerSessionId;
+            playerInfo.myName = aUsername;
             responseMessage = new ServerLobbyMessage(LobbyMessageId.CONNECTED, playerInfo, "");
             SendMessageToOtherPlayer(aConnectionId, responseMessage);
         }
-    }
+    }    
 
-    private void EndMatch()
+    public void EndMatch()
     {
         Shared.Log("Closing match");
         foreach (KeyValuePair<int, string> playerSession in myPlayerSessionsMap)
         {
+            if(myPlayerSessionsMap.ContainsKey(playerSession.Key))
+                myPlayerSessionsMap.Remove(playerSession.Key);
+            if(myConnectionIdMap.ContainsKey(playerSession.Value))
+                myConnectionIdMap.Remove(playerSession.Value);
             myServer.Disconnect(playerSession.Key);
-            myPlayerSessionsMap.Remove(playerSession.Key);
-            myConnectionIdMap.Remove(playerSession.Value);
             if (!CLU.GetIsConnectLocalEnabled())
                 myGameLiftServerReference.RemovePlayerSession(playerSession.Value);
         }
@@ -552,9 +602,14 @@ public class NetworkServer : MonoBehaviour
             else if (myPlayerSessionsMap[connectionId] == myGameManagerReference.GetPlayer2().GetSessionId())
                 myGameManagerReference.SetMatchWinner(MatchWinner.PLAYER_1);
             myGameManagerReference.ChangeState(MatchState.END);
-            EndMatch();
         }
-        //EndGameAfterDisconnect(connectionId);        
+
+        if(myPlayerSessionsMap.ContainsKey(connectionId))
+        {
+            string disconnectedPlayerSession = myPlayerSessionsMap[connectionId].ToString();
+            myPlayerSessionsMap.Remove(connectionId);
+            myConnectionIdMap.Remove(disconnectedPlayerSession);
+        }
     }
 
     private void OnConnected(int connectionId)
@@ -564,36 +619,71 @@ public class NetworkServer : MonoBehaviour
         myGameState = GameState.IN_LOBBY;
     }
 
-    private void HandleDisconnect(string aPlayerSessionId, bool aIsOwner)
+    private void HandleHostDisconnect(string aPlayerSessionId)
     {
-        Shared.Log("[HOOD][SERVER][NETWORK] - HandleDisconnect");
-
+        Shared.Log("[HOOD][SERVER][NETWORK] - HandleHostDisconnect");
         LobbyPlayer disconnectedPlayerInfo = new LobbyPlayer();
         disconnectedPlayerInfo.myPlayerSessionId = aPlayerSessionId;
-        if (myGameState == GameState.IN_LOBBY)
+        SharedServerMessage responseMessage = new ServerLobbyMessage(LobbyMessageId.HOST_DISCONNECTED, disconnectedPlayerInfo, "");
+        SendMessageToGuest(responseMessage);
+
+        //Disconnect everyone from telepathy
+        foreach (int connectionId in myConnectionIdMap.Values)
         {
-            SharedServerMessage responseMessage = new ServerLobbyMessage(LobbyMessageId.PLAYER_LEFT, disconnectedPlayerInfo, "");
-            SendMessageToAllPlayers(responseMessage);
+            myServer.Disconnect(connectionId);
         }
-        else if (myGameState == GameState.IN_MATCH)
-        {
-            if (aPlayerSessionId == myGameManagerReference.GetPlayer1().GetSessionId())
-                myGameManagerReference.SetMatchWinner(MatchWinner.PLAYER_2);
-            else if (aPlayerSessionId == myGameManagerReference.GetPlayer2().GetSessionId())
-                myGameManagerReference.SetMatchWinner(MatchWinner.PLAYER_1);
-            myGameManagerReference.ChangeState(MatchState.END);
-        }
-        if (!CLU.GetIsConnectLocalEnabled()) 
+
+        if (!CLU.GetIsConnectLocalEnabled())
         {
             foreach (KeyValuePair<int, string> playerSession in myPlayerSessionsMap)
             {
-                if (aIsOwner || playerSession.Value == aPlayerSessionId)
+                myGameLiftServerReference.RemovePlayerSession(playerSession.Value); // player session id
+            }
+            myGameLiftServerReference.HandleGameEnd();
+        }
+        myConnectionIdMap.Clear();
+        myPlayerSessionsMap.Clear();
+        myHostConnectionId = -1;
+        myGuestConnectionId = -1;
+        myHostUsername = "";
+    }
+
+    private void HandleGuestDisconnect(string aPlayerSessionId)
+    {
+        Shared.Log("[HOOD][SERVER][NETWORK] - HandleGuestDisconnect");
+        LobbyPlayer disconnectedPlayerInfo = new LobbyPlayer();
+        disconnectedPlayerInfo.myPlayerSessionId = aPlayerSessionId;
+        SharedServerMessage responseMessage = new ServerLobbyMessage(LobbyMessageId.GUEST_DISCONNECTED, disconnectedPlayerInfo, "");
+        SendMessageToHost(responseMessage);
+
+        //Disconnect guest from telepathy
+        foreach (int connectionId in myConnectionIdMap.Values)
+        {
+            if(myGuestConnectionId == connectionId)
+                myServer.Disconnect(connectionId);
+        }
+
+        if (!CLU.GetIsConnectLocalEnabled())
+        {
+            foreach (KeyValuePair<int, string> playerSession in myPlayerSessionsMap)
+            {
+                if(myGuestConnectionId == playerSession.Key)
                     myGameLiftServerReference.RemovePlayerSession(playerSession.Value); // player session id
             }
         }
+        string guestPlayerSessionId = myPlayerSessionsMap[myGuestConnectionId];
+        myConnectionIdMap.Remove(guestPlayerSessionId);
+        myPlayerSessionsMap.Remove(myGuestConnectionId);
+        myGuestConnectionId = -1;
+    }
 
+    private void HandleDisconnect(string aPlayerSessionId, bool aIsOwner)
+    {
+        Shared.Log("[HOOD][SERVER][NETWORK] - HandleDisconnect");
         if (aIsOwner)
-            myGameLiftServerReference.HandleGameEnd();
+            HandleHostDisconnect(aPlayerSessionId);
+        else
+            HandleGuestDisconnect(aPlayerSessionId);
     }
 
     public void ShutDownGameSession()

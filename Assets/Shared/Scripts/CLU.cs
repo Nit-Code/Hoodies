@@ -30,14 +30,21 @@ public class CLU : MonoBehaviour
 #endif
 #endif
 
-    public static bool GetIsLobbyCacheEnabled()
-    {
-        return CommandLine.GetBool("-LOBBY_CACHE_ENABLED", false);
-    }
+    public int callbackOrder { get { return 0; } }
 
     public static string GetSessionCacheFilename()
     {
         return CommandLine.GetString("-SESSION_CACHE_FILENAME", "");
+    }
+
+    public static bool GetIsPrintToScreenEnabled()
+    {
+        return CommandLine.GetBool("-PRINT_TO_SCREEN_ENABLED", false);
+    }
+
+    public static bool GetIsLoadSessionCacheEnabled()
+    {
+        return CommandLine.GetBool("-SESSION_CACHE_LOAD_ENABLED", false);
     }
 
     public static string GetFleetId()

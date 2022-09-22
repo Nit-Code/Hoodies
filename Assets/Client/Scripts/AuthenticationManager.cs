@@ -31,10 +31,22 @@ public class AuthenticationManager : MonoBehaviour
     public async Task<bool> RefreshSession()
     {
         Debug.Log("[HOOD][CLIENT][AUTH] - AuthenticationManager/RefreshSession");
+        if (!CLU.GetIsLoadSessionCacheEnabled()) 
+        {
+            Shared.LogError("[HOOD][CLIENT][AUTH] - Session cache is not enabled, skipping refresh session.");
+            return false;
+        }
+
+        string filename = CLU.GetSessionCacheFilename();
+        if (string.IsNullOrEmpty(filename))
+        {
+            Shared.LogError("[HOOD][CLIENT][AUTH] - Session cache filename was not provided, skipping refresh session.");
+            return false;
+        }
 
         DateTime issued = DateTime.Now;
         SessionCache userSessionCache = new SessionCache();
-        SaveDataManager.LoadJsonData(userSessionCache);
+        SaveDataManager.LoadJsonData(userSessionCache, filename);
         if (string.IsNullOrEmpty(userSessionCache.myRefreshToken)) 
         {
             return false;
@@ -74,7 +86,7 @@ public class AuthenticationManager : MonoBehaviour
                 userSessionCache.myUserId,
                 userSessionCache.myUsername);
 
-            myUserReference.SetSessionCache(userSessionCacheToUpdate);
+            myUserReference.SetSessionCache(userSessionCacheToUpdate, userSessionCache.myUsername);
 
             // update credentials with the latest access token
             myCognitoAWSCredentials = user.GetCognitoAWSCredentials(Shared.OurIdentityPoolId(), Shared.OurRegionId());
@@ -125,7 +137,17 @@ public class AuthenticationManager : MonoBehaviour
                myUserId,
                userName);
 
-            myUserReference.SetSessionCache(userSessionCache);
+            string filename = CLU.GetSessionCacheFilename();
+            if (!CLU.GetIsLoadSessionCacheEnabled()) 
+            {
+                filename = userName;
+            }
+            else if (CLU.GetIsLoadSessionCacheEnabled() && string.IsNullOrEmpty(filename))
+            {
+                filename = userName;
+            }
+
+            myUserReference.SetSessionCache(userSessionCache, filename);
 
             // This how you get credentials to use for accessing other services.
             // This IdentityPool is your Authorization, so if you tried to access using an

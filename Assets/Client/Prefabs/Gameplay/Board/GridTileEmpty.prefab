@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7192844812976780394}
   - component: {fileID: 680549113265747773}
   - component: {fileID: 8813392834789357107}
+  - component: {fileID: 8344749037499334014}
   m_Layer: 0
   m_Name: GridTileEmpty
   m_TagString: Tile
@@ -115,3 +116,15 @@ MonoBehaviour:
   myTileGlowRed: {fileID: 2100000, guid: 5b5f50ceafa0c6448a1329035dba4258, type: 2}
   myTileGlowYellow: {fileID: 2100000, guid: 7d39bb59c1c47d34b8e8649d4a045bb1, type: 2}
   myTileGlowGreen: {fileID: 2100000, guid: 9cd18891473287846b7a79d7b84df29d, type: 2}
+--- !u!114 &8344749037499334014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8706269861666510271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cceb04b7f4dfe4fa15d4bb15371aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -38,18 +38,8 @@ public class Protector : SharedAbility
         RemoveVisualEffects();
 
         myCastTiles = myBoardReference.GetShapeFromCenterTileCoord(this.myIncludeCenter, this.GetShape(), this.myAreaShapeSize, this.myOwnerUnitReference.GetPosition());
+        myCastTiles.RemoveAll(tile => tile.GetTileType() == TileType.BLACKHOLE || (tile.GetUnit() != null && !tile.GetUnit().IsOwnedByPlayer(myOwnerUnitReference.GetPlayer())));
 
-        for (int i = 0; i < myCastTiles.Count; i++)
-        {
-            if (myCastTiles[i].GetTileType() == TileType.BLACKHOLE)
-            {
-                myCastTiles.RemoveAt(i);
-            }
-            else if (myCastTiles[i].GetUnit() != null && !myCastTiles[i].GetUnit().IsOwnedByPlayer(myOwnerUnitReference.GetPlayer()))
-            {
-                myCastTiles.RemoveAt(i);
-            }
-        }
         ApplyAbilityEffect();
     }
 
@@ -64,8 +54,9 @@ public class Protector : SharedAbility
     {
         foreach (SharedTile tile in this.myCastTiles)
         {
-            tile.ChangeBaseColor(TileColor.WHITE);
-            tile.GoToBaseColor(true);
+            tile.ColorTile(TileColor.WHITE);
+            //tile.ChangeBaseColor(TileColor.WHITE);
+            //tile.GoToBaseColor(true);
         }
     }
 }

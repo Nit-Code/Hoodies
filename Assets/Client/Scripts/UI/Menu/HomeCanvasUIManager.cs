@@ -165,10 +165,7 @@ public class HomeCanvasUIManager : MonoBehaviour
     public void OnOptionsButton()
     {
         PlaySound(AudioId.SOUND_MENU_CLICK);
-
-        Debug.LogWarning("[HOOD][UI] - Merge in progress, doing nothing.");
-        // TODO MERGE
-        /*
+        
         if (myOptionsArea != null)
         {
             UnloadMainMenuAreaUI();
@@ -176,8 +173,7 @@ public class HomeCanvasUIManager : MonoBehaviour
             myOptionsArea.SetActive(true);
             myTitleText.SetText("OPTIONS");
             myTitleText.fontSize = 180;
-        }
-        */
+        }   
     }
 
     public void OnLogOutButton()
@@ -202,9 +198,7 @@ public class HomeCanvasUIManager : MonoBehaviour
     public void OnFindMatchButton()
     {
         PlaySound(AudioId.SOUND_MENU_CLICK);
-        //TODO MERGE
-        Debug.LogWarning("[HOOD][UI] - Merge in progress, doing nothing.");
-        //myMenuSceneUIManagerReference.LoadPublicLobbyCanvas();
+        myMenuSceneUIManagerReference.LoadPublicLobbyCanvas();
     }
 
     public void OnPrivateMatchAreaBackButton()

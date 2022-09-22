@@ -31,12 +31,17 @@ MonoBehaviour:
     myAudioDescription: 'Ambient sound. Source: ???'
     myAudioVolume: 0
   - myName: Sound menu click
-    myId: 5
+    myId: 6
     myAudioClip: {fileID: 8300000, guid: e4374454682ffd847aa1ff545c44cab1, type: 3}
     myAudioDescription: 'Sound effect. Source: ???'
-    myAudioVolume: 0
+    myAudioVolume: 20
   - myName: Sound error
-    myId: 6
-    myAudioClip: {fileID: 8300000, guid: edc78ccb0763ac649a2e257d07c2830f, type: 3}
+    myId: 7
+    myAudioClip: {fileID: 8300000, guid: b80bd184a20fc7b46ac0f39ad3f80ec2, type: 3}
     myAudioDescription: 'Sound effect. Source: ???'
-    myAudioVolume: 0
+    myAudioVolume: 3
+  - myName: Match scene music
+    myId: 5
+    myAudioClip: {fileID: 8300000, guid: a2782d988bfadb4418c9a60c4770003f, type: 3}
+    myAudioDescription: 'Sound effect. Source: ???'
+    myAudioVolume: -4

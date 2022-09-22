@@ -260,7 +260,6 @@ GameObject:
   - component: {fileID: 6396316102965570629}
   - component: {fileID: 6660994670897442195}
   - component: {fileID: 7178414158132177942}
-  - component: {fileID: 3023504004282065880}
   m_Layer: 5
   m_Name: Movement Range
   m_TagString: Untagged
@@ -385,19 +384,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3023504004282065880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500982142068309077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: Movement Range
 --- !u!1 &1310844482213944349
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: Energy Cost
+  myMessage: Cost
 --- !u!1 &2835675979583723953
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: Attack Range
+  myMessage: 
 --- !u!1 &3301767101614438328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,12 +1544,12 @@ GameObject:
   - component: {fileID: 4605538271626991106}
   - component: {fileID: 2785769686229906146}
   m_Layer: 5
-  m_Name: StatusEffectDuration
+  m_Name: SummonerTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3349929865472882775
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1582,7 +1568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -221.9, y: -23.9}
+  m_AnchoredPosition: {x: -221.9, y: -27.8}
   m_SizeDelta: {x: 35.1246, y: 35.1246}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5474498379933812308
@@ -1606,7 +1592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6666667, g: 0.9098039, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1635,7 +1621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: Status Effect Duration
+  myMessage: You can summon units around this unit
 --- !u!1 &4643472515956528988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1726,7 +1712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: Hull Points
+  myMessage: Shield
 --- !u!1 &5797628905184916203
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,7 +2374,7 @@ GameObject:
   - component: {fileID: 152696521532042149}
   - component: {fileID: 7101313423050431749}
   m_Layer: 5
-  m_Name: CostNumber
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2442,10 +2428,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: S
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68914219c1bd3d0418cdeae055549af6, type: 2}
-  m_sharedMaterial: {fileID: -3522110256241023413, guid: 68914219c1bd3d0418cdeae055549af6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 40f499f36aa8c6e418143a1134af3cce, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2733,6 +2719,7 @@ MonoBehaviour:
   myATKDisplay: {fileID: 9053654215743904604}
   myExtraStatsPanel: {fileID: 3301767101614438328}
   myAbilityDescriptionPanel: {fileID: 4265065801025040122}
+  mySummonerTag: {fileID: 4428849685763552515}
   myTitleText: {fileID: 3134465630187467711}
   myCostText: {fileID: 8387837427301390765}
   myHitPointsText: {fileID: 6712962965809162114}
@@ -2755,7 +2742,6 @@ GameObject:
   - component: {fileID: 2443806802844972937}
   - component: {fileID: 4628620205061054591}
   - component: {fileID: 7128186555054762380}
-  - component: {fileID: 8476702707188282131}
   m_Layer: 5
   m_Name: Attack Range
   m_TagString: Untagged
@@ -2880,19 +2866,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8476702707188282131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8943163472895280070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _message: Attack Range
 --- !u!1 &9053654215743904604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2983,7 +2956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c83eef59cfb9c6438a0b38bcacfa2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _message: Attack Points
+  myMessage: Attack
 --- !u!1001 &102563984201934074
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,18 +28,19 @@ public class SharedUser : MonoBehaviour
         myIsUserSessionCacheSet = false;
     }
 
-    public void SetSessionCache(SessionCache aUserSessionCache)
+    public void SetSessionCache(SessionCache aUserSessionCache, string aFilename)
     {
         myUserSessionCache = aUserSessionCache;
-        SaveDataManager.SaveJsonData(myUserSessionCache);
+        SaveDataManager.SaveJsonData(myUserSessionCache, aFilename);
         myIsUserSessionCacheSet = true;
     }
 
     public void CleanSessionCache()
     {
+        string filename = myUserSessionCache.GetPartialFilename();
         SessionCache cleanCache = new SessionCache("", "", "", "", myUserSessionCache.myUsername);
         myIsUserSessionCacheSet = false;
-        SetSessionCache(cleanCache);
+        SetSessionCache(cleanCache, filename);
     }
 
     public string GetUserId() 

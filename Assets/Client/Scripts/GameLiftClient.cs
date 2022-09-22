@@ -360,11 +360,6 @@ public class GameLiftClient : MonoBehaviour
         {
             Debug.Log("[HOOD][CLIENT][PRIVATE_LOBBY][HOST] - Step 4/9 - GameSession created successfully.");
             CreatePlayerSession(myGameSession, "PRIVATE_HOST");
-            if (CLU.GetIsLobbyCacheEnabled())
-            {
-                LobbyCache lobbyCache = new LobbyCache(myGameSession.GameSessionId);
-                SaveDataManager.SaveJsonData(lobbyCache);
-            }
         }
         else
         {

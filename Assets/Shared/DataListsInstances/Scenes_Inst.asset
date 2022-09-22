@@ -26,7 +26,7 @@ MonoBehaviour:
   - myName: Match
     myId: 3
     myScenePath: Assets/Client/Scenes/MatchScene.unity
-    myAudioId: 1
+    myAudioId: 5
     myAmbientAudioId: 1
   - myName: Persistent
     myId: 4

@@ -177,9 +177,9 @@ public class SharedGameObjectFactory : MonoBehaviour
         return null;
     }
 
-    public SharedUnit CreateUnit(Transform aParent, Vector3 aPosition, SharedPlayer anOwnerPlayer, bool aIsCapitain, Vector2Int aBoardPosition, UnitId anId, int aMatchId)
+    public SharedUnit CreateUnit(Transform aParent, Vector3 aPosition, SharedPlayer anOwnerPlayer, bool aIsCapitain, Vector2Int aBoardPosition, UnitId aUnitId, CardId aCardId, int aMatchId)
     {
-        if (!IsDataLoaded() || anId == UnitId.INVALID || !myHasLoader)
+        if (!IsDataLoaded() || aUnitId == UnitId.INVALID || !myHasLoader)
         {
             Shared.LogError("[HOOD][FACTORY] - CreateUnit");
             return null;
@@ -188,17 +188,46 @@ public class SharedGameObjectFactory : MonoBehaviour
         SharedUnit unit = Instantiate(myUnitPrefab, aPosition, Quaternion.identity);
         unit.transform.SetParent(aParent);
 
-        UnitData data = myDataLoaderReference.GetUnitData(anId);
+        UnitData data = myDataLoaderReference.GetUnitData(aUnitId);
         if (data != null)
         {
             unit.Init
-                (anOwnerPlayer, aIsCapitain, aBoardPosition, data, aMatchId);
+                (anOwnerPlayer, aIsCapitain, aBoardPosition, data, aMatchId, aCardId);
             return unit;
         }
 
         Shared.LogError("[HOOD][FACTORY] - CreateUnit, no data from DataLoader");
         return null;
     }
+
+    //commented for future implementation
+    //public SharedUnit CreateTechnologyAuxiliaryUnit(Transform aParent, Vector3 aPosition, SharedPlayer anOwnerPlayer, bool aIsCapitain, Vector2Int aBoardPosition, AbilityId anAbilityId)
+    //{
+    //    if (!IsDataLoaded() || !myHasLoader)
+    //    {
+    //        Shared.LogError("[HOOD][FACTORY] - CreateUnit");
+    //        return null;
+    //    }
+
+    //    SharedUnit unit = Instantiate(myUnitPrefab, aPosition, Quaternion.identity);
+    //    unit.transform.SetParent(aParent);
+
+    //    UnitData unitData = myDataLoaderReference.GetUnitData(UnitId.UNIT_BASIC_UNIT_TEST);
+    //    AbilityData abilityData = myDataLoaderReference.GetAbilityData(anAbilityId);
+        
+    //    if (unitData != null && abilityData != null)
+    //    {
+    //        unitData.myOverrideAnimatorController = abilityData.myOverrideAnimatorController;
+
+    //        unit.Init
+    //            (anOwnerPlayer, aIsCapitain, aBoardPosition, unitData, -1);
+
+    //        return unit;
+    //    }
+
+    //    Shared.LogError("[HOOD][FACTORY] - CreateUnit, no data from DataLoader");
+    //    return null;
+    //}
 
     public SharedAbility AddAbilityComponent(GameObject aGameObject, AbilityId anId)
     {
@@ -212,7 +241,7 @@ public class SharedGameObjectFactory : MonoBehaviour
 
         if (data != null)
         {
-            SharedAbility ability;
+            SharedAbility ability = null;
 
             switch (anId)
             {
@@ -222,7 +251,13 @@ public class SharedGameObjectFactory : MonoBehaviour
                     break;
                 case AbilityId.ENGINE_OVERDRIVE:
                     ability = aGameObject.AddComponent<EngineOverdrive>();
+                    ability.Init(aGameObject, data); 
+                    break;
+                case AbilityId.REPAIR_STATION:
+                    ability = aGameObject.AddComponent<RepairStation>();
                     ability.Init(aGameObject, data); // We do this every time in case that some abilities need extra parameters
+                    break;
+                case AbilityId.INVALID:
                     break;
                 default:
                     return null;
@@ -269,7 +304,7 @@ public class SharedGameObjectFactory : MonoBehaviour
     }
 
     //TODO: does this need a transform parent?
-    public SharedCard CreateMyDecksCard(CardId anId)
+    public SharedCard CreateCard(CardId anId)
     {
         if (!IsDataLoaded() || anId == CardId.INVALID || !myHasLoader)
         {
@@ -338,8 +373,12 @@ public class SharedGameObjectFactory : MonoBehaviour
                 UnitData unitData = myDataLoaderReference.GetUnitData(unitCardData.myUnitId);
                 if (unitData != null)
                 {
-                    AbilityData abilityData = myDataLoaderReference.GetAbilityData(unitData.myAbilityId);
-
+                    AbilityData abilityData = null;
+                    if (unitData.myAbilityId != AbilityId.INVALID)
+                    {
+                        abilityData = myDataLoaderReference.GetAbilityData(unitData.myAbilityId);
+                    }
+                    
                     card.Init(unitCardData, unitData, abilityData);
                     return card;
                 }

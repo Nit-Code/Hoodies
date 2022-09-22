@@ -30,7 +30,7 @@ namespace SharedScripts
     public enum LobbyMessageIdClient
     { 
         CONNECT,
-        DISCONNECT,
+        DISCONNECT_ME,
         READY
     }
 
@@ -70,11 +70,12 @@ namespace SharedScripts
     {
         KILL_MY_MOTHERSHIP
     }
-    
+
     public enum InformationMessageId
     {
         ERROR,
-        INFO
+        INFO,
+        SERVER_CLOSED
     }
 
     public enum LobbyMessageId
@@ -82,7 +83,9 @@ namespace SharedScripts
         CONNECTED,
         PRIVATE_LOBBY_CREATED,
         LOBBY_FULL,     
-        PLAYER_LEFT
+        PLAYER_LEFT,
+        HOST_DISCONNECTED,
+        GUEST_DISCONNECTED
     }
 
     public enum MatchSetupMessageId
@@ -239,7 +242,7 @@ namespace SharedScripts
             INVALID,          
             ENGINE_OVERDRIVE,
             PROTECTOR,
-            ABILITY_3
+            REPAIR_STATION
         }
 
         public enum AudioId
@@ -249,6 +252,7 @@ namespace SharedScripts
             AMBIENT_RAIN,
             MUSIC_LOGIN_SCENE,
             MUSIC_MENU_SCENE,
+            MUSIC_MATCH_SCENE,
             SOUND_MENU_CLICK,
             SOUND_ERROR
         }
@@ -263,7 +267,8 @@ namespace SharedScripts
             CARD_ROCKET_SPAWNER,
             CARD_TANK_SPAWNER,
             CARD_FENIX_SPAWNER,
-            CARD_TRAVELER_SPAWNER
+            CARD_TRAVELER_SPAWNER,
+            CARD_REPAIR_STATION
         }
 
         public enum CardType

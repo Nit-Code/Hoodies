@@ -11,6 +11,7 @@ using System.Threading.Tasks;
     This script should exist on the same game object as SharedGameObjectFactory
 */
 
+
 public class SharedGameManager : MonoBehaviour
 {
     // gameplay data, solo id's, arrays, nada de prefabs 
@@ -36,6 +37,7 @@ public class SharedGameManager : MonoBehaviour
 
     protected int myUnitIndex;
     protected Dictionary<int, SharedUnit> mySpawnedUnitDictionary;
+    //protected List<SharedUnit> myTechnologyAuxiliaryUnits;
 
     private int myToLoad;
     private int myLoaded;
@@ -49,6 +51,7 @@ public class SharedGameManager : MonoBehaviour
         myMatchWinner = MatchWinner.NO_WINNER;
         myPlayersReferenceList = new List<SharedPlayer>();
         mySpawnedUnitDictionary = new Dictionary<int, SharedUnit>();
+        //myTechnologyAuxiliaryUnits = new List<SharedUnit>();
     }
 
     private bool MyHasLoaded()
@@ -136,19 +139,57 @@ public class SharedGameManager : MonoBehaviour
 
         List<CardId> cards = deck.GetCards();
         cards = ShuffleItemsWithSeed(cards.ToArray(), aSeed).ToList();
-        //set deck? or is this enough?
+        deck.SetCards(cards);
         return deck;
     }
 
     private SharedDeck GetDeckFromId(int aDeckId) // TODO
     {
-        List<CardId> cards = new() { 
-            CardId.CARD_BASIC_UNIT_TEST, 
-            CardId.CARD_FENIX_SPAWNER, 
-            CardId.CARD_TANK_SPAWNER, 
-            CardId.CARD_HUNTER_SPAWNER, 
-            CardId.CARD_TRAVELER_SPAWNER, 
-            CardId.CARD_ROCKET_SPAWNER };
+        List<CardId> cards = new() 
+        {
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_TANK_SPAWNER,
+            CardId.CARD_HUNTER_SPAWNER,
+            CardId.CARD_TRAVELER_SPAWNER,
+            CardId.CARD_ROCKET_SPAWNER,
+            CardId.CARD_FENIX_SPAWNER,
+            //CardId.CARD_REPAIR_STATION
+        };
 
         SharedDeck deck = new SharedDeck("testDeck", cards);
         deck.SetMothership(CardId.CARD_MOTHERSHIP_TEST);
@@ -159,7 +200,7 @@ public class SharedGameManager : MonoBehaviour
     {
         SharedPlayer player = GetPlayerFromPlayerSessionId(aPlayerSessionId);
 
-        if(player == null)
+        if (player == null)
         {
             return;
         }
@@ -183,13 +224,19 @@ public class SharedGameManager : MonoBehaviour
             {
                 unit.DisableUnit();
             }
-            unit.RefreshUnit(); // This refreshes ability/status effect timers and resets sprites
+            unit.RefreshUnit(false); // This refreshes ability/status effect timers and resets sprites
         }
+
+        //for(int i = 0; i < myTechnologyAuxiliaryUnits.Count; i++)
+        //{
+        //    myTechnologyAuxiliaryUnits[i].RefreshUnit(true);
+        //}
 
         DoDrawCard(); // Only applies to current player
         myCurrentPlayerReference.IncreaseCurrentMaximumEnergy();
         myCurrentPlayerReference.FillEnergy();
-        UseAllAliveUnitsAbilities(); //TODO: disabled until this feature is fully implemented
+        UseAllAliveUnitsAbilities();
+        //UseAllUsedTechnologyAbilities();
     }
 
     protected virtual void MatchEnd(string aWinner)
@@ -245,7 +292,7 @@ public class SharedGameManager : MonoBehaviour
 
         SharedTile tile = myBoardReference.GetTile(aCoord);
 
-        if(tile == null)
+        if (tile == null)
         {
             return null;
         }
@@ -255,7 +302,7 @@ public class SharedGameManager : MonoBehaviour
         Vector3 unitPosition = tile.transform.position;
         unitPosition.y += 20;
 
-        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(tile.transform, unitPosition, myCurrentPlayerReference, false, tile.GetCoordinate(), unitCardData.myUnitId, myUnitIndex);
+        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(tile.transform, unitPosition, myCurrentPlayerReference, false, tile.GetCoordinate(), unitCardData.myUnitId, cardData.myId, myUnitIndex);
         bool canAffordCard = myCurrentPlayerReference.TrySubstractEnergyCost(cardData.myCost);
 
         if (spawnedUnit == null || !canAffordCard)
@@ -263,6 +310,8 @@ public class SharedGameManager : MonoBehaviour
             Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoSpawnUnitFromCard()");
             return null;
         }
+
+        myCurrentPlayerReference.RemoveCardFromHand(aUnitCardId);
 
         tile.SetUnit(spawnedUnit);
         spawnedUnit.DisableUnit();
@@ -294,7 +343,7 @@ public class SharedGameManager : MonoBehaviour
         Vector3 unitPosition = aTile.transform.position;
         unitPosition.y += 20;
 
-        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(aTile.transform, unitPosition, anOwnerPlayer, false, aTile.GetCoordinate(), unitCardData.myUnitId, myUnitIndex);
+        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(aTile.transform, unitPosition, anOwnerPlayer, false, aTile.GetCoordinate(), unitCardData.myUnitId, cardData.myId, myUnitIndex);
 
         if (spawnedUnit == null)
         {
@@ -312,7 +361,7 @@ public class SharedGameManager : MonoBehaviour
         return spawnedUnit;
     }
 
-    public virtual SharedUnit ForceSpawnAuxiliaryUnit(SharedTile aTile)
+    public virtual SharedUnit ForceSpawnAuxiliaryUnit(SharedTile aTile, CardId cardId)
     {
         if (!MyHasLoaded())
         {
@@ -320,7 +369,7 @@ public class SharedGameManager : MonoBehaviour
             return null;
         }
 
-        CardData cardData = myDataLoaderReference.GetCardData(CardId.CARD_MOTHERSHIP_TEST);
+        CardData cardData = myDataLoaderReference.GetCardData(cardId);
 
         if (cardData.myCardType == CardType.INVALID)
         {
@@ -328,52 +377,92 @@ public class SharedGameManager : MonoBehaviour
             return null;
         }
 
-        UnitCardData unitCardData = cardData as UnitCardData;
-
+        SharedUnit spawnedUnit;
         Vector3 unitPosition = aTile.transform.position;
         unitPosition.y += 20;
 
-        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(aTile.transform, unitPosition, myCurrentPlayerReference, false, aTile.GetCoordinate(), unitCardData.myUnitId, myUnitIndex);
-
-        if (spawnedUnit == null)
+        if (cardData.myCardType == CardType.UNIT || cardData.myCardType == CardType.MOTHERSHIP)
         {
-            Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - ForceSpawnAuxiliaryUnit()");
-            return null;
+            UnitCardData unitCardData = cardData as UnitCardData;
+            spawnedUnit = myGameFactoryReference.CreateUnit(aTile.transform, unitPosition, myCurrentPlayerReference, false, aTile.GetCoordinate(), unitCardData.myUnitId, cardData.myId, myUnitIndex);
+
+            if (spawnedUnit == null)
+            {
+                Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - ForceSpawnAuxiliaryUnit()");
+                return null;
+            }
+
+            //aTile.SetUnit(spawnedUnit);
+            return spawnedUnit;
         }
+        //else if(cardData.myCardType == CardType.TECHNOLOGY)
+        //{
+        //    AbilityCardData abilityCardData = cardData as AbilityCardData;
+        //    AbilityId abilityId = abilityCardData.myAbilityId;
+        //    spawnedUnit = myGameFactoryReference.CreateTechnologyAuxiliaryUnit(aTile.transform, unitPosition, myCurrentPlayerReference, false, aTile.GetCoordinate(), abilityId);
 
-        aTile.SetUnit(spawnedUnit);
-        return spawnedUnit;
-    }
-
-    public virtual List<SharedTile> DoUseTechnologyCard(CardId aTechnologyCardId, Vector2Int aCoord)
-    {
-        if (!MyHasLoaded() || myBoardReference == null)
-        {
-            Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoUseTechnologyCard()");
-            return null;
-        }
-
-        if (myMatchState != MatchState.PLAYER_TURN)
-        {
-            return null;
-        }
-
-        SharedTile tile = myBoardReference.GetTile(aCoord);
-        CardData cardData = myDataLoaderReference.GetCardData(aTechnologyCardId);
-        if (cardData.myCardType != CardType.TECHNOLOGY || tile == null)
-        {
-            Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoUseTechnologyCard()");
-            return null;
-        }
-
-        AbilityCardData abilityCardData = cardData as AbilityCardData;
-
-        // Create technology prefab that is assigned an ability script. Fill that script with its data and use the abilityEffect
-
-
-        //TODO
+        //    if (spawnedUnit == null)
+        //    {
+        //        Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - ForceSpawnAuxiliaryUnit()");
+        //        return null;
+        //    }
+        //    return spawnedUnit;
+        //}   
         return null;
     }
+
+    // Commented for future implementation
+    //public virtual Task<List<SharedTile>> DoUseTechnologyCard(CardId aTechnologyCardId, Vector2Int aCoord)
+    //{
+    //    if (!MyHasLoaded() || myBoardReference == null)
+    //    {
+    //        Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoUseTechnologyCard()");
+    //        return null;
+    //    }
+
+    //    if (myMatchState != MatchState.PLAYER_TURN)
+    //    {
+    //        return null;
+    //    }
+
+    //    SharedTile tile = myBoardReference.GetTile(aCoord);
+    //    CardData cardData = myDataLoaderReference.GetCardData(aTechnologyCardId);
+
+    //    if (cardData.myCardType != CardType.TECHNOLOGY || tile == null)
+    //    {
+    //        Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoUseTechnologyCard()");
+    //        return null;
+    //    }
+
+    //    AbilityCardData abilityCardData = cardData as AbilityCardData;
+    //    SharedUnit auxiliaryUnit = ForceSpawnAuxiliaryUnit(tile, aTechnologyCardId);
+
+    //    if (abilityCardData.myIsInvisible)
+    //    {
+    //        auxiliaryUnit.MakeInvisible();
+    //    }
+
+    //    myGameFactoryReference.AddAbilityComponent(auxiliaryUnit.gameObject, abilityCardData.myAbilityId);
+
+    //    if(!auxiliaryUnit.CanAffordAbility())
+    //    {
+    //        Destroy(auxiliaryUnit.gameObject);
+    //        return null;
+    //    }
+
+    //    SharedAbility ability = auxiliaryUnit.GetAbility();
+    //    List<SharedTile> castTiles = myBoardReference.GetShapeFromCenterTileCoord(ability.GetIncludesCenter(), ability.GetShape(), ability.GetShapeSize(), tile.GetCoordinate());        
+    //    auxiliaryUnit.UseAbility(castTiles);
+
+    //    if(auxiliaryUnit.GetAbility() != null)
+    //    {
+    //        myTechnologyAuxiliaryUnits.Add(auxiliaryUnit);
+    //    }
+
+    //    //Captain health check is done in server
+
+    //    return Task.FromResult(castTiles);
+    //}
 
     public virtual SharedUnit DoMoveUnit(int aUnitId, Vector2Int aCoord)
     {
@@ -382,7 +471,7 @@ public class SharedGameManager : MonoBehaviour
             Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoMoveUnit()");
             return null;
         }
-        
+
         SharedTile tile = myBoardReference.GetTile(aCoord);
         SharedUnit unit = GetUnit(aUnitId);
 
@@ -447,6 +536,8 @@ public class SharedGameManager : MonoBehaviour
         defendingUnit.ModifyShield(-attackingUnit.GetAttack());
         attackingUnit.ModifyShield(-defendingUnit.GetAttack());
 
+        //Captain health check is done in server
+
         attackingUnit.DisableUnit();
 
         return Task.FromResult(affectedUnits);
@@ -477,15 +568,12 @@ public class SharedGameManager : MonoBehaviour
         SharedAbility ability = castingUnit.GetAbility();
         List<SharedTile> castTiles = myBoardReference.GetShapeFromCenterTileCoord(ability.GetIncludesCenter(), ability.GetShape(), ability.GetShapeSize(), tile.GetCoordinate());
 
-        //TODO check captains
+        //Captain health check is done in server
 
         castingUnit.UseAbility(castTiles);
-        return Task.FromResult(castTiles);
-    }
+        castingUnit.DisableUnit();
 
-    public virtual void DoUseTechnologyCard()
-    {
-        // TODO
+        return Task.FromResult(castTiles);
     }
 
     public virtual CardId DoDrawCard()
@@ -519,6 +607,26 @@ public class SharedGameManager : MonoBehaviour
         return Task.CompletedTask;
     }
 
+    // Commented for future implementation
+    //protected virtual Task UseAllUsedTechnologyAbilities() // Async in clientGameManager if we end up adding animations
+    //{
+    //    for (int i = 0; i < myTechnologyAuxiliaryUnits.Count; i++)
+    //    {
+    //        SharedUnit auxUnit = myTechnologyAuxiliaryUnits[i];
+
+    //        if (!auxUnit.GetAbility().IsAbilityActive())
+    //        {
+    //            myTechnologyAuxiliaryUnits.RemoveAt(i);
+    //            Destroy(auxUnit);
+    //        }
+    //        else
+    //        {
+    //            auxUnit.CastAbilityEffect();
+    //        }
+    //    }
+    //    return Task.CompletedTask;
+    //}
+
     protected virtual Task TryUseAbilityOnUnit(SharedUnit spawnedUnit) // Async in clientGameManager if we end up adding animations
     {
         foreach (KeyValuePair<int, SharedUnit> entry in mySpawnedUnitDictionary)
@@ -530,6 +638,16 @@ public class SharedGameManager : MonoBehaviour
                 otherUnit.GetAbility().TryApplyEffectOnUnit(spawnedUnit);
             }
         }
+
+        //for (int i = 0; i < myTechnologyAuxiliaryUnits.Count; i++)
+        //{
+        //    SharedUnit auxUnit = myTechnologyAuxiliaryUnits[i];
+
+        //    if (auxUnit.GetAbility().IsAbilityActive())
+        //    {
+        //        auxUnit.GetAbility().TryApplyEffectOnUnit(spawnedUnit);
+        //    }
+        //}
         return Task.CompletedTask;
     }
 
@@ -569,15 +687,25 @@ public class SharedGameManager : MonoBehaviour
 
         List<SharedTile> spawnTiles = myBoardReference.GetShapeFromCenterTileCoord(false, AreaShape.SQUARE, 1, myCurrentPlayerReference.GetCaptainsPosition());
 
-        for (int i = 0; i < spawnTiles.Count; i++)
+        foreach (KeyValuePair<int, SharedUnit> entry in mySpawnedUnitDictionary)
         {
-            SharedTile tile = spawnTiles[i];
+            SharedUnit unit = entry.Value;
 
-            if (tile.GetUnit() != null || !tile.GetCanSpawn())
+            if(unit.GetPlayer().Equals(myCurrentPlayerReference) && unit.GetIsSpawner())
             {
-                spawnTiles.RemoveAt(i);
+                List<SharedTile> unitSpawnTiles = myBoardReference.GetShapeFromCenterTileCoord(false, AreaShape.CROSS, 1, unit.GetPosition());
+
+                foreach(SharedTile tile in unitSpawnTiles)
+                {
+                    if(!spawnTiles.Contains(tile))
+                    {
+                        spawnTiles.Add(tile);
+                    }
+                }
             }
         }
+
+        spawnTiles.RemoveAll(tile => tile.GetIsBlocked() || tile.GetUnit() != null || !tile.GetCanSpawn());
         return spawnTiles;
     }
 
@@ -623,7 +751,6 @@ public class SharedGameManager : MonoBehaviour
                     tilesToSearchCount--; // Range gets shortened by one aTile
                 }
             }
-
         }
 
         return possibleAttackTiles;

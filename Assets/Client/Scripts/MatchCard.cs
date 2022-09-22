@@ -118,11 +118,6 @@ public class MatchCard : SharedCard, IPointerDownHandler, IBeginDragHandler, IDr
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (myMatchSceneUIManager.IsPlayerInputLocked())
-        {
-            return;
-        }
-
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(myRectTransform, eventData.position, eventData.pressEventCamera, out var globalMousePosition))
         {
             myRectTransform.position = globalMousePosition;
@@ -134,6 +129,7 @@ public class MatchCard : SharedCard, IPointerDownHandler, IBeginDragHandler, IDr
     {
         if (myMatchSceneUIManager.IsPlayerInputLocked())
         {
+            ResetCard();
             return;
         }
 

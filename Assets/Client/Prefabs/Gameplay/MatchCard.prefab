@@ -211,6 +211,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3134465630187467711, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_text
+      value: Lorem
+      objectReference: {fileID: 0}
     - target: {fileID: 3469397741393137520, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_Color.g
       value: 0.44705883
@@ -219,6 +223,12 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.078431375
       objectReference: {fileID: 0}
+    - target: {fileID: 3553890071063310547, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_text
+      value: '- Lorem ipsum dolor sit amet
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 4014839008397578676, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -243,6 +253,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4428849685763552515, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588747199317619007, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_text
+      value: UNIT
+      objectReference: {fileID: 0}
+    - target: {fileID: 4588747199317619007, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_characterSpacing
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5168964899812185931, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -266,6 +288,12 @@ PrefabInstance:
     - target: {fileID: 5168964899812185931, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358744616962834635, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_text
+      value: '- Lorem ipsum dolor sit amet
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 6381776507386770659, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_AnchorMax.y
@@ -302,6 +330,14 @@ PrefabInstance:
     - target: {fileID: 6396316102965570629, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6782753287419154095, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_text
+      value: Lorem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8782301755386801746, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_text
+      value: '- Lorem ipsum dolor sit amet'
       objectReference: {fileID: 0}
     - target: {fileID: 8871406438747358843, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_Name
@@ -347,6 +383,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1645102498520988530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4428849685763552515, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+  m_PrefabInstance: {fileID: 3144351825385885297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1941912785835146914 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3553890071063310547, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
@@ -413,6 +454,7 @@ MonoBehaviour:
   myATKDisplay: {fileID: 6199189326817400109}
   myExtraStatsPanel: {fileID: 464082950556137929}
   myAbilityDescriptionPanel: {fileID: 1194146511122440331}
+  mySummonerTag: {fileID: 1645102498520988530}
   myTitleText: {fileID: 62241915760065998}
   myCostText: {fileID: 6901043914262484956}
   myHitPointsText: {fileID: 8542140003857361395}

@@ -4,36 +4,37 @@ using UnityEngine.EventSystems;
 
 public class HandleTooltipOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [TextArea][SerializeField] private string _message;
-    private TooltipScreenSpaceUI _tooltip;
-    private bool _isHovered;
+    [TextArea][SerializeField] private string myMessage;
+    private TooltipScreenSpaceUI myTooltip;
+    private bool myIsHovered;
 
     void Awake()
     {
-        _tooltip = FindObjectOfType<TooltipScreenSpaceUI>();
+        myTooltip = FindObjectOfType<TooltipScreenSpaceUI>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _isHovered = true;
+        myIsHovered = true;
 
         StartCoroutine(HoverTimer());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _isHovered = false;
-        _tooltip.MakeInvisible();
+        myIsHovered = false;
+        myTooltip.MakeInvisible();
         StopCoroutine(HoverTimer());
     }
 
     private IEnumerator HoverTimer()
     {
-        yield return new WaitForSeconds(2f);
-        if(_isHovered)
+        yield return new WaitForSeconds(1.5f);
+        if(myIsHovered)
         {
-            _tooltip.SetText(_message);
-            _tooltip.MakeVisible();
+            myTooltip.SetText(myMessage);
+            myTooltip.MakeVisible();
         }
+        yield return null;
     }
 }

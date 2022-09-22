@@ -28,12 +28,14 @@ namespace Assets.Shared.Scripts.Messages.Client
     {
         public LobbyMessageIdClient myMessageId;
         public string myPlayerSessionId;
+        public string myUsername;
         public bool myLobbyOwner;
 
-        public ClientLobbyMessage(LobbyMessageIdClient aMessageId, string aPlayerSessionId, bool aLobbyOwner) : base()
+        public ClientLobbyMessage(LobbyMessageIdClient aMessageId, string aPlayerSessionId, string aUsername, bool aLobbyOwner) : base()
         {
             myMessageId = aMessageId;
             myPlayerSessionId = aPlayerSessionId;
+            myUsername = aUsername;
             myLobbyOwner = aLobbyOwner;
         }
 
@@ -100,13 +102,15 @@ namespace Assets.Shared.Scripts.Messages.Client
         public ReadyStatusMessageId myMessageId;
         public string myPlayerId;
         public bool myIsReady;
+        public string myUsername;
         public int myDeckId;
 
-        public ClientPlayerReadyStatusMessage(ReadyStatusMessageId aMessageId, string aPlayerId, bool aIsReady, int aDeckId = -1) : base()
+        public ClientPlayerReadyStatusMessage(ReadyStatusMessageId aMessageId, string aPlayerId, bool aIsReady, string aUsername = "", int aDeckId = -1) : base()
         {
             myMessageId = aMessageId;
             myPlayerId = aPlayerId;
             myIsReady = aIsReady;
+            myUsername = aUsername;
             myDeckId = aDeckId;
         }
 

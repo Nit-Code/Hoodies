@@ -5,19 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Client/Scenes/PersistentScene.unity
     guid: a0c10a187978f5b4eb97554199d43379
-  - enabled: 1
+  - enabled: 0
     path: Assets/Client/Scenes/LoginScene_Imported.unity
     guid: 2b62051860972a64fb5926b1965470ba
-  - enabled: 1
+  - enabled: 0
     path: Assets/Client/Scenes/MenuScene_Imported.unity
     guid: d02cdc2356dbf3d4aa139bdc61acd2e7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Client/Scenes/MatchScene.unity
     guid: 2be6d95d8802a5443a4cce0aa7b39e79
-  - enabled: 0
+  - enabled: 1
     path: Assets/Server/Scenes/ServerBaseScene.unity
     guid: 9a9dacf1b8286064dad693c152600f62
   m_configObjects: {}

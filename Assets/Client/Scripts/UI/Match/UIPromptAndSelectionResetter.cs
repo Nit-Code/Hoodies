@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIPromptReseter : MonoBehaviour, IPointerClickHandler
+public class UIPromptAndSelectionResetter : MonoBehaviour, IPointerClickHandler
 {
     MatchSceneUIManager myMatchSceneUIManager;
     ClientGameManager myGameManager;
@@ -21,11 +21,5 @@ public class UIPromptReseter : MonoBehaviour, IPointerClickHandler
             myGameManager.ResetPlayerSelections();
             
         }
-        // TODO: commented code?
-        //if (myGameManagerReference.myIsCastingUnitAbility)
-        //{
-        //    myGameManagerReference.myIsCastingUnitAbility = false;
-        //    myMatchSceneUIManagerReference.UpdateAbilityButtonStatus(null);
-        //}
     }
 }
