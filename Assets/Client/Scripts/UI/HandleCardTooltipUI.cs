@@ -17,10 +17,12 @@ public class HandleCardTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointer
 
     private void Start()
     {
+#if !UNITY_SERVER
         myTile = this.GetComponent<SharedTile>();
         myCard = GameObject.FindWithTag("TooltipCard").GetComponent<SharedCard>();
         myDataLoaderReference = FindObjectOfType<SharedDataLoader>();
         myTooltipReference = FindObjectOfType<CardTooltipScreenSpaceUI>();
+#endif
     }
 
     public void OnPointerEnter(PointerEventData eventData)

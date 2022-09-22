@@ -31,6 +31,8 @@ public class MatchSceneUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI myPlayer2UsernameText;
     [SerializeField] Button myEndTurnButton;
     [SerializeField] Button mySurrenderButton;
+    [SerializeField] Button myBackToMenuButton;
+    [SerializeField] TextMeshProUGUI myBackToMenuButtonText;
 
 
     [SerializeField] GameObject myMatchEndContainer;
@@ -101,6 +103,14 @@ public class MatchSceneUIManager : MonoBehaviour
 
     public void ShowMatchEndPanel(MatchStateMessageId anEndState, string aWinnerName, Color32 aBorderColor)
     {
+        if (!CLU.GetIsConnectLocalEnabled())
+        {
+            myBackToMenuButtonText.text = "Back to main menu";
+        }
+        else {
+            myBackToMenuButtonText.text = "Exit game";
+        }
+
         myPlayerInputLocked = true;
 
         if (anEndState == MatchStateMessageId.END_DRAW)

@@ -7,10 +7,11 @@ public class ActionPromptUI : MonoBehaviour
     private Button myButton;
     private TextMeshProUGUI myButtonText;
     private RectTransform myRectTransform;
-    private Canvas myPromptCanvas;
+    private RectTransform myCanvasRectTransform;
+    private Canvas myPromptParentCanvas;
     private Color myOriginalTextColor;
     private PromptOption myCurrentOption;
-    
+
 
     //reference
     private ClientGameManager myGameManagerReference;
@@ -27,10 +28,12 @@ public class ActionPromptUI : MonoBehaviour
     private void Awake()
     {
         myButton = GetComponentInChildren<Button>();
-        myButtonText = GetComponentInChildren<TextMeshProUGUI>();
-        myRectTransform = GetComponent<RectTransform>();
-        myPromptCanvas = GetComponent<Canvas>();
+        myButtonText = myButton.transform.GetComponentInChildren<TextMeshProUGUI>();
         myOriginalTextColor = myButtonText.color;
+
+        myRectTransform = GetComponent<RectTransform>();
+        myCanvasRectTransform = transform.parent.GetComponent<RectTransform>();
+        myPromptParentCanvas = myCanvasRectTransform.GetComponent<Canvas>(); 
     }
 
     private void Start()
@@ -46,10 +49,10 @@ public class ActionPromptUI : MonoBehaviour
             return;
         }
 
-        myRectTransform.anchoredPosition = Input.mousePosition;// / myRectTransform.localScale.x;//new Vector3(70,15,0);
+        myRectTransform.anchoredPosition = Input.mousePosition / myCanvasRectTransform.localScale.x;//new Vector3(70,15,0);
 
         myClickedTileReference = aTile;
-        
+
         switch (aPromptOption)
         {
             case PromptOption.ATTACK:
@@ -77,13 +80,13 @@ public class ActionPromptUI : MonoBehaviour
 
     private void MakeVisible()
     {
-        myPromptCanvas.enabled = true;
+        myPromptParentCanvas.enabled = true;
     }
 
     public void MakeInvisible()
     {
         myCurrentOption = PromptOption.NONE; // We put this here, so it's easy to reset its aPromptOption when a turn ends. (One of the things we do when ending turns is making the prompt invisible)
-        myPromptCanvas.enabled = false;
+        myPromptParentCanvas.enabled = false;
     }
 
     public void RequestAction()
@@ -97,7 +100,7 @@ public class ActionPromptUI : MonoBehaviour
         {
             myGameManagerReference.TryRequestAttackUnit(myClickedTileReference);
         }
-        else if(myCurrentOption == PromptOption.MOVE)
+        else if (myCurrentOption == PromptOption.MOVE)
         {
             myGameManagerReference.TryRequestMoveUnit(myClickedTileReference);
         }

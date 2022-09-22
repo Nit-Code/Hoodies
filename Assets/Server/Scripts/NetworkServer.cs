@@ -555,10 +555,11 @@ public class NetworkServer : MonoBehaviour
             foreach (KeyValuePair<int, string> playerSession in myPlayerSessionsMap)
             {
                 myGameLiftServerReference.RemovePlayerSession(playerSession.Value);
-            }
-            myGameLiftServerReference.HandleGameEnd();
-        }else
-            myServer.Stop();
+            }            
+        }
+        myGameLiftServerReference.HandleGameEnd();
+        /*else
+            myServer.Stop();*/
         //Disconnect everyone from telepathy
         foreach (int connectionId in myConnectionIdMap.Values)
         {

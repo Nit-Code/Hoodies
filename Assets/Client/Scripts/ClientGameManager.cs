@@ -249,16 +249,17 @@ public class ClientGameManager : SharedGameManager
         yield return new WaitForSeconds(2f);
 
         SharedPlayer player = GetPlayerFromPlayerSessionId(aWinner);
+        string aWinnerName = player.GetUsername();
 
         if(player != null) // Somebody won
         {
             if (aWinner == myLocalPlayer.GetSessionId()) // If I won
             {
-                myMatchSceneUIManagerReference.ShowMatchEndPanel(MatchStateMessageId.END_WINNER, aWinner, new Color32(170, 232, 255, 255));
+                myMatchSceneUIManagerReference.ShowMatchEndPanel(MatchStateMessageId.END_WINNER, aWinnerName, new Color32(170, 232, 255, 255));
             }
             else // If I lost
             {
-                myMatchSceneUIManagerReference.ShowMatchEndPanel(MatchStateMessageId.END_WINNER, aWinner, Color.red);
+                myMatchSceneUIManagerReference.ShowMatchEndPanel(MatchStateMessageId.END_WINNER, aWinnerName, Color.red);
             }
             yield return null;
         }

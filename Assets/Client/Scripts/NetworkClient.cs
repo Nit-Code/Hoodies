@@ -509,6 +509,9 @@ public class NetworkClient : MonoBehaviour
 
     public void LeaveEndedMatch()
     {
-        mySceneControllerReference.LoadScene(SceneId.MENU);
+        if (!CLU.GetIsConnectLocalEnabled())
+            mySceneControllerReference.LoadScene(SceneId.MENU);
+        else
+            Application.Quit();
     }
 }

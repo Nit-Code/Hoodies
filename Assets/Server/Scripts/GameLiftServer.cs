@@ -222,12 +222,11 @@ public class GameLiftServer : MonoBehaviour
 
     private void FinalizeLocalServerProcessShutdown()
     {
-        Shared.Log("[HOOD][SERVER][GAMELIFT] - FinalizeLocalServerProcessShutdown");
-        /*
+        Shared.Log("[HOOD][SERVER][GAMELIFT] - FinalizeLocalServerProcessShutdown");        
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
-#endif*/
+#endif
     }
 }
