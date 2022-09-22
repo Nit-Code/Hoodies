@@ -1,10 +1,12 @@
 # Hoodies
+```
   _   _                 _ _               ____                  
  | | | | ___   ___   __| (_) ___  ___    |  _ \ ___ _ __   ___  
  | |_| |/ _ \ / _ \ / _` | |/ _ \/ __|   | |_) / _ \ '_ \ / _ \ 
  |  _  | (_) | (_) | (_| | |  __/\__ \   |  _ <  __/ |_) | (_) |
  |_| |_|\___/ \___/ \__,_|_|\___||___/___|_| \_\___| .__/ \___/ 
                                     |_____|        |_|          
+```									
 ## Para obtener ejecutables 
 1. [Acceder al FinalDistribution/FinalDistribution.zip](https://github.com/SpaceGauchoDev/Hoodies/blob/main/FinalDistribution/FinalDistribution.zip)
 2. Descargar el archivo con el botón de "Download" o "Descarga", en la parte central derecha de la pantalla.
