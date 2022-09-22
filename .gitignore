@@ -68,3 +68,7 @@ crashlytics-build.properties
 # Lambda project
 .Lambda/HoodiesLambda/bin/
 .Lambda/HoodiesLambda/obj/
+
+# .bat launchers
+/[Ff]inalDistribution/LocalTesting.bat
+/[Ff]inalDistribution/RemoteTesting.bat
