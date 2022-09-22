@@ -20,6 +20,18 @@ Es necesario registrarse con un email valido, verificar la cuenta y finalmente a
 Debe hacer esto por cada cliente, es decir un mínimo de dos registros para una partida, pero solo una vez. 
 Si ya lo hizo en una session de validación anterior puede usar las credenciales ya generadas.
 
+Alternativamente se pueden usar los siguientes usuarios que ya se encuentran registrados en nuestro servicio de autenticación.
+
+```		
+Nombre de usuario (email): kanepam479@moenode.com
+Contraseña: KQ]s3]Qr0qL
+```		
+
+```	
+Nombre de usuario (email): mokolep135@oncebar.com
+Contraseña: KQ]s3]Qr0qL
+```	
+
 ### Sesión de validación local
 Dos clientes y un servidor serán lanzados en su computadora. 
 Este tipo de ejecución fue muy usado durante el desarrollo ya que permite depurar el flujo completo de juego, exceptuando la interacción con la API de AWS GameLift.
