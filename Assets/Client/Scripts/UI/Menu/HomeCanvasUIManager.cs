@@ -30,6 +30,7 @@ public class HomeCanvasUIManager : MonoBehaviour
     [SerializeField] private MenuSceneUIManager myMenuSceneUIManagerReference;
     private AudioManager myAudioManagerReference;
     private AuthenticationManager myAuthenticationManagerReference;
+    private Settings mySettingsReference;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class HomeCanvasUIManager : MonoBehaviour
     {
         myAuthenticationManagerReference = FindObjectOfType<AuthenticationManager>();
         myAudioManagerReference = FindObjectOfType<AudioManager>();
+        mySettingsReference = FindObjectOfType<Settings>();
         //TODO: add error logs if references arent found
 
         ShowMainMenuArea();
@@ -118,6 +120,33 @@ public class HomeCanvasUIManager : MonoBehaviour
         }
     }
 
+    private void ShowOptionsArea()
+    {
+        if (mySettingsReference != null) 
+        {
+            float volumeMaster = mySettingsReference.GetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_MASTER, true);
+            myMasterSlider.SetValueWithoutNotify(volumeMaster);
+
+            float volumeMusic = mySettingsReference.GetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_MUSIC, true);
+            myMusicSlider.SetValueWithoutNotify(volumeMusic);
+
+            float volumeAmbient = mySettingsReference.GetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_AMBIENT, true);
+            myAmbientSlider.SetValueWithoutNotify(volumeAmbient);
+
+            float volumeSound = mySettingsReference.GetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_SOUND, true);
+            mySoundSlider.SetValueWithoutNotify(volumeSound);
+        }
+
+        if (myOptionsArea != null)
+        {
+            UnloadMainMenuAreaUI();
+
+            myOptionsArea.SetActive(true);
+            myTitleText.SetText("OPTIONS");
+            myTitleText.fontSize = 180;
+        }
+    }
+
     #region OnInput
     public void OnMyDecksButton()
     {
@@ -165,15 +194,7 @@ public class HomeCanvasUIManager : MonoBehaviour
     public void OnOptionsButton()
     {
         PlaySound(AudioId.SOUND_MENU_CLICK);
-        
-        if (myOptionsArea != null)
-        {
-            UnloadMainMenuAreaUI();
-
-            myOptionsArea.SetActive(true);
-            myTitleText.SetText("OPTIONS");
-            myTitleText.fontSize = 180;
-        }   
+        ShowOptionsArea();
     }
 
     public void OnLogOutButton()
@@ -234,24 +255,76 @@ public class HomeCanvasUIManager : MonoBehaviour
     }
 
     // OPTIONS
-    public void HandleMasterVolumeSlider()
+    public void HandleMasterVolumeSliderUpdate()
     {
-        myAudioManagerReference.ChangeMasterVolume(myMasterSlider.value);
+        if (mySettingsReference == null) 
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleMasterVolumeSliderUpdate()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_MASTER, myMasterSlider.value, false);
     }
 
-    public void HandleMusicVolumeSlider()
+    public void HandleMasterVolumeSliderSubmit()
     {
-        myAudioManagerReference.ChangeMusicMasterVolume(myMusicSlider.value);
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleMasterVolumeSliderSubmit()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_MASTER, myMasterSlider.value, true);
     }
 
-    public void HandleAmbientVolumeSlider()
+    public void HandleMusicVolumeSliderUpdate()
     {
-        myAudioManagerReference.ChangeAmbientMasterVolume(myAmbientSlider.value);
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleMusicVolumeSliderUpdate()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_MUSIC, myMusicSlider.value, false);
     }
 
-    public void HandleSoundVolumeSlider()
+    public void HandleMusicVolumeSliderSubmit()
     {
-        myAudioManagerReference.ChangeSoundVolume(mySoundSlider.value);
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleMusicVolumeSliderSubmit()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_MUSIC, myMusicSlider.value, true);
+    }
+
+    public void HandleAmbientVolumeSliderUpdate()
+    {
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleAmbientVolumeSliderUpdate()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_AMBIENT, myAmbientSlider.value, false);
+    }
+
+    public void HandleAmbientVolumeSliderSubmit()
+    {
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleAmbientVolumeSliderSubmit()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_AMBIENT, myAmbientSlider.value, true);
+    }
+
+    public void HandleSoundVolumeSliderUpdate()
+    {
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleSoundVolumeSliderUpdate()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_SOUND, mySoundSlider.value, false);
+    }
+
+    public void HandleSoundVolumeSliderSubmit()
+    {
+        if (mySettingsReference == null)
+        {
+            Shared.LogError("[HOOD][CLIENT][SCENE] - missing reference at HandleSoundVolumeSliderSubmit()");
+        }
+        mySettingsReference.SetFloatRangeOptionValue(FloatRangeOptionId.VOLUME_SOUND, mySoundSlider.value, true);
     }
     #endregion
 

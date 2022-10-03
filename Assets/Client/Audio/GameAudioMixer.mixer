@@ -39,6 +39,20 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-3644605423012717750
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 9cf4163c590482e47bf3dc092e814be9
+  m_EffectName: Attenuation
+  m_MixLevel: 38d22cfbe94369e45a038dd712c83b7a
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-3548106646157687387
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -84,6 +98,8 @@ AudioMixerController:
     name: MusicVolume
   - guid: a10c566c299259e4a98783b39e8c6e92
     name: MusicMasterVolume
+  - guid: 34298d79f2ef2644e9a5db56fde4c582
+    name: SoundMasterVolume
   m_AudioMixerGroupViews:
   - guids:
     - ad746776f8b1bd546a38efc946abc67a
@@ -91,6 +107,7 @@ AudioMixerController:
     - ab30f724a46eed14db5f37b7379ca370
     - 5a7eb80e2a69ae849a0b8713ae766748
     - 828b4c6699008de43949e879ddc84e1d
+    - 31f67588b29e2f3448e5950fd36f5cd5
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -106,6 +123,7 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: -8890181478223434964}
   - {fileID: 448634848010273210}
+  - {fileID: 4586781851078828572}
   m_Volume: 0a688e65dc97c5546a64b278856f822a
   m_Pitch: 029f8aae465c54d47aad17185d7f25ed
   m_Send: 00000000000000000000000000000000
@@ -140,7 +158,7 @@ AudioMixerSnapshotController:
   m_SnapshotID: 34cfbfb966bf134409ddb913a7cea670
   m_FloatValues:
     6878b4059da07aa4c967d2ecbcbb2289: 0
-    0a688e65dc97c5546a64b278856f822a: 0
+    0a688e65dc97c5546a64b278856f822a: -22.71404
   m_TransitionOverrides: {}
 --- !u!244 &267624954159028658
 AudioMixerEffectController:
@@ -204,6 +222,25 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!243 &4586781851078828572
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SoundMaster
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 31f67588b29e2f3448e5950fd36f5cd5
+  m_Children: []
+  m_Volume: 34298d79f2ef2644e9a5db56fde4c582
+  m_Pitch: 8aa65a2c959793344b3d100cf2f812d5
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -3644605423012717750}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!244 &7081040234796708471
 AudioMixerEffectController:
   m_ObjectHideFlags: 3

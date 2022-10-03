@@ -257,6 +257,10 @@ public class SharedGameObjectFactory : MonoBehaviour
                     ability = aGameObject.AddComponent<RepairStation>();
                     ability.Init(aGameObject, data); // We do this every time in case that some abilities need extra parameters
                     break;
+                case AbilityId.KAMIKAZE:
+                    ability = aGameObject.AddComponent<Kamikaze>();
+                    ability.Init(aGameObject, data);
+                    break;
                 case AbilityId.INVALID:
                     break;
                 default:

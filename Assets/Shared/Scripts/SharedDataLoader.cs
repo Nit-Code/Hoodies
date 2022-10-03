@@ -52,6 +52,14 @@ public class SharedDataLoader : MonoBehaviour
     [SerializeField] private bool myIsRequiredTilesData;
     private Dictionary<TileType, TileData> myTiles;
 
+    [Space(10)]
+    [SerializeField] private Options_Def myOptionsData;
+    [SerializeField] private bool myIsRequiredFloatRangeOptionData;
+    private Dictionary<FloatRangeOptionId, FloatRangeOptionData> myFloatRangeOptions;
+
+    [SerializeField] private bool myIsRequiredBooleanOptionData;
+    private Dictionary<BooleanOptionId, BooleanOptionData> myBooleanOptions;
+
     private Dictionary<string, bool> myRequiredDatasMap;
     private Dictionary<string, bool> myLoadedDatasMap;
     private int myDataLoaded;
@@ -76,13 +84,15 @@ public class SharedDataLoader : MonoBehaviour
     {
         myDataLoaded = 0;
         myRequiredDatasMap = new Dictionary<string, bool>();
-        myRequiredDatasMap.Add(nameof(AudioData),           myIsRequiredAudiosData);
-        myRequiredDatasMap.Add(nameof(SceneData),           myIsRequiredScenesData);
-        myRequiredDatasMap.Add(nameof(StatusEffectData),    myIsRequiredStatusEffectsData);
-        myRequiredDatasMap.Add(nameof(AbilityData),         myIsRequiredAbilitiesData);
-        myRequiredDatasMap.Add(nameof(UnitData),            myIsRequiredUnitsData);
-        myRequiredDatasMap.Add(nameof(CardData),            myIsRequiredCardsData);
-        myRequiredDatasMap.Add(nameof(TileData),            myIsRequiredTilesData);
+        myRequiredDatasMap.Add(nameof(AudioData),               myIsRequiredAudiosData);
+        myRequiredDatasMap.Add(nameof(SceneData),               myIsRequiredScenesData);
+        myRequiredDatasMap.Add(nameof(StatusEffectData),        myIsRequiredStatusEffectsData);
+        myRequiredDatasMap.Add(nameof(AbilityData),             myIsRequiredAbilitiesData);
+        myRequiredDatasMap.Add(nameof(UnitData),                myIsRequiredUnitsData);
+        myRequiredDatasMap.Add(nameof(CardData),                myIsRequiredCardsData);
+        myRequiredDatasMap.Add(nameof(TileData),                myIsRequiredTilesData);
+        myRequiredDatasMap.Add(nameof(FloatRangeOptionData),    myIsRequiredFloatRangeOptionData);
+        myRequiredDatasMap.Add(nameof(BooleanOptionData),       myIsRequiredBooleanOptionData);
 
         myDataToLoad = 0;
         foreach (KeyValuePair<string, bool> toLoadData in myRequiredDatasMap)
@@ -126,6 +136,12 @@ public class SharedDataLoader : MonoBehaviour
                     case nameof(TileData):
                         myLoadedDatasMap.Add(nameof(TileData), LoadTiles());
                         break;
+                    case nameof(FloatRangeOptionData):
+                        myLoadedDatasMap.Add(nameof(FloatRangeOptionData), LoadFloatRangeOptions());
+                        break;
+                    case nameof(BooleanOptionData):
+                        myLoadedDatasMap.Add(nameof(BooleanOptionData), LoadBooleanOptions());
+                        break;
                     default:
                         break;
                 }
@@ -146,7 +162,7 @@ public class SharedDataLoader : MonoBehaviour
         GetDataTargetInfo();
         LoadTargetData();
 
-        if (!IsAllTargetDataLoaded()) 
+        if (!IsAllTargetDataLoaded())
         {
             Shared.LogError("[HOOD][LOAD][DATA] - Data load error, loaded: " + myDataLoaded + " out of: " + myDataToLoad);
 #if UNITY_EDITOR
@@ -154,6 +170,10 @@ public class SharedDataLoader : MonoBehaviour
 #else
             Application.Quit();
 #endif
+        }
+        else 
+        {
+            EventHandler.CallAfterDataLoadedEvent();
         }
     }
 
@@ -396,6 +416,114 @@ public class SharedDataLoader : MonoBehaviour
         }
     }
 
+    private bool LoadFloatRangeOptions()
+    {
+        bool success = false;
+
+        if (myOptionsData != null)
+        {
+            myFloatRangeOptions = new Dictionary<FloatRangeOptionId, FloatRangeOptionData>();
+            int validCount = 0;
+
+            foreach (FloatRangeOptionData option in myOptionsData.myFloatOptions)
+            {
+                if (option.myId != FloatRangeOptionId.INVALID)
+                {
+                    myFloatRangeOptions.Add(option.myId, option);
+                    validCount++;
+                }
+            }
+
+            success = validCount == myOptionsData.myFloatOptions.Count;
+        }
+
+        return success;
+    }
+
+    public FloatRangeOptionData GetFloatRangeOptionData(FloatRangeOptionId anId)
+    {
+        if (!IsSpecificDataLoaded(nameof(FloatRangeOptionData)))
+        {
+            Shared.LogError("[HOOD][OPTION][DATA] - GetFloatRangeOptionData attempt before load completed.");
+            return null;
+        }
+
+        if (myFloatRangeOptions.TryGetValue(anId, out FloatRangeOptionData optionData))
+        {
+            return optionData;
+        }
+        else
+        {
+            Shared.LogError("[HOOD][OPTION][DATA] - Invalid FloatRangeOptionId at GetFloatRangeOptionData.");
+            return null;
+        }
+    }
+
+    public Dictionary<FloatRangeOptionId, FloatRangeOptionData> GetAllFloatRangeOptionData()
+    {
+        if (!IsSpecificDataLoaded(nameof(FloatRangeOptionData)))
+        {
+            Shared.LogError("[HOOD][OPTION][DATA] - GetAllFloatRangeOptionData attempt before load completed.");
+            return null;
+        }
+
+        return myFloatRangeOptions;
+    }
+
+    private bool LoadBooleanOptions()
+    {
+        bool success = false;
+
+        if (myOptionsData != null)
+        {
+            myBooleanOptions = new Dictionary<BooleanOptionId, BooleanOptionData>();
+            int validCount = 0;
+
+            foreach (BooleanOptionData option in myOptionsData.myBooleanOptions)
+            {
+                if (option.myId != BooleanOptionId.INVALID)
+                {
+                    myBooleanOptions.Add(option.myId, option);
+                    validCount++;
+                }
+            }
+
+            success = validCount == myOptionsData.myBooleanOptions.Count;
+        }
+
+        return success;
+    }
+
+    public BooleanOptionData GetBooleanOptionData(BooleanOptionId anId)
+    {
+        if (!IsSpecificDataLoaded(nameof(BooleanOptionData)))
+        {
+            Shared.LogError("[HOOD][OPTION][DATA] - GetBooleanOptionData attempt before load completed.");
+            return null;
+        }
+
+        if (myBooleanOptions.TryGetValue(anId, out BooleanOptionData optionData))
+        {
+            return optionData;
+        }
+        else
+        {
+            Shared.LogError("[HOOD][OPTION][DATA] - Invalid BooleanOptionId at GetBooleanOptionData.");
+            return null;
+        }
+    }
+
+    public Dictionary<BooleanOptionId, BooleanOptionData> GetAllBooleanOptionData()
+    {
+        if (!IsSpecificDataLoaded(nameof(BooleanOptionData)))
+        {
+            Shared.LogError("[HOOD][OPTION][DATA] - GetAllBooleanOptionData attempt before load completed.");
+            return null;
+        }
+
+        return myBooleanOptions;
+    }
+
     private bool LoadCards()
     {
         bool success = false;
@@ -501,26 +629,4 @@ public class SharedDataLoader : MonoBehaviour
 
         return myTiles;
     }
-
-
-    //public List<TileData> GetTileDatasByType(TileType aType)
-    //{
-    //    if (!IsSpecificDataLoaded(nameof(TileData)))
-    //    {
-    //        Shared.LogError("[HOOD][TILE][DATA] - GetTileDatasByType attempt before load completed.");
-    //        return null;
-    //    }
-
-    //    List<TileData> tiles = new List<TileData>();
-    //    foreach (KeyValuePair<TileId, TileData> tileData in myTiles)
-    //    {
-    //        if (tileData.Value.myType == aType) 
-    //        {
-    //            tiles.Add(tileData.Value);
-    //        }
-    //    }
-
-    //    return tiles;
-    //}
-
 }

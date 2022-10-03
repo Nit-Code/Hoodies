@@ -16,7 +16,7 @@ MonoBehaviour:
   - myName: Improved Engines
     myId: 1
     myDescription: Unit Movement Range +2
-    myDuration: 2
+    myDuration: 4
     mySprite: {fileID: 0}
     myAnimationController: {fileID: 0}
     myUnitColor: {r: 0.84400004, g: 0.730838, b: 0, a: 1}

@@ -96,7 +96,7 @@ public class SharedGameManager : MonoBehaviour
                 break;
 
             case MatchState.END:
-                MatchEnd(aPlayerSessionId); // 
+                MatchEnd(aPlayerSessionId);  
                 break;
         }
     }
@@ -124,8 +124,6 @@ public class SharedGameManager : MonoBehaviour
         }
 
         myBoardReference.Init(aBoardInfo.seed, aBoardInfo.nebulaQty, aBoardInfo.blackHoleQty, aBoardInfo.width, aBoardInfo.height);
-
-        // TODO: Override in server
     }
 
     protected SharedDeck GetShuffledDeck(int aDeckId, int aSeed)
@@ -147,47 +145,47 @@ public class SharedGameManager : MonoBehaviour
     {
         List<CardId> cards = new() 
         {
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
-            CardId.CARD_TANK_SPAWNER,
-            CardId.CARD_HUNTER_SPAWNER,
-            CardId.CARD_TRAVELER_SPAWNER,
-            CardId.CARD_ROCKET_SPAWNER,
-            CardId.CARD_FENIX_SPAWNER,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_FENIX,
+            CardId.CARD_TANK,
+            CardId.CARD_TANK,
+            CardId.CARD_TANK,
+            CardId.CARD_TANK,
+            CardId.CARD_TANK,
+            CardId.CARD_TANK,
+            CardId.CARD_HUNTER,
+            CardId.CARD_HUNTER,
+            CardId.CARD_HUNTER,
+            CardId.CARD_HUNTER,
+            CardId.CARD_HUNTER,
+            CardId.CARD_HUNTER,
+            CardId.CARD_HUNTER,
+            CardId.CARD_TRAVELER,
+            CardId.CARD_TRAVELER,
+            CardId.CARD_TRAVELER,
+            CardId.CARD_TRAVELER,
+            CardId.CARD_TRAVELER,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_ROCKET,
+            CardId.CARD_SUICIDE_DRONE,
+            CardId.CARD_SUICIDE_DRONE,
+            CardId.CARD_SUICIDE_DRONE,
+            CardId.CARD_SUICIDE_DRONE,
+            CardId.CARD_SUICIDE_DRONE,
+            CardId.CARD_SUICIDE_DRONE
             //CardId.CARD_REPAIR_STATION
         };
 
@@ -341,9 +339,9 @@ public class SharedGameManager : MonoBehaviour
         UnitCardData unitCardData = cardData as UnitCardData;
 
         Vector3 unitPosition = aTile.transform.position;
-        unitPosition.y += 20;
+        unitPosition.y += 40;
 
-        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(aTile.transform, unitPosition, anOwnerPlayer, false, aTile.GetCoordinate(), unitCardData.myUnitId, cardData.myId, myUnitIndex);
+        SharedUnit spawnedUnit = myGameFactoryReference.CreateUnit(aTile.transform, unitPosition, anOwnerPlayer, true, aTile.GetCoordinate(), unitCardData.myUnitId, cardData.myId, myUnitIndex);
 
         if (spawnedUnit == null)
         {
@@ -510,16 +508,16 @@ public class SharedGameManager : MonoBehaviour
             return null;
         }
 
-        SharedTile tile = myBoardReference.GetTile(aCoord);
+        SharedTile attackedTile = myBoardReference.GetTile(aCoord);
 
-        if (tile == null)
+        if (attackedTile == null)
         {
             Shared.LogError("[HOOD][GAMEMANAGER][ERROR] - DoAttackUnit()");
             return null;
         }
 
         SharedUnit attackingUnit = GetUnit(aUnitId);
-        SharedUnit defendingUnit = tile.GetUnit();
+        SharedUnit defendingUnit = attackedTile.GetUnit();
 
         if (attackingUnit == null || defendingUnit == null)
         {
@@ -534,8 +532,15 @@ public class SharedGameManager : MonoBehaviour
         };
 
         defendingUnit.ModifyShield(-attackingUnit.GetAttack());
-        attackingUnit.ModifyShield(-defendingUnit.GetAttack());
 
+
+        SharedTile attackingUnitTile = myBoardReference.GetTile(attackingUnit.GetPosition()); 
+
+        if(GetValidAttackTiles(defendingUnit).Contains(attackingUnitTile))
+        {
+            attackingUnit.ModifyShield(-defendingUnit.GetAttack());
+        }
+        
         //Captain health check is done in server
 
         attackingUnit.DisableUnit();
@@ -633,7 +638,7 @@ public class SharedGameManager : MonoBehaviour
         {
             SharedUnit otherUnit = entry.Value;
 
-            if (otherUnit.HasAbility())
+            if (otherUnit.HasAbility() && otherUnit.IsAlive())
             {
                 otherUnit.GetAbility().TryApplyEffectOnUnit(spawnedUnit);
             }
@@ -735,7 +740,7 @@ public class SharedGameManager : MonoBehaviour
 
             for (int i = 0; i < tilesToSearchCount; i++)
             {
-                if (tileList[i].GetUnit() != null && !tileList[i].GetUnit().IsOwnedByPlayer(myCurrentPlayerReference)) // Is this an enemy unit?
+                if (tileList[i].GetUnit() != null && !tileList[i].GetUnit().IsOwnedByPlayer(anAttackingUnit.GetPlayer())) // Is this an enemy unit?
                 {
                     possibleAttackTiles.Add(tileList[i]);
                     break;

@@ -27,11 +27,13 @@ public class SharedUnit : MonoBehaviour
     public void SetIsMothership() { myIsMothership = true;}
     public bool IsMothership() { return myIsMothership; }
     protected int myShield;
+    public int GetShield() { return myShield; }
     protected int myAttack;
     public int GetAttack() { return myAttack; }
     protected int myAttackRange;
     public int GetAttackRange() { return myAttackRange; }
     protected int myMovementRange;
+    public int GetMovementRange() { return myMovementRange; }
     protected List<SharedStatusEffect> myStatusEffects;
     protected bool myIsEnabled;
     public bool GetIsEnabled() { return myIsEnabled; }
@@ -82,6 +84,11 @@ public class SharedUnit : MonoBehaviour
         }
     }
 
+    public struct UnitStats
+    {
+
+    }
+
     public SharedUnit()
     {
         myOwnerPlayerReference = null;
@@ -98,13 +105,7 @@ public class SharedUnit : MonoBehaviour
             myAbility = myGameObjectFactoryReference.AddAbilityComponent(this.gameObject, aUnitData.myAbilityId);
         }
 
-        myOwnerPlayerReference = aOwnerPlayer;
-
-        if(myOwnerPlayerReference != null)
-        {
-            aOwnerPlayer.AddPlacedUnit(this);
-        }
-        
+        myOwnerPlayerReference = aOwnerPlayer;        
         myIsMothership = aIsCapitain;
         myBoardPosition = aBoardPosition;
 
@@ -121,7 +122,22 @@ public class SharedUnit : MonoBehaviour
 
         mySprite = aUnitData.mySprite;
         myOriginalColor = mySpriteRenderer.color;
-        myAnimator.runtimeAnimatorController = aUnitData.myOverrideAnimatorController;
+
+        myAnimator.runtimeAnimatorController = aUnitData.myDefaultOverrideAnimatorController;
+
+        if (myOwnerPlayerReference != null)
+        {
+            aOwnerPlayer.AddPlacedUnit(this);
+
+            if (myOwnerPlayerReference.GetBoardSide() == SharedPlayer.BoardSide.LEFT)
+            {
+                myAnimator.runtimeAnimatorController = aUnitData.myBlueOverrideAnimatorController;
+            }
+            if (myOwnerPlayerReference.GetBoardSide() == SharedPlayer.BoardSide.RIGHT)
+            {
+                myAnimator.runtimeAnimatorController = aUnitData.myRedOverrideAnimatorController;
+            }
+        }
 
         myATKText.text = myAttack.ToString();
         myHPText.text = myShield.ToString();
@@ -375,5 +391,10 @@ public class SharedUnit : MonoBehaviour
     public void FlipSprite()
     {
         mySpriteRenderer.flipX = true;
+    }
+
+    public void IncreaseSpriteSize(Vector2 aSize)
+    {
+        mySpriteRenderer.size = aSize;
     }
 }

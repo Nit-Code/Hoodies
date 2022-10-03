@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -159,8 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4634f94b02a357f40ad460d3e34ef9a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myCurrentGameSessionState: 
-  hostConnectionId: 0
+  myHostConnectionId: 0
+  myHostUsername: 
+  myGuestConnectionId: 0
 --- !u!114 &1460209347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +257,9 @@ MonoBehaviour:
   myIsRequiredCardsData: 1
   myTilesData: {fileID: 11400000, guid: 738189edf6b07954b9ba307c71d37d57, type: 2}
   myIsRequiredTilesData: 1
+  myOptionsData: {fileID: 11400000, guid: 63411cdea2ab8584b80b0181a9d3848e, type: 2}
+  myIsRequiredFloatRangeOptionData: 0
+  myIsRequiredBooleanOptionData: 0
 --- !u!114 &1460209353
 MonoBehaviour:
   m_ObjectHideFlags: 0

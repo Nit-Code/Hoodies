@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 500027554}
   - component: {fileID: 500027555}
   - component: {fileID: 500027556}
+  - component: {fileID: 500027557}
   m_Layer: 0
   m_Name: World_Root
   m_TagString: Untagged
@@ -424,6 +425,9 @@ MonoBehaviour:
   myIsRequiredCardsData: 1
   myTilesData: {fileID: 11400000, guid: 738189edf6b07954b9ba307c71d37d57, type: 2}
   myIsRequiredTilesData: 1
+  myOptionsData: {fileID: 11400000, guid: 63411cdea2ab8584b80b0181a9d3848e, type: 2}
+  myIsRequiredFloatRangeOptionData: 1
+  myIsRequiredBooleanOptionData: 1
 --- !u!114 &500027552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,6 +493,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac43376406fac674b9804b9b43e9761f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &500027557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500027545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b029e2c6d0216c342b02c97219086e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1033402734

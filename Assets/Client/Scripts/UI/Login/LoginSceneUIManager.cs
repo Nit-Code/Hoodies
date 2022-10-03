@@ -159,19 +159,19 @@ public class LoginSceneUIManager : MonoBehaviour
 
         if (anIsSuccessfulAuthentication)
         {
-            Debug.Log("[HOOD][LOGIN] - Session token refresh success.");
+            Shared.Log("[HOOD][LOGIN] - Session token refresh success.");
 
             UnloadUnauthenticatedArea();
             UnloadConfirmEmailMenu();
             if (mySceneControllerReference != null)
             {
-                Debug.Log("[HOOD][LOGIN] - Session token refresh success.");
+                Shared.Log("[HOOD][LOGIN] - Loading SceneId.MENU");
                 mySceneControllerReference.LoadScene(SceneId.MENU);
             }
         }
         else
         {
-            Debug.Log("[HOOD][LOGIN] - Session token refresh failed.");
+            Shared.Log("[HOOD][LOGIN] - Session token refresh failed.");
             UnloadConfirmEmailMenu();
             LoadUnauthenticatedArea();
         }

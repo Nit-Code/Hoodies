@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 public class HandleCardTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private SharedCard myCard;
-    private SharedTile myTile;
+    private SharedUnit myHoveredUnit;
+    private MatchCard myHoveredCard;
     private bool myIsHovered;
 
     private SharedDataLoader myDataLoaderReference;
@@ -18,7 +19,6 @@ public class HandleCardTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointer
     private void Start()
     {
 #if !UNITY_SERVER
-        myTile = this.GetComponent<SharedTile>();
         myCard = GameObject.FindWithTag("TooltipCard").GetComponent<SharedCard>();
         myDataLoaderReference = FindObjectOfType<SharedDataLoader>();
         myTooltipReference = FindObjectOfType<CardTooltipScreenSpaceUI>();
@@ -28,44 +28,88 @@ public class HandleCardTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointer
     public void OnPointerEnter(PointerEventData eventData)
     {
         myIsHovered = true;
-        SharedUnit unit = myTile.GetUnit();
+        myHoveredCard = null;
+        myHoveredUnit = null;
 
-        if(unit != null)
+        if (eventData.pointerEnter.TryGetComponent<SharedTile>(out SharedTile tile)) // Tooltip from unit on board
         {
-           myCoroutine = StartCoroutine(HoverTimer(unit));
-        } 
+            SharedUnit unit = tile.GetUnit();
+
+            if (unit != null)
+            {
+                myHoveredUnit = unit;
+                myCoroutine = StartCoroutine(HoverTimer());
+            }
+        }
+        else
+        {
+            MatchCard card = eventData.pointerEnter.GetComponentInParent<MatchCard>();
+
+            if(card != null)
+            {
+                myHoveredCard = card;
+                myCoroutine = StartCoroutine(HoverTimer());
+            }   
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        myIsHovered = false;
+        MatchCard card = eventData.pointerEnter.GetComponentInParent<MatchCard>();
         myTooltipReference.MakeInvisible();
 
-        if(myCoroutine != null)
+        if (card != null) // We need to do this because card contains many elements inside it, and each time we hover over one of them it triggers this method. We need to get out of this method, because we are still inside the card.
+        {
+            return;
+        }
+
+        myTooltipReference.MakeInvisible();
+        myIsHovered = false;
+
+        if (myCoroutine != null)
         {
             StopCoroutine(myCoroutine);
-        }  
+        }
     }
 
-    private IEnumerator HoverTimer(SharedUnit aUnit)
+    private IEnumerator HoverTimer()
     {
         yield return new WaitForSeconds(1.5f);
         if (myIsHovered)
         {
-            SetCardData(aUnit);
+            SetCardData();
             myTooltipReference.MakeVisible();
         }
         yield return null;
     }
 
-    private void SetCardData(SharedUnit aUnit)
+    private void SetCardData()
     {
-        CardId cardId = aUnit.GetCardId();
+        CardId cardId = CardId.INVALID;
+
+        if (myHoveredUnit != null)
+        {
+            cardId = myHoveredUnit.GetCardId();
+        }
+        else if (myHoveredCard != null)
+        {
+            cardId = myHoveredCard.GetId();
+        }
 
         CardData cardData = myDataLoaderReference.GetCardData(cardId);
-        if (cardData != null)
+        if (cardData == null)
         {
-            UnitCardData unitCardData = cardData as UnitCardData;
+            return;
+        }
+
+        UnitCardData unitCardData = cardData as UnitCardData;
+
+        if (myHoveredUnit != null)
+        {
+            myCard.SetDataFromUnit(unitCardData, myHoveredUnit);
+        }
+        else if (myHoveredCard != null)
+        {
             UnitData unitData = myDataLoaderReference.GetUnitData(unitCardData.myUnitId);
             if (unitData != null)
             {

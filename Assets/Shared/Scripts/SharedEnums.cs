@@ -183,6 +183,12 @@ namespace SharedScripts
         GUEST
     }
 
+    public enum PlayerColor
+    {
+        BLUE,
+        RED
+    }
+
     // TODO mda: does this need to be here or only on ClientEnums
     public enum SceneName
     {
@@ -242,6 +248,7 @@ namespace SharedScripts
             INVALID,          
             ENGINE_OVERDRIVE,
             PROTECTOR,
+            KAMIKAZE,
             REPAIR_STATION
         }
 
@@ -254,7 +261,11 @@ namespace SharedScripts
             MUSIC_MENU_SCENE,
             MUSIC_MATCH_SCENE,
             SOUND_MENU_CLICK,
-            SOUND_ERROR
+            SOUND_ERROR,
+            SOUND_LASER,
+            SOUND_EXPLOSION,
+            SOUND_MOVE,
+            SOUND_SPAWN
         }
 
         public enum CardId
@@ -263,11 +274,12 @@ namespace SharedScripts
             CARD_MOTHERSHIP_TEST,
             CARD_BASIC_UNIT_TEST,
             CARD_3,
-            CARD_HUNTER_SPAWNER,
-            CARD_ROCKET_SPAWNER,
-            CARD_TANK_SPAWNER,
-            CARD_FENIX_SPAWNER,
-            CARD_TRAVELER_SPAWNER,
+            CARD_HUNTER,
+            CARD_ROCKET,
+            CARD_TANK,
+            CARD_FENIX,
+            CARD_TRAVELER,
+            CARD_SUICIDE_DRONE,
             CARD_REPAIR_STATION
         }
 
@@ -296,14 +308,6 @@ namespace SharedScripts
             PROTECTOR_AURA
         }
 
-        //public enum TileId
-        //{
-        //    INVALID,
-        //    EMPTY,
-        //    NEBULA,
-        //    BLACK_HOLE
-        //}
-
         public enum TileType
         {
             INVALID,
@@ -322,7 +326,23 @@ namespace SharedScripts
             UNIT_ROCKET,
             UNIT_TANK,
             UNIT_FENIX,
-            UNIT_TRAVELER
+            UNIT_TRAVELER,
+            UNIT_SUICIDE_DRONE,
+        }
+
+        public enum FloatRangeOptionId
+        {
+            INVALID,
+            VOLUME_MASTER,
+            VOLUME_MUSIC,
+            VOLUME_SOUND,
+            VOLUME_AMBIENT
+        }
+
+        public enum BooleanOptionId
+        {
+            INVALID,
+            BOOLEAN_OPTION_1
         }
     }
 }

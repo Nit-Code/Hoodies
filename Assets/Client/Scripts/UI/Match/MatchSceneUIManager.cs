@@ -22,9 +22,11 @@ public class MatchSceneUIManager : MonoBehaviour
     [SerializeField] Canvas myCanvas;
     [SerializeField] GameObject myLoadingScreen;
     [SerializeField] GameObject myCardGrid;
-    [SerializeField] GameObject myPlayerTurnPanel;
-    [SerializeField] Image myPlayerTurnPanelBorder;
-    [SerializeField] TextMeshProUGUI myPlayerTurnText;
+    [SerializeField] GameObject myPopupPlayerTurnPanel;
+    [SerializeField] Image myPopupPlayerTurnPanelBorder;
+    [SerializeField] Image myInGamePlayerTurnPanelBorder;
+    [SerializeField] TextMeshProUGUI myPopupPlayerTurnText;
+    [SerializeField] TextMeshProUGUI myInGamePlayerTurnText;
     [SerializeField] TextMeshProUGUI myEnergyNumberText;
     [SerializeField] TextMeshProUGUI myTimerNumberText;
     [SerializeField] TextMeshProUGUI myPlayer1UsernameText;
@@ -199,18 +201,26 @@ public class MatchSceneUIManager : MonoBehaviour
     {
         if (aTurnType == TurnType.PLAYER)
         {
-            myPlayerTurnPanelBorder.color = new Color32(170, 232, 255, 255);
-            myPlayerTurnText.color = new Color32(170, 232, 255, 255);
-            myPlayerTurnText.text = "Player Turn";
+            myPopupPlayerTurnPanelBorder.color = new Color32(170, 232, 255, 255);
+            myPopupPlayerTurnText.color = new Color32(170, 232, 255, 255);
+            myPopupPlayerTurnText.text = "Player Turn";
+
+            myInGamePlayerTurnPanelBorder.color = new Color32(170, 232, 255, 255);
+            myInGamePlayerTurnText.color = new Color32(170, 232, 255, 255);
+            myInGamePlayerTurnText.text = "Player Turn";
         }
         else if (aTurnType == TurnType.ENEMY)
         {
-            myPlayerTurnPanelBorder.color = Color.red;
-            myPlayerTurnText.color = Color.red;
-            myPlayerTurnText.text = "Enemy Turn";
+            myPopupPlayerTurnPanelBorder.color = Color.red;
+            myPopupPlayerTurnText.color = Color.red;
+            myPopupPlayerTurnText.text = "Enemy Turn";
+
+            myInGamePlayerTurnPanelBorder.color = Color.red;
+            myInGamePlayerTurnText.color = Color.red;
+            myInGamePlayerTurnText.text = "Enemy Turn";
         }
 
-        myPlayerTurnPanel.SetActive(true);
+        myPopupPlayerTurnPanel.SetActive(true);
 
         int secondsLeft = 3;
 
@@ -220,7 +230,7 @@ public class MatchSceneUIManager : MonoBehaviour
             secondsLeft--;
         }
 
-        myPlayerTurnPanel.SetActive(false);
+        myPopupPlayerTurnPanel.SetActive(false);
         yield return null;
     }
 

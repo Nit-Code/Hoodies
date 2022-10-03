@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69f6e1332fbc9f47bab3845a3668e76, type: 3}
+  m_Name: Options_Inst
+  m_EditorClassIdentifier: 
+  myFloatOptions:
+  - myName: Volume Master
+    myDescription: 
+    myId: 1
+    myMinValue: 0
+    myDefaultValue: 1
+    myMaxValue: 1
+  - myName: Volume Music
+    myDescription: 
+    myId: 2
+    myMinValue: 0
+    myDefaultValue: 0
+    myMaxValue: 1
+  - myName: Volume Sound
+    myDescription: 
+    myId: 3
+    myMinValue: 0
+    myDefaultValue: 1
+    myMaxValue: 1
+  - myName: Volume Ambient
+    myDescription: 
+    myId: 4
+    myMinValue: 0
+    myDefaultValue: 1
+    myMaxValue: 1
+  myBooleanOptions: []

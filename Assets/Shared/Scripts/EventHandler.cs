@@ -2,6 +2,16 @@ using System;
 
 public static class EventHandler
 {
+    public static event Action OurAfterDataLoadedEvent;
+
+    public static void CallAfterDataLoadedEvent()
+    {
+        if (OurAfterDataLoadedEvent != null)
+        {
+            OurAfterDataLoadedEvent();
+        }
+    }
+
     #region SceneEvents
 
     public static event Action OurBeforeSceneUnloadEvent;
@@ -13,7 +23,6 @@ public static class EventHandler
             OurBeforeSceneUnloadEvent();
         }
     }
-
 
     public static event Action OurAfterSceneUnloadEvent;
 

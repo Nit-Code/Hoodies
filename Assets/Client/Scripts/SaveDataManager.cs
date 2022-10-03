@@ -9,20 +9,24 @@ public interface ISaveable
 // based on https://github.com/UnityTechnologies/UniteNow20-Persistent-Data
 public static class SaveDataManager
 {
-    public static void LoadJsonData(ISaveable aSaveable, string aName)
+    public static bool LoadJsonData(ISaveable aSaveable, string aName)
     {
         if (FileReadWrite.LoadFromFile(aSaveable.GenerateFullFilename(aName), out var json))
         {
             aSaveable.LoadFromJson(json);
-            //Debug.LogError("[HOOD][GUEST][SAVE] - Load complete");
+            return true;
+            //Debug.LogError("[HOOD][GUEST][SAVE] - StartLoadFromPersistance complete");
         }
+        return false;
     }
 
-    public static void SaveJsonData(ISaveable aSaveable, string aName)
+    public static bool SaveJsonData(ISaveable aSaveable, string aName)
     {
         if (FileReadWrite.WriteToFile(aSaveable.GenerateFullFilename(aName), aSaveable.ToJson()))
         {
+            return true;
             //Debug.LogError("[HOOD][GUEST][SAVE] - Save successful");
         }
+        return false;
     }
 }

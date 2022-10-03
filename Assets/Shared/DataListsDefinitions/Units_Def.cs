@@ -17,7 +17,9 @@ public class UnitData
 
     public bool canSpawnOtherUnits;
 
-    public AnimatorOverrideController myOverrideAnimatorController;
+    public AnimatorOverrideController myDefaultOverrideAnimatorController;
+    public AnimatorOverrideController myBlueOverrideAnimatorController;
+    public AnimatorOverrideController myRedOverrideAnimatorController;
     public Sprite mySprite;
 }
 

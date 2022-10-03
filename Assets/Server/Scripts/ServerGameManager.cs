@@ -37,10 +37,10 @@ public class ServerGameManager : SharedGameManager
     //        turnMaxTime
     //}
 
-    [SerializeField] private int myLobbyCountdownTime = 15;
-    [SerializeField] private int myLockInTime = 5;
-    [SerializeField] private int myTurnTimer = 90;
-    private bool myLobbyCountdownIsRunning = false;
+    [SerializeField] private int myLobbyCountdownTime;
+    [SerializeField] private int myLockInTime;
+    [SerializeField] private int myTurnTimer;
+    private bool myLobbyCountdownIsRunning;
 
     private Coroutine myLobbyCountdownCoroutine;
     private Coroutine myTurnCountdownCoroutine;
@@ -55,9 +55,10 @@ public class ServerGameManager : SharedGameManager
         base.Awake();
         myReadyAndLoadedPlayers = new List<string>();
         myReadyPlayersInfo = new Dictionary<string, ReadyPlayerInfo>();
+        myLobbyCountdownIsRunning = false;
         myLobbyCountdownTime = 15;
         myLockInTime = 5;
-        myTurnTimer = 60;
+        myTurnTimer = 90;
     }
 
     private new void Start()
@@ -292,7 +293,7 @@ public class ServerGameManager : SharedGameManager
         player2Info.myMothershipCoord = motherShip2Tile.GetCoordinate();
         player2Info.myBoardSide = SharedPlayer.BoardSide.RIGHT;
     }
-   
+
     private void DrawStartingHands()
     {
         foreach (SharedPlayer player in myPlayersReferenceList)
@@ -421,14 +422,11 @@ public class ServerGameManager : SharedGameManager
             }
         }
 
-        if (affectedUnits[0].IsMothership() || affectedUnits[1].IsMothership())
-        {
-            EvaluateWinCondition();
+        EvaluateWinCondition();
 
-            if (myMatchWinner != MatchWinner.NO_WINNER)
-            {
-                ChangeState(MatchState.END);
-            }
+        if (myMatchWinner != MatchWinner.NO_WINNER)
+        {
+            ChangeState(MatchState.END);
         }
 
         return true;
@@ -493,6 +491,14 @@ public class ServerGameManager : SharedGameManager
                 }
             }
         }
+
+        EvaluateWinCondition();
+
+        if (myMatchWinner != MatchWinner.NO_WINNER)
+        {
+            ChangeState(MatchState.END);
+        }
+
 
         return true;
     }

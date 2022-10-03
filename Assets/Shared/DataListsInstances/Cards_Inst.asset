@@ -60,11 +60,18 @@ MonoBehaviour:
     myCardType: 1
     myDescription: Spawns a Traveler ship
     myCost: 2
-    mySprite: {fileID: 1098143202, guid: 3eea9abdf0b926141a9e45cf20fd2a45, type: 3}
+    mySprite: {fileID: 188303475, guid: d8ead70bfb102b84cb83c9f2f6ebf7ba, type: 3}
     myUnitId: 8
+  - myName: Suicide Drone
+    myId: 9
+    myCardType: 1
+    myDescription: Spawns a Suicide Drone
+    myCost: 3
+    mySprite: {fileID: 1723827933, guid: 3eea9abdf0b926141a9e45cf20fd2a45, type: 3}
+    myUnitId: 9
   myAbilityCards:
   - myName: Repair Station
-    myId: 9
+    myId: 10
     myCardType: 2
     myDescription: Adjacent units get +1 SHIELDS per turn.
     myCost: 3

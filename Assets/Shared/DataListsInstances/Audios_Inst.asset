@@ -18,13 +18,13 @@ MonoBehaviour:
     myAudioClip: {fileID: 8300000, guid: 0676b90d9af5e6643934f85b2ed0aa4d, type: 3}
     myAudioDescription: 'Background music. Source: Portal 2: Songs to Test By Vol.
       1'
-    myAudioVolume: -23
+    myAudioVolume: 0
   - myName: Music menu scene
     myId: 4
     myAudioClip: {fileID: 8300000, guid: 146d4b63720af80439a4e1e51dc0467c, type: 3}
     myAudioDescription: 'Background music. Source: Portal 2: Songs to Test By Vol.
       3'
-    myAudioVolume: -23
+    myAudioVolume: 0
   - myName: Ambient rain
     myId: 2
     myAudioClip: {fileID: 0}
@@ -34,14 +34,34 @@ MonoBehaviour:
     myId: 6
     myAudioClip: {fileID: 8300000, guid: e4374454682ffd847aa1ff545c44cab1, type: 3}
     myAudioDescription: 'Sound effect. Source: ???'
-    myAudioVolume: 20
+    myAudioVolume: 2
   - myName: Sound error
     myId: 7
     myAudioClip: {fileID: 8300000, guid: b80bd184a20fc7b46ac0f39ad3f80ec2, type: 3}
     myAudioDescription: 'Sound effect. Source: ???'
-    myAudioVolume: 3
+    myAudioVolume: 2
   - myName: Match scene music
     myId: 5
     myAudioClip: {fileID: 8300000, guid: a2782d988bfadb4418c9a60c4770003f, type: 3}
     myAudioDescription: 'Sound effect. Source: ???'
     myAudioVolume: -4
+  - myName: Laser SFX
+    myId: 8
+    myAudioClip: {fileID: 8300000, guid: 1307fc70df6f7ef4e82fac0374d64448, type: 3}
+    myAudioDescription: 'Sound effect. Source: ???'
+    myAudioVolume: 1
+  - myName: Explosion SFX
+    myId: 9
+    myAudioClip: {fileID: 8300000, guid: 15c41b0f6a91745409a688af54d120df, type: 3}
+    myAudioDescription: 'Sound effect. Source: ???'
+    myAudioVolume: 1
+  - myName: Move SFX
+    myId: 10
+    myAudioClip: {fileID: 8300000, guid: 1d4d80c5ff1e872469e1dbc8092969ae, type: 3}
+    myAudioDescription: 'Sound effect. Source: ???'
+    myAudioVolume: 0.75
+  - myName: Summon  SFX
+    myId: 11
+    myAudioClip: {fileID: 8300000, guid: 98e890a9c2ccba04cae6a8c9febdc31a, type: 3}
+    myAudioDescription: 'Sound effect. Source: ???'
+    myAudioVolume: 0.5

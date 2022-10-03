@@ -15,9 +15,8 @@ public class Sound : MonoBehaviour
         myAudioSource = GetComponent<AudioSource>();
     }
 
-    // Optional aVolume, default value = 1
     // TODO: change this to Init() to comply with coding standard
-    public void SetAudio(AudioData anAudioItem, float aVolume = 1) 
+    public void SetAudio(AudioData anAudioItem, float aVolume) 
     {
         if (myAudioSource == null) 
         {

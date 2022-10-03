@@ -818,6 +818,7 @@ GameObject:
   m_Component:
   - component: {fileID: 164908363}
   - component: {fileID: 164908364}
+  - component: {fileID: 164908365}
   m_Layer: 5
   m_Name: SoundSlider
   m_TagString: Untagged
@@ -899,7 +900,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1055255560}
         m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
-        m_MethodName: HandleSoundVolumeSlider
+        m_MethodName: HandleSoundVolumeSliderUpdate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -909,6 +910,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &164908365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164908362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1055255560}
+          m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
+          m_MethodName: HandleSoundVolumeSliderSubmit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &193455352
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6860,6 +6890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1039864127}
   - component: {fileID: 1039864128}
+  - component: {fileID: 1039864129}
   m_Layer: 5
   m_Name: AmbientSlider
   m_TagString: Untagged
@@ -6941,7 +6972,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1055255560}
         m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
-        m_MethodName: HandleAmbientVolumeSlider
+        m_MethodName: HandleAmbientVolumeSliderUpdate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6951,6 +6982,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1039864129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039864126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1055255560}
+          m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
+          m_MethodName: HandleAmbientVolumeSliderSubmit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1044199181
 GameObject:
   m_ObjectHideFlags: 0
@@ -13858,6 +13918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1782171119}
   - component: {fileID: 1782171120}
+  - component: {fileID: 1782171121}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -13939,7 +14000,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1055255560}
         m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
-        m_MethodName: HandleMusicVolumeSlider
+        m_MethodName: HandleMusicVolumeSliderUpdate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13949,6 +14010,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1782171121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782171118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1055255560}
+          m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
+          m_MethodName: HandleMusicVolumeSliderSubmit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1784658098
 GameObject:
   m_ObjectHideFlags: 0
@@ -14887,6 +14977,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1961543106}
   - component: {fileID: 1961543107}
+  - component: {fileID: 1961543108}
   m_Layer: 5
   m_Name: MasterSlider
   m_TagString: Untagged
@@ -14968,7 +15059,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1055255560}
         m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
-        m_MethodName: HandleMasterVolumeSlider
+        m_MethodName: HandleMasterVolumeSliderUpdate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14978,6 +15069,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1961543108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961543105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1055255560}
+          m_TargetAssemblyTypeName: HomeCanvasUIManager, Assembly-CSharp
+          m_MethodName: HandleMasterVolumeSliderSubmit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1993344330
 GameObject:
   m_ObjectHideFlags: 0

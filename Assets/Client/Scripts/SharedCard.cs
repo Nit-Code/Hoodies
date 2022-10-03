@@ -49,8 +49,6 @@ public class SharedCard : MonoBehaviour
     {
         myUnitId = UnitId.INVALID;
         myAbilityId = AbilityId.INVALID;
-
-
     }
 
     public virtual void Init(UnitCardData aCardData, UnitData aUnitData, AbilityData anAbilityData) 
@@ -88,6 +86,8 @@ public class SharedCard : MonoBehaviour
             myAbilityDescriptionText.text = SetAbilityDescriptionText(anAbilityData.myDescription);
             myAbilityDurationText.text = SetAbilityDurationText(anAbilityData.myDuration);
             myAbilityCooldownText.text = SetAbilityCooldownText(anAbilityData.myCooldown);
+
+            myAbilityDescriptionPanel.SetActive(true);
         }
         else
         {
@@ -97,6 +97,10 @@ public class SharedCard : MonoBehaviour
         if(aUnitData.canSpawnOtherUnits)
         {
             mySummonerTag.SetActive(true);
+        }
+        else
+        {
+            mySummonerTag.SetActive(false);
         }
     }
 
@@ -134,6 +138,51 @@ public class SharedCard : MonoBehaviour
             myAbilityNameText.text = myAbilityId.ToString(); // TODO: re - create a ToString implementation.
             myAbilityDescriptionText.text = SetAbilityDescriptionText(anAbilityData.myDescription);
             myAbilityDurationText.text = SetAbilityDurationText(anAbilityData.myDuration);
+        }
+    }
+
+    public void SetDataFromUnit(UnitCardData aCardData, SharedUnit aUnit)
+    {
+        myCardType = aCardData.myCardType;
+        myCardName = aCardData.myName;
+        myCardDescription = aCardData.myDescription;
+        myCardCost = aCardData.myCost;
+
+        myCardImage.sprite = aCardData.mySprite;
+
+        // UI
+        myCardImage.sprite = aCardData.mySprite;
+
+        myTitleText.text = aCardData.myName;
+        myCostText.text = aCardData.myCost.ToString();
+        myHitPointsText.text = aUnit.GetShield().ToString();
+        myAttackDamageText.text = aUnit.GetAttack().ToString();
+        myMovementRangeText.text = SetMovementRangeText(aUnit.GetMovementRange());
+        myAttackRangeText.text = SetAttackRangeText(aUnit.GetAttackRange());
+        myTypeText.text = "UNIT";
+        //myTypeText.text = aCardData.myCardType.ToString(); //mda TODO: re-create a ToString implementation.
+
+        if (aUnit.GetAbility() != null)
+        {
+            myAbilityNameText.text = aUnit.GetAbility().GetAbilityId().ToString();// TODO: re - create a ToString implementation.
+            myAbilityDescriptionText.text = SetAbilityDescriptionText(aUnit.GetAbility().GetDescription());
+            myAbilityDurationText.text = SetAbilityDurationText(aUnit.GetAbility().GetDurationTimer());
+            myAbilityCooldownText.text = SetAbilityCooldownText(aUnit.GetAbility().GetCooldownTimer());
+
+            myAbilityDescriptionPanel.SetActive(true);
+        }
+        else
+        {
+            myAbilityDescriptionPanel.SetActive(false);
+        }
+
+        if (aUnit.GetIsSpawner())
+        {
+            mySummonerTag.SetActive(true);
+        }
+        else
+        {
+            mySummonerTag.SetActive(false);
         }
     }
 

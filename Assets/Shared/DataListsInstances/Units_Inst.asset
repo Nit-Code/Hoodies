@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Units_Inst
   m_EditorClassIdentifier: 
   myUnits:
-  - myName: Test Mothership
+  - myName: Mothership
     myId: 1
     myAttack: 2
     myAttackRange: 2
@@ -21,7 +21,9 @@ MonoBehaviour:
     myMovementRange: 2
     myAbilityId: 2
     canSpawnOtherUnits: 0
-    myOverrideAnimatorController: {fileID: 22100000, guid: 2a3f6ce59340828498b9cc771dfff3c6, type: 2}
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: 6ff12e24759270549b2dede5273446a8, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: 421f511b4a135304e9557ff2e40272fb, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: 1c7c417efa4871940b8c62e9aa145849, type: 2}
     mySprite: {fileID: -1182949721, guid: f57a7a561e9833d4db2759da8807ae57, type: 3}
   - myName: Test Unit
     myId: 2
@@ -31,7 +33,9 @@ MonoBehaviour:
     myMovementRange: 2
     myAbilityId: 0
     canSpawnOtherUnits: 0
-    myOverrideAnimatorController: {fileID: 22100000, guid: fabe1b78fa34ecb40acee418a3ca53d9, type: 2}
+    myDefaultOverrideAnimatorController: {fileID: 0}
+    myBlueOverrideAnimatorController: {fileID: 0}
+    myRedOverrideAnimatorController: {fileID: 0}
     mySprite: {fileID: 1143979375, guid: 7e3767fff239f5f43a1e37b413319631, type: 3}
   - myName: Hunter
     myId: 4
@@ -41,7 +45,9 @@ MonoBehaviour:
     myMovementRange: 3
     myAbilityId: 1
     canSpawnOtherUnits: 0
-    myOverrideAnimatorController: {fileID: 22100000, guid: 08dd75f884d9bf145a615a6740b911b4, type: 2}
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: 08dd75f884d9bf145a615a6740b911b4, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: 3c48d008aa1300849928064e3e742c27, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: e1881ebb04597604cba6c029f7eac3f4, type: 2}
     mySprite: {fileID: -1544636669, guid: e96d70bf03814244a8cabf821c9a058c, type: 3}
   - myName: Rocket
     myId: 5
@@ -51,7 +57,9 @@ MonoBehaviour:
     myMovementRange: 2
     myAbilityId: 0
     canSpawnOtherUnits: 0
-    myOverrideAnimatorController: {fileID: 22100000, guid: 4f10b2737c6bd1b448dbc9848928ece8, type: 2}
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: 4f10b2737c6bd1b448dbc9848928ece8, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: 8fd62f302cbfd274bb54f56d798f4277, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: 08f0ddcc520b3fb45a2e7bd9fd594508, type: 2}
     mySprite: {fileID: 1122007686, guid: f7d0435dcb0547b4c948e89bdd365f03, type: 3}
   - myName: Tank
     myId: 6
@@ -61,7 +69,9 @@ MonoBehaviour:
     myMovementRange: 1
     myAbilityId: 2
     canSpawnOtherUnits: 1
-    myOverrideAnimatorController: {fileID: 22100000, guid: 96b94d8a137a5a94b8b7bdfada4d3509, type: 2}
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: 96b94d8a137a5a94b8b7bdfada4d3509, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: bbea1428e40bf1040ac5236b752d5a12, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: f5ddc9d72dacd4e408155104d05cdcde, type: 2}
     mySprite: {fileID: 1008428006, guid: cb871a69c0af31b439a8221542e897c7, type: 3}
   - myName: Fenix
     myId: 7
@@ -71,7 +81,9 @@ MonoBehaviour:
     myMovementRange: 2
     myAbilityId: 0
     canSpawnOtherUnits: 1
-    myOverrideAnimatorController: {fileID: 22100000, guid: 387bbbdabc0bd0545a20a817893196e0, type: 2}
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: 387bbbdabc0bd0545a20a817893196e0, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: 0be1eb397f03b18448f8cd51c7e13782, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: d9b9951b3f34d954abc91d83cb0041bb, type: 2}
     mySprite: {fileID: -1903147306, guid: 2c5e191e6db424b4aa7f55f20da7c21f, type: 3}
   - myName: Traveler
     myId: 8
@@ -81,5 +93,19 @@ MonoBehaviour:
     myMovementRange: 10
     myAbilityId: 1
     canSpawnOtherUnits: 1
-    myOverrideAnimatorController: {fileID: 22100000, guid: cd78544f5033e594dab96aabfc8cd935, type: 2}
-    mySprite: {fileID: 1098143202, guid: 3eea9abdf0b926141a9e45cf20fd2a45, type: 3}
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: b4b41270fa39be04595909b06f2be6fc, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: 1612acc56d6d00f4180d5270fca2c6d6, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: cd83c24f27ec0794895cbb611230c494, type: 2}
+    mySprite: {fileID: 188303475, guid: d8ead70bfb102b84cb83c9f2f6ebf7ba, type: 3}
+  - myName: Suicide Drone
+    myId: 9
+    myAttack: 0
+    myAttackRange: 0
+    myShields: 1
+    myMovementRange: 4
+    myAbilityId: 3
+    canSpawnOtherUnits: 0
+    myDefaultOverrideAnimatorController: {fileID: 22100000, guid: cd78544f5033e594dab96aabfc8cd935, type: 2}
+    myBlueOverrideAnimatorController: {fileID: 22100000, guid: 99934de7e6c4bb24a94a64b3df940046, type: 2}
+    myRedOverrideAnimatorController: {fileID: 22100000, guid: 7070faffc3c7b5f439ba37cdb5b71547, type: 2}
+    mySprite: {fileID: 188303475, guid: d8ead70bfb102b84cb83c9f2f6ebf7ba, type: 3}

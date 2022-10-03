@@ -12,8 +12,10 @@ public abstract class SharedAbility : MonoBehaviour
 
     protected SharedUnit myOwnerUnitReference;
     protected AbilityId myAbilityDataId;
+    public AbilityId GetAbilityId() { return myAbilityDataId; }
     protected string myName;
     protected string myDescription;
+    public string GetDescription() { return myDescription; }
     protected int myCost;
     public int GetCost() { return myCost; }
     protected AreaShape myAreaShape;
@@ -28,8 +30,10 @@ public abstract class SharedAbility : MonoBehaviour
     public int GetCastingRange() { return myCastingRange; }
     protected int myCooldown; // How many turns a unit needs to wait until the ability can be cast again
     protected int myCooldownTimer;
+    public int GetCooldownTimer() { return myCooldownTimer; }
     protected int myDuration; // How long an ability lasts on the board
     protected int myDurationTimer;
+    public int GetDurationTimer() { return myDurationTimer; }
     protected List<SharedTile> myCastTiles;
     public List<SharedTile> GetCastTiles() { return myCastTiles; }
 

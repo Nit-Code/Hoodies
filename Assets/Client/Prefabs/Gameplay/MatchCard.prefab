@@ -31,6 +31,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 877956650166592181, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 972688635396740301, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -289,6 +293,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6189547710969884824, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6358744616962834635, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_text
       value: '- Lorem ipsum dolor sit amet
@@ -334,6 +342,10 @@ PrefabInstance:
     - target: {fileID: 6782753287419154095, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_text
       value: Lorem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160394209249439081, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8782301755386801746, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
       propertyPath: m_text
@@ -437,6 +449,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8871406438747358843, guid: ccd4e57a853b0bc4f906dda12e726e68, type: 3}
   m_PrefabInstance: {fileID: 3144351825385885297}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6312852617722220474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818486291634604042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3cceb04b7f4dfe4fa15d4bb15371aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7241660680180440604
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,32 +25,21 @@ public class AudioManager : MonoBehaviour
     private SceneController mySceneControllerReference;
 
     private Coroutine myPlaySceneSoundsCoroutine;
-    private float mySoundVolume = 1f;
 
     private const string MASTER_VOL_NAME = "MasterVolume";
     private const string MUSIC_MASTER_VOL_NAME = "MusicMasterVolume";
     private const string AMBIENT_MASTER_VOL_NAME = "AmbientMasterVolume";
+    private const string SOUND_MASTER_VOL_NAME = "SoundMasterVolume";
 
     private const string MUSIC_VOL_NAME = "MusicVolume";
     private const string AMBIENT_VOL_NAME = "AmbientVolume";
 
-    private const float MAX_DECIBELS = 20;
-    private const float MIN_DECIBELS = -80;
+    protected const float MY_DECIBELS_RANGE_MIN = -80.0f;
+    protected const float MY_DECIBELS_RANGE_MAX = 0.0f;
     private Vector2 myDecibelsRange;
 
     private int myDataToLoad;
-
-    //TODO: these values should be stored on the ui class that handles the volume sliders
-    private const float MAX_SLIDER = 20;
-    private const float MIN_SLIDER = -80;
     private int myDataLoaded;
-    private Vector2 myUISliderRange;
-
-    private void Awake()
-    {
-        myDecibelsRange = new Vector2(MIN_DECIBELS, MAX_DECIBELS);
-        myUISliderRange = new Vector2(MIN_SLIDER, MAX_SLIDER);
-    }
 
     private bool IsDataLoaded() 
     {
@@ -61,6 +50,8 @@ public class AudioManager : MonoBehaviour
     {
         myDataLoaded = 0; 
         myDataToLoad = 6;
+        myDecibelsRange = new Vector2(MY_DECIBELS_RANGE_MIN, MY_DECIBELS_RANGE_MAX);
+
         myPoolReference = FindObjectOfType<GameObjectPool>();
         if (myPoolReference != null)
         {
@@ -110,29 +101,43 @@ public class AudioManager : MonoBehaviour
         EventHandler.OurAfterSceneLoadEvent -= PlaySceneSounds;
     }
 
-    public void ChangeMasterVolume(float aVolume)
+    private float RemapFromPercentageToDecibels(float aPercentage) 
     {
-        aVolume = Mathf.Clamp(aVolume, 0, 1);
-        mySoundVolume = aVolume;
-        myAudioMixer.SetFloat(MASTER_VOL_NAME, ConvertSoundVolumeDecimalFractionToDecibels(aVolume));
+        Vector2 percentageRange = new Vector2(0.0f, 1.0f);
+
+        if (aPercentage >= percentageRange.x && aPercentage <= percentageRange.y)
+        {
+            return RemapClamped(aPercentage, percentageRange, myDecibelsRange);
+        }
+        else 
+        {
+            Shared.LogError("[HOOD][CLIENT][AUDIO] - aPercentage out of bounds.");
+            return 1.0f;
+        }
     }
 
-    public void ChangeMusicMasterVolume(float aVolume)
+    public void SetMasterVolume(float aPercentage)
     {
-        aVolume = Mathf.Clamp(aVolume, 0, 1);
-        myAudioMixer.SetFloat(MUSIC_MASTER_VOL_NAME, ConvertSoundVolumeDecimalFractionToDecibels(aVolume));
+        float volume = RemapFromPercentageToDecibels(aPercentage);
+        myAudioMixer.SetFloat(MASTER_VOL_NAME, volume);
     }
 
-    public void ChangeAmbientMasterVolume(float aVolume)
+    public void SetAmbientMasterVolume(float aPercentage)
     {
-        aVolume = Mathf.Clamp(aVolume, 0, 1);
-        myAudioMixer.SetFloat(AMBIENT_MASTER_VOL_NAME, ConvertSoundVolumeDecimalFractionToDecibels(aVolume));
+        float volume = RemapFromPercentageToDecibels(aPercentage);
+        myAudioMixer.SetFloat(AMBIENT_MASTER_VOL_NAME, volume);
     }
 
-    // TODO mda: should this ve handled in the same way ambient and music volumes are handled?
-    public void ChangeSoundVolume(float aVolume)
+    public void SetMusicMasterVolume(float aPercentage)
     {
-        mySoundVolume = aVolume;
+        float volume = RemapFromPercentageToDecibels(aPercentage);
+        myAudioMixer.SetFloat(MUSIC_MASTER_VOL_NAME, volume);
+    }
+
+    public void SetSoundMasterVolume(float aPercentage)
+    {
+        float volume = RemapFromPercentageToDecibels(aPercentage);
+        myAudioMixer.SetFloat(SOUND_MASTER_VOL_NAME, volume);
     }
 
     public void PlaySound(AudioId anId)
@@ -145,11 +150,10 @@ public class AudioManager : MonoBehaviour
 
         GameObject soundGameObject = myPoolReference.ReuseObject(mySoundAudioSourcePrefab, Vector3.zero, Quaternion.identity); // We retrieve the generic 'Sound' gameobject from the pool
         Sound sound = soundGameObject.GetComponent<Sound>();
-        sound.SetAudio(audio, mySoundVolume);
+        sound.SetAudio(audio, audio.myAudioVolume);
         soundGameObject.SetActive(true); // It automatically plays the sound because it plays on Awake
         StartCoroutine(DisableSound(soundGameObject, audio.myAudioClip.length)); // Disable the sound after it's done playing
     }
-
 
     private AudioData GetSceneAudioClip(SceneId anId) 
     {
@@ -274,8 +278,7 @@ public class AudioManager : MonoBehaviour
     private void PlayAmbientSoundClip(AudioData anAmbientAudioItem)
     {
         // Set Volume
-        float volume = Mathf.Clamp(anAmbientAudioItem.myAudioVolume, myUISliderRange.x, myUISliderRange.y);
-        myAudioMixer.SetFloat(AMBIENT_VOL_NAME, RemapClamped(volume, myUISliderRange, myDecibelsRange));
+        myAudioMixer.SetFloat(AMBIENT_VOL_NAME, anAmbientAudioItem.myAudioVolume);
 
         // Set clip & play
         myAmbientAudioSource.clip = anAmbientAudioItem.myAudioClip;
@@ -285,8 +288,7 @@ public class AudioManager : MonoBehaviour
     private void PlayMusicSoundClip(AudioData aMusicAudioItem)
     {
         // Set Volume
-        float volume = Mathf.Clamp(aMusicAudioItem.myAudioVolume, myUISliderRange.x, myUISliderRange.y);
-        myAudioMixer.SetFloat(MUSIC_VOL_NAME, RemapClamped(volume, myUISliderRange, myDecibelsRange));
+        myAudioMixer.SetFloat(MUSIC_VOL_NAME, aMusicAudioItem.myAudioVolume);
 
         // Set clip & play
         myMusicAudioSource.clip = aMusicAudioItem.myAudioClip;

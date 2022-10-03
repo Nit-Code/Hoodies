@@ -38,6 +38,7 @@ public class ClientGameManager : SharedGameManager
     // reference
     private NetworkClient myNetworkClientReference;
     private MatchSceneUIManager myMatchSceneUIManagerReference;
+    private AudioManager myAudioManagerReference;
 
     public ClientGameManager(string aPlayer1Id)
     {
@@ -55,7 +56,7 @@ public class ClientGameManager : SharedGameManager
     private void TestEndGame()
     {
         ClientTestFeaturesMessage ctfm = new ClientTestFeaturesMessage(TestFeaturesMessageId.KILL_MY_MOTHERSHIP, myCurrentPlayerReference.GetSessionId());
-        myNetworkClientReference.SendMessageToServer(ctfm);        
+        myNetworkClientReference.SendMessageToServer(ctfm);
     }
 
     private new void Awake()
@@ -74,6 +75,7 @@ public class ClientGameManager : SharedGameManager
         base.Start();
         myMatchSceneUIManagerReference = FindObjectOfType<MatchSceneUIManager>();
         myNetworkClientReference = FindObjectOfType<NetworkClient>();
+        myAudioManagerReference = FindObjectOfType<AudioManager>();
     }
 
     public bool IsLocalPlayerTurn()
@@ -130,7 +132,7 @@ public class ClientGameManager : SharedGameManager
 
     public bool SelectedUnitCanAttackOnTile(SharedTile aTile)
     {
-        if(myCurrentlySelectedUnit == null)
+        if (myCurrentlySelectedUnit == null)
         {
             return false;
         }
@@ -154,9 +156,9 @@ public class ClientGameManager : SharedGameManager
 
         foreach (ServerGameManager.ReadyPlayerInfo playerInfo in playersInfo)
         {
-            if(playerInfo.myBoardSide == SharedPlayer.BoardSide.LEFT)
+            if (playerInfo.myBoardSide == SharedPlayer.BoardSide.LEFT)
             {
-                myMatchSceneUIManagerReference.SetPlayer1UsernameText(playerInfo.myUsername);             
+                myMatchSceneUIManagerReference.SetPlayer1UsernameText(playerInfo.myUsername);
             }
             else
             {
@@ -167,19 +169,19 @@ public class ClientGameManager : SharedGameManager
             {
                 SharedPlayer opponentPlayer = new SharedPlayer(playerInfo.myPlayerSessionId, null);
                 opponentPlayer.SetBoardSide(playerInfo.myBoardSide);
+                opponentPlayer.SetUsername(playerInfo.myUsername);
                 myPlayersReferenceList.Add(opponentPlayer);
                 DoSpawnMothership(playerInfo.myMothershipId, myBoardReference.GetTile(playerInfo.myMothershipCoord), opponentPlayer);
-                
             }
             else
             {
                 SharedDeck deck = GetShuffledDeck(playerInfo.myDeckId, playerInfo.myDeckSeed); // LocalPlayer
                 myLocalPlayer.SetBoardSide(playerInfo.myBoardSide);
                 myLocalPlayer.SetDeck(deck);
+                myLocalPlayer.SetUsername(playerInfo.myUsername);
+                myLocalPlayer.FillEnergy();
                 DrawStartingHand();
                 DoSpawnMothership(playerInfo.myMothershipId, myBoardReference.GetTile(playerInfo.myMothershipCoord), myLocalPlayer);
-                myLocalPlayer.FillEnergy();
-                
             }
         }
 
@@ -211,7 +213,8 @@ public class ClientGameManager : SharedGameManager
 
         myMatchSceneUIManagerReference.StopTimer();
         myMatchSceneUIManagerReference.HideLoadingScreen(); // We put this here to avoid creating a "hide loading screen" message
-        myMatchSceneUIManagerReference.StartTimer(90); //Hardcoded for now, could send this from server message later
+        
+        myMatchSceneUIManagerReference.StartTimer(90); //Must match ServerGameManager/Awake()/ myTurnTimer value 
         myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy(), myLocalPlayer.GetCurrentMaximumEnergy());
 
         if (!IsLocalPlayerTurn())
@@ -251,7 +254,7 @@ public class ClientGameManager : SharedGameManager
         SharedPlayer player = GetPlayerFromPlayerSessionId(aWinner);
         string aWinnerName = player.GetUsername();
 
-        if(player != null) // Somebody won
+        if (player != null) // Somebody won
         {
             if (aWinner == myLocalPlayer.GetSessionId()) // If I won
             {
@@ -324,10 +327,12 @@ public class ClientGameManager : SharedGameManager
             myMatchSceneUIManagerReference.UpdateEnergyNumber(myLocalPlayer.GetEnergy(), myLocalPlayer.GetCurrentMaximumEnergy());
         }
 
-        if(!unit.GetPlayer().Equals(myLocalPlayer))
-        {
-            unit.EnableKindText();
-        }
+        //if(!unit.GetPlayer().Equals(myLocalPlayer))
+        //{
+        //    unit.EnableKindText();
+        //}
+
+        myAudioManagerReference.PlaySound(AudioId.SOUND_SPAWN);
 
         if (unit.GetPlayer().GetBoardSide() == SharedPlayer.BoardSide.RIGHT)
             unit.FlipSprite();
@@ -341,13 +346,15 @@ public class ClientGameManager : SharedGameManager
     {
         SharedUnit mothership = base.DoSpawnMothership(aUnitCardId, aTile, anOwnerPlayer);
 
-        if (!mothership.GetPlayer().Equals(myLocalPlayer))
-        {
-            mothership.EnableKindText();
-        }
-		
-		if (mothership.GetPlayer().GetBoardSide() == SharedPlayer.BoardSide.RIGHT)
-        	mothership.FlipSprite();
+        //if (!mothership.GetPlayer().Equals(myLocalPlayer))
+        //{
+        //    mothership.EnableKindText();
+        //}
+
+        if (mothership.GetPlayer().GetBoardSide() == SharedPlayer.BoardSide.RIGHT)
+            mothership.FlipSprite();
+
+        mothership.IncreaseSpriteSize(new Vector2(1.75f, 1.75f));
 
         return mothership;
     }
@@ -455,6 +462,8 @@ public class ClientGameManager : SharedGameManager
             unit.ColorGray();
         }
 
+        myAudioManagerReference.PlaySound(AudioId.SOUND_MOVE);
+
         return unit;
     }
 
@@ -513,6 +522,7 @@ public class ClientGameManager : SharedGameManager
             // update UI
         }
 
+        myAudioManagerReference.PlaySound(AudioId.SOUND_LASER);
         ResetPlayerSelections();
         return affectedUnits;
     }
@@ -612,6 +622,7 @@ public class ClientGameManager : SharedGameManager
         SharedTile tile = myBoardReference.GetTile(aUnit.GetPosition().x, aUnit.GetPosition().y);
         tile.RemoveUnit();
 
+        myAudioManagerReference.PlaySound(AudioId.SOUND_EXPLOSION);
         await aUnit.PerformAnimation(SharedUnit.DeathAnimation);
 
         aUnit.KillUnit();
@@ -651,7 +662,7 @@ public class ClientGameManager : SharedGameManager
             return;
         }
 
-        if(aStatus)
+        if (aStatus)
         {
             myIsCastingUnitAbility = false;
         }
@@ -676,10 +687,8 @@ public class ClientGameManager : SharedGameManager
 
     public override List<SharedTile> GetValidAttackTiles(SharedUnit anAttackingUnit) // This one returns just the tiles where an attack is possible
     {
-        if (anAttackingUnit.IsOwnedByPlayer(myLocalPlayer))
-        {
-            myCurrentValidAttackTiles = base.GetValidAttackTiles(anAttackingUnit);
-        }
+        myCurrentValidAttackTiles = base.GetValidAttackTiles(anAttackingUnit);
+
         return myCurrentValidAttackTiles;
     }
 
